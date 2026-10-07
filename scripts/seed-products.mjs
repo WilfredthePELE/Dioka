@@ -1,0 +1,7 @@
+import { DatabaseSync } from 'node:sqlite';
+const db = new DatabaseSync('C:/Users/HP/Downloads/Dioka/.wrangler/state/v3/d1/miniflare-D1DatabaseObject/metadata.sqlite');
+db.exec("INSERT OR REPLACE INTO products (id, name, category, price, image, position, sizes, color, description) VALUES ('arc-shoulder-bag', 'Arc Shoulder Bag', 'Bags', 285, '/dioka-brown-bag.webp', 'center center', 'One size', 'Cognac', 'A fluid shape that sits close and carries beautifully. The easy everyday piece with a sense of occasion.')");
+db.exec("INSERT OR REPLACE INTO products (id, name, category, price, image, position, sizes, color, description) VALUES ('column-ankle-boot', 'Column Ankle Boot', 'Footwear', 340, '/dioka-footwear-editorial.png', 'center center', 'EU 38,EZ 39,EU 40,EU 41,EU 42,EU 43,EU 44,EU 45', 'Black', 'A clean line, a grounded heel, and the kind of presence that never asks for attention.')");
+db.exec("INSERT OR REPLACE INTO products (id, name, category, price, image, position, sizes, color, description) VALUES ('transit-leather-jacket', 'Transit Leather Jacket', 'Jackets', 560, '/dioka-jacket-editorial.png', 'center center', 'XS,S,M,L,XL,XXL', 'Black', 'A leather layer with an easy attitude. Cut to move between seasons, settings, and styles.')");
+console.log(JSON.stringify(db.prepare('SELECT id, name, category, price FROM products').all(), null, 2));
+db.close();

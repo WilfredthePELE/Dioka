@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS products (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  price INTEGER NOT NULL,
+  image TEXT NOT NULL,
+  position TEXT NOT NULL DEFAULT 'center center',
+  sizes TEXT NOT NULL DEFAULT '[]',
+  color TEXT NOT NULL DEFAULT '',
+  description TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
