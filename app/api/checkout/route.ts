@@ -1,11 +1,11 @@
-import { env } from "cloudflare:workers";
 import { products } from "@/lib/products";
 
 type RequestedItem = { id: string; size: string; quantity: number };
 
 function checkoutIsReady() {
-  const settings = env as unknown as { STRIPE_SECRET_KEY?: string; DIOKA_STORE_LIVE?: string };
-  return Boolean(settings.STRIPE_SECRET_KEY) && settings.DIOKA_STORE_LIVE === "true";
+  const stripeKey = process.env.STRIPE_SECRET_KEY;
+  const storeLive = process.env.DIOKA_STORE_LIVE;
+  return Boolean(stripeKey) && storeLive === "true";
 }
 
 export async function GET() {
@@ -13,7 +13,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const secret = (env as unknown as { STRIPE_SECRET_KEY?: string }).STRIPE_SECRET_KEY;
+  const secret = process.env.STRIPE_SECRET_KEY;
   if (!secret || !checkoutIsReady()) {
     return Response.json({ error: "Online checkout is being connected. Please try again later." }, { status: 503 });
   }

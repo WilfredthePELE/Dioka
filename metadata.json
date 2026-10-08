@@ -1,0 +1,5 @@
+{
+  "name": "Dioka",
+  "description": "Bags, Footwear & Leather Jackets storefront",
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

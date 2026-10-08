@@ -1,53 +1,52 @@
-import { getDb } from "@/db/index";
-import { products } from "@/db/schema";
-import { desc } from "drizzle-orm";
-import type { Category } from "@/lib/products";
+import { products as initialProducts, type Category, type Product } from "@/lib/products";
 
-export type AdminProduct = {
-  id: string;
-  name: string;
-  category: Category;
-  price: number;
-  image: string;
-  position: string;
-  sizes: string[];
-  color: string;
-  description: string;
-};
+export type { Category };
+export type AdminProduct = Product;
 
-function toAdmin(p: typeof products.$inferSelect): AdminProduct {
-  return {
-    ...p,
-    sizes: JSON.parse(p.sizes),
-    price: p.price,
-  };
+// In-memory product storage for the application
+const inMemoryProducts: Map<string, AdminProduct> = new Map(
+  initialProducts.map((p) => [
+    p.id,
+    {
+      ...p,
+      stockQuantity: p.stockQuantity ?? (p.category === "Jackets" ? 8 : p.category === "Footwear" ? 15 : 12),
+      inStock: true,
+    },
+  ])
+);
+
+export async function adminListProducts(): Promise<AdminProduct[]> {
+  return Array.from(inMemoryProducts.values());
 }
 
-export async function adminListProducts() {
-  const db = getDb();
-  const rows = await db.select().from(products).orderBy(desc(products.createdAt));
-  return rows.map(toAdmin);
-}
-
-export async function adminGetProduct(id: string) {
-  const db = getDb();
-  const [row] = await db.select().from(products).where((p) => p.id === id).limit(1);
-  return row ? toAdmin(row) : null;
+export async function adminGetProduct(id: string): Promise<AdminProduct | null> {
+  return inMemoryProducts.get(id) ?? null;
 }
 
 export async function adminUpsertProduct(input: AdminProduct) {
-  const db = getDb();
-  const sizes = JSON.stringify(input.sizes);
-  const existing = await adminGetProduct(input.id);
-  if (existing) {
-    await db.update(products).set({ name: input.name, category: input.category, price: input.price, image: input.image, position: input.position, sizes, color: input.color, description: input.description }).where((p) => p.id === input.id);
-    return { upserted: false };
-  }
-  await db.insert(products).values({ id: input.id, name: input.name, category: input.category, price: input.price, image: input.image, position: input.position, sizes, color: input.color, description: input.description });
-  return { upserted: true };
+  const existing = inMemoryProducts.get(input.id);
+  const stockQuantity = Number(input.stockQuantity ?? existing?.stockQuantity ?? 10);
+  const updated: AdminProduct = {
+    ...existing,
+    ...input,
+    price: Number(input.price),
+    stockQuantity,
+    inStock: stockQuantity > 0,
+  };
+  inMemoryProducts.set(input.id, updated);
+  return { upserted: !existing };
+}
+
+export async function adminUpdatePriceAndQuantity(id: string, price: number, stockQuantity: number) {
+  const existing = inMemoryProducts.get(id);
+  if (!existing) return null;
+  existing.price = Number(price);
+  existing.stockQuantity = Number(stockQuantity);
+  existing.inStock = Number(stockQuantity) > 0;
+  inMemoryProducts.set(id, { ...existing });
+  return existing;
 }
 
 export async function adminDeleteProduct(id: string) {
-  const db = getDb();
-  await db.delete(products).where((p) => p.id === id);
+  inMemoryProducts.delete(id);
 }

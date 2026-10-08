@@ -1,13 +1,28 @@
-import { env } from "cloudflare:workers";
-import { drizzle } from "drizzle-orm/d1";
-import * as schema from "./schema";
-
+// Mocked database connection for AI Studio environment
 export function getDb() {
-  if (!env.DB) {
-    throw new Error(
-      "Cloudflare D1 binding `DB` is unavailable. Set the `d1` field in .openai/hosting.json to `DB` or let your control plane inject the real binding values before using the database."
-    );
-  }
+  const noOp = {
+    findMany: async () => [],
+    findFirst: async () => null,
+    select: () => ({
+      from: () => ({
+        orderBy: () => [],
+        where: () => ({
+          limit: () => [],
+        }),
+      }),
+    }),
+    insert: () => ({
+      values: async () => ({}),
+    }),
+    update: () => ({
+      set: () => ({
+        where: async () => ({}),
+      }),
+    }),
+    delete: () => ({
+      where: async () => ({}),
+    }),
+  };
 
-  return drizzle(env.DB, { schema });
+  return noOp as unknown as Record<string, unknown>;
 }

@@ -1,0 +1,87 @@
+{
+  "users": {
+    "client@dioka.com": {
+      "id": "usr_client_demo",
+      "name": "Wilfred Owubokiri",
+      "email": "client@dioka.com",
+      "passwordHash": "9f6904bb21a1a8611bef4eafe08b98d4571b082b1a302b9c9304d278fb495666cfbc0132c981a29fceeae827abca44aae2d89c8a56df227395fea6ba1bae6e1f",
+      "salt": "5a659d23580927ca17b30fc3be269473",
+      "tier": "Dioka Atelier Member · Preferred Client",
+      "cart": [
+        {
+          "id": "arc-shoulder-bag",
+          "size": "One size",
+          "quantity": 1,
+          "addedAt": "2026-10-08T08:47:22.116Z"
+        },
+        {
+          "id": "column-ankle-boot",
+          "size": "EU 42 / US 9",
+          "quantity": 1,
+          "addedAt": "2026-10-08T08:47:22.116Z"
+        }
+      ],
+      "wishlist": [
+        "transit-leather-jacket",
+        "saddle-courier-bag"
+      ],
+      "shippingAddress": {
+        "fullName": "Wilfred Owubokiri",
+        "street": "42 Savile Row & Kensington",
+        "city": "London",
+        "country": "United Kingdom",
+        "postalCode": "W1S 2ER",
+        "phone": "+44 20 7946 0912"
+      },
+      "orders": [
+        {
+          "orderId": "DK-88204",
+          "items": [
+            {
+              "id": "atelier-weekender",
+              "size": "One size",
+              "quantity": 1
+            }
+          ],
+          "subtotal": 620,
+          "total": 620,
+          "currency": "USD",
+          "status": "Dispatched",
+          "trackingCode": "DK-EXP-99214-GB",
+          "createdAt": "2026-09-28T14:30:00Z"
+        }
+      ],
+      "createdAt": "2026-10-08T08:47:22.116Z",
+      "updatedAt": "2026-10-08T08:47:22.116Z"
+    },
+    "amara@example.com": {
+      "id": "usr_0cc223a3",
+      "name": "Amara Kalu",
+      "email": "amara@example.com",
+      "passwordHash": "8e41172341318cb0341d534683ed6d420237d107ccae3430653f1e95442f58ab74db8a175784cb9352b433e4f8e7f3e94f339a03e215af25bb1ad3ab2a258e38",
+      "salt": "8b90fa66509fc35f84dba53db9f35083",
+      "tier": "Dioka Atelier Member · Preferred Client",
+      "cart": [
+        {
+          "id": "saddle-courier-bag",
+          "size": "One size",
+          "quantity": 1
+        }
+      ],
+      "wishlist": [],
+      "orders": [],
+      "createdAt": "2026-10-08T08:47:26.948Z",
+      "updatedAt": "2026-10-08T08:47:26.948Z"
+    }
+  },
+  "sessions": {
+    "dk_sess_2d6d8d70db9924e0ac81360535f5d80d7685e9a5159bddf5": {
+      "userId": "usr_client_demo",
+      "expiresAt": 1794041242134
+    },
+    "dk_sess_f51bc0e0067cf3c4bbf2502198b29e61df78eacbe477ebc2": {
+      "userId": "usr_0cc223a3",
+      "expiresAt": 1794041246953
+    }
+  }
+}
