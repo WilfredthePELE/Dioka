@@ -19,6 +19,8 @@ import {
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { useStore } from "@/lib/store-context";
+import { ItemCustomizerSelector } from "@/components/ItemCustomizerSelector";
+import type { AtelierColor } from "@/lib/products";
 
 export default function ProductDetailPage({
   params,
@@ -41,6 +43,10 @@ export default function ProductDetailPage({
   const product = catalog.find((p) => p.id === productId);
 
   const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<AtelierColor>("Cognac");
+  const [selectedLeather, setSelectedLeather] = useState<string>("Full-Grain");
+  const [selectedShape, setSelectedShape] = useState<string>("The Classic");
+  const [monogram, setMonogram] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<"overview" | "features" | "materials" | "care">("overview");
 
@@ -71,7 +77,12 @@ export default function ProductDetailPage({
     .slice(0, 3);
 
   const handleBuyNow = () => {
-    addToCart(product, currentSize, quantity);
+    addToCart(product, currentSize, quantity, {
+      color: selectedColor,
+      leather: selectedLeather,
+      shape: selectedShape,
+      monogram: monogram.trim(),
+    });
     setCheckoutModalOpen(true);
   };
 
@@ -182,18 +193,20 @@ export default function ProductDetailPage({
               <Check size={18} /> In Stock · Ships within 24 hours via express courier
             </div>
 
-            {/* Color specification */}
-            <div style={{ marginBottom: "20px" }}>
-              <span style={{ display: "block", fontSize: "11px", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "#333", marginBottom: "6px" }}>
-                Color: <strong>{product.color}</strong>
-              </span>
-              <span style={{ display: "inline-block", padding: "6px 14px", background: "#f8f7f3", border: "1px solid #123d32", fontSize: "12px", fontWeight: 600, color: "#123d32" }}>
-                {product.color} (Natural Vegetable Tanned)
-              </span>
-            </div>
+            {/* Bespoke Atelier Customizer: Colour, Choice of Leather, Shape of Design */}
+            <ItemCustomizerSelector
+              selectedColor={selectedColor}
+              onSelectColor={setSelectedColor}
+              selectedLeather={selectedLeather}
+              onSelectLeather={setSelectedLeather}
+              selectedShape={selectedShape}
+              onSelectShape={setSelectedShape}
+              monogram={monogram}
+              onMonogramChange={setMonogram}
+            />
 
             {/* Size Selector */}
-            <div style={{ marginBottom: "24px" }}>
+            <div style={{ marginTop: "20px", marginBottom: "24px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
                 <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "#333" }}>
                   {product.sizes.length === 1 ? "Size: One Size" : "Select Your Size:"}
@@ -262,7 +275,14 @@ export default function ProductDetailPage({
                 type="button"
                 className="dark-button"
                 disabled={!inStock}
-                onClick={() => addToCart(product, currentSize, quantity)}
+                onClick={() =>
+                  addToCart(product, currentSize, quantity, {
+                    color: selectedColor,
+                    leather: selectedLeather,
+                    shape: selectedShape,
+                    monogram: monogram.trim(),
+                  })
+                }
                 style={{ flex: 1, height: "50px", justifyContent: "center", cursor: "pointer", fontSize: "14px" }}
               >
                 <ShoppingBag size={18} style={{ marginRight: "8px" }} />

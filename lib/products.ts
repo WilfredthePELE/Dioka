@@ -1,10 +1,56 @@
 export type Category = "Bags" | "Footwear" | "Jackets";
 export type Filter = "All" | Category;
 
+export type AtelierColor = "Espresso" | "Cognac" | "Sahara Tan" | "Noir" | "Oxblood" | "Sand";
+
+export interface ColorOption {
+  name: AtelierColor;
+  hex: string;
+  border: string;
+}
+
+export const ATELIER_COLORS: ColorOption[] = [
+  { name: "Espresso", hex: "#342217", border: "#22150e" },
+  { name: "Cognac", hex: "#8a4f27", border: "#6c3a19" },
+  { name: "Sahara Tan", hex: "#c78e58", border: "#a6713e" },
+  { name: "Noir", hex: "#161616", border: "#000000" },
+  { name: "Oxblood", hex: "#5b1f2b", border: "#3c131c" },
+  { name: "Sand", hex: "#dfd3c3", border: "#b8a892" },
+];
+
+export interface LeatherOption {
+  id: string;
+  name: "Full-Grain" | "Italian Suede" | "Nubuck" | "Exotic Hide";
+  subtitle: string;
+}
+
+export const ATELIER_LEATHERS: LeatherOption[] = [
+  { id: "full-grain", name: "Full-Grain", subtitle: "The connoisseur's choice" },
+  { id: "italian-suede", name: "Italian Suede", subtitle: "Soft, sensorial, elegant" },
+  { id: "nubuck", name: "Nubuck", subtitle: "Velvet hand, rugged spirit" },
+  { id: "exotic-hide", name: "Exotic Hide", subtitle: "Statement & rare" },
+];
+
+export interface ShapeOption {
+  id: string;
+  name: "The Classic" | "The Modern" | "Personal Monogram";
+  subtitle: string;
+  symbol?: string;
+}
+
+export const ATELIER_SHAPES: ShapeOption[] = [
+  { id: "the-classic", name: "The Classic", subtitle: "Timeless silhouettes", symbol: "●" },
+  { id: "the-modern", name: "The Modern", subtitle: "Sharp, contemporary lines", symbol: "○" },
+  { id: "personal-monogram", name: "Personal Monogram", subtitle: "Initials embossed in gold" },
+];
+
+export type BagType = "Shoulder Bags" | "Crossbody Bags" | "Travel & Duffle Bags";
+
 export type Product = {
   id: string;
   name: string;
   category: Category;
+  bagType?: BagType;
   price: number;
   image: string;
   position: string;
@@ -23,11 +69,12 @@ export type Product = {
 };
 
 export const products: Product[] = [
-  // --- BAGS ---
+  // --- BAGS: SHOULDER BAGS ---
   {
     id: "arc-shoulder-bag",
     name: "Arc Leather Shoulder Bag",
     category: "Bags",
+    bagType: "Shoulder Bags",
     price: 285,
     image: "/dioka-brown-bag.webp",
     position: "center center",
@@ -49,9 +96,37 @@ export const products: Product[] = [
     reviews: 38,
   },
   {
+    id: "crescent-shoulder-bag",
+    name: "Aura Tuscan Crescent Shoulder Bag",
+    category: "Bags",
+    bagType: "Shoulder Bags",
+    price: 345,
+    image: "/crescent_shoulder_bag_1791822894053.jpg",
+    position: "center center",
+    sizes: ["One size"],
+    color: "Warm Saddle Tan",
+    description: "An architectural crescent silhouette sculpted from buttery vegetable-tanned Italian calfskin, featuring a custom contoured shoulder strap and solid antiqued brass turn-clasp.",
+    subtitle: "Sculpted crescent leather shoulder bag",
+    materials: "100% full-grain Tuscan calfskin, solid brushed brass turn-clasp, bonded suede interior.",
+    dimensions: "34cm W × 26cm H × 10cm D · Ergonomic strap drop: 26cm",
+    care: "Buff gently with a microfiber cloth. Natural patina deepens with sunlight and wear.",
+    details: [
+      "Signature crescent curve that hugs the ribcage naturally",
+      "Solid brass turn-clasp front closure with engraved atelier crest",
+      "Dual interior slip pockets and hidden zippered security compartment",
+      "Hand-skived and burnished raw edges"
+    ],
+    inStock: true,
+    rating: 5.0,
+    reviews: 19,
+  },
+
+  // --- BAGS: CROSSBODY BAGS ---
+  {
     id: "saddle-courier-bag",
     name: "Classic Saddle Crossbody Bag",
     category: "Bags",
+    bagType: "Crossbody Bags",
     price: 360,
     image: "/dioka_saddle_bag_1791376838607.jpg",
     position: "center center",
@@ -73,9 +148,37 @@ export const products: Product[] = [
     reviews: 24,
   },
   {
+    id: "florentine-crossbody-bag",
+    name: "Palazzo Lock Box Crossbody Bag",
+    category: "Bags",
+    bagType: "Crossbody Bags",
+    price: 385,
+    image: "/florentine_crossbody_bag_1791822910268.jpg",
+    position: "center center",
+    sizes: ["One size"],
+    color: "Forest Green & Espresso",
+    description: "Two-tone Florentine box calfskin crossbody detailed with an archival gold push-lock, contrasting edge bevels, and an adjustable bridle leather shoulder strap.",
+    subtitle: "Two-tone structured box crossbody",
+    materials: "Dual-tone Florentine box calfskin, 24k gold-plated brass lock mechanism, leather lining.",
+    dimensions: "24cm W × 18cm H × 8cm D · Adjustable crossbody strap: 46–58cm",
+    care: "Wipe with damp cloth and dry immediately. Store in supplied archival dust bag.",
+    details: [
+      "Heritage box construction with reinforced structured corners",
+      "Archival gold-plated center key lock with smooth spring release",
+      "Adjustable bridle leather strap for shoulder or crossbody carry",
+      "Interior card organizer and divided gusset compartments"
+    ],
+    inStock: true,
+    rating: 4.9,
+    reviews: 31,
+  },
+
+  // --- BAGS: TRAVEL & DUFFLE BAGS ---
+  {
     id: "atelier-weekender",
     name: "Voyager Leather Travel Duffle",
     category: "Bags",
+    bagType: "Travel & Duffle Bags",
     price: 640,
     image: "/dioka_weekender_bag_1791376853630.jpg",
     position: "center center",
@@ -95,6 +198,31 @@ export const products: Product[] = [
     inStock: true,
     rating: 4.9,
     reviews: 41,
+  },
+  {
+    id: "travel-duffle-holdall",
+    name: "San Miniato 48-Hour Travel Holdall",
+    category: "Bags",
+    bagType: "Travel & Duffle Bags",
+    price: 695,
+    image: "/travel_duffle_holdall_1791822926418.jpg",
+    position: "center center",
+    sizes: ["One size"],
+    color: "Tuscan Saddle Amber",
+    description: "A generational 48-hour duffle crafted from hand-rubbed Tuscan saddle leather with double-stitched reinforcements, solid brass end-buckles, and an embossed heritage atelier luggage tag.",
+    subtitle: "Hand-rubbed 48-hour heritage duffle",
+    materials: "Full-grain vegetable-tanned Tuscan saddle leather, solid brass hardware, cotton drill lining.",
+    dimensions: "54cm W × 33cm H × 25cm D · Capacity: 42L",
+    care: "Leather develops a magnificent deep patina over years of transatlantic travel.",
+    details: [
+      "Extra-wide zip opening with double end-down buckle cinches",
+      "Solid cast brass hardware with protective base studs",
+      "Full-grain luggage tag with personalized monogram option",
+      "Water-resistant interior shoe compartment and tech sleeves"
+    ],
+    inStock: true,
+    rating: 5.0,
+    reviews: 28,
   },
 
   // --- FOOTWEAR ---

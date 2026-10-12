@@ -32,6 +32,8 @@ import { AccountModal } from "@/components/AccountModal";
 import { SupabaseModal } from "@/components/SupabaseModal";
 import { CurrencyConverterModal } from "@/components/CurrencyConverterModal";
 import { syncOrderToSupabase } from "@/lib/supabase";
+import { ItemCustomizerSelector } from "@/components/ItemCustomizerSelector";
+import type { AtelierColor } from "@/lib/products";
 
 export function GlobalModals() {
   const router = useRouter();
@@ -69,6 +71,10 @@ export function GlobalModals() {
   } = useStore();
 
   const [modalSize, setModalSize] = useState("");
+  const [modalColor, setModalColor] = useState<AtelierColor>("Cognac");
+  const [modalLeather, setModalLeather] = useState<string>("Full-Grain");
+  const [modalShape, setModalShape] = useState<string>("The Classic");
+  const [modalMonogram, setModalMonogram] = useState<string>("");
   const [modalQuantity, setModalQuantity] = useState(1);
 
   // Tracking modal form
@@ -302,7 +308,7 @@ export function GlobalModals() {
                   if (!product) return null;
                   const maxQty = product.stockQuantity ?? 10;
                   return (
-                    <div className="cart-item" key={item.id + item.size}>
+                    <div className="cart-item" key={item.itemKey || item.id + item.size}>
                       <div className="cart-item-image">
                         <Image src={product.image} alt={product.name} fill sizes="100px" style={{ objectPosition: product.position }} />
                       </div>
@@ -315,15 +321,19 @@ export function GlobalModals() {
                         >
                           <h3 style={{ margin: "2px 0 4px" }}>{product.name}</h3>
                         </Link>
-                        <span>
-                          Size: {item.size} · {product.color}
+                        <span style={{ fontSize: "11px", color: "#444", display: "block", lineHeight: "1.4" }}>
+                          Size: {item.size} · <strong>{item.color || product.color}</strong>
+                        </span>
+                        <span style={{ fontSize: "10.5px", color: "#666", display: "block" }}>
+                          {item.leather || "Full-Grain"} · {item.shape || "The Classic"}
+                          {item.monogram ? ` · [Gold Monogram: ${item.monogram}]` : ""}
                         </span>
 
-                        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "12px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "10px" }}>
                           <div className="quantity">
                             <button
                               type="button"
-                              onClick={() => changeQuantity(item.id, item.size, -1)}
+                              onClick={() => changeQuantity(item.itemKey || item.id, item.size, -1)}
                               aria-label="Decrease quantity"
                             >
                               <Minus size={13} />
@@ -331,7 +341,7 @@ export function GlobalModals() {
                             <span>{item.quantity}</span>
                             <button
                               type="button"
-                              onClick={() => changeQuantity(item.id, item.size, 1)}
+                              onClick={() => changeQuantity(item.itemKey || item.id, item.size, 1)}
                               disabled={item.quantity >= maxQty}
                               aria-label="Increase quantity"
                               style={{ opacity: item.quantity >= maxQty ? 0.4 : 1 }}
@@ -342,7 +352,7 @@ export function GlobalModals() {
 
                           <button
                             type="button"
-                            onClick={() => removeFromCart(item.id, item.size)}
+                            onClick={() => removeFromCart(item.itemKey || item.id, item.size)}
                             style={{
                               background: "none",
                               border: 0,
@@ -440,8 +450,21 @@ export function GlobalModals() {
                   </span>
                 </div>
 
+                {/* Bespoke Atelier Customizer: Colour, Choice of Leather, Shape of Design */}
+                <ItemCustomizerSelector
+                  selectedColor={modalColor}
+                  onSelectColor={setModalColor}
+                  selectedLeather={modalLeather}
+                  onSelectLeather={setModalLeather}
+                  selectedShape={modalShape}
+                  onSelectShape={setModalShape}
+                  monogram={modalMonogram}
+                  onMonogramChange={setModalMonogram}
+                  compact={true}
+                />
+
                 {/* Size options */}
-                <div className="size-heading" style={{ marginTop: "12px" }}>
+                <div className="size-heading" style={{ marginTop: "14px" }}>
                   <span>{selectedProduct.sizes.length === 1 ? "SIZE: ONE SIZE" : "SELECT SIZE"}</span>
                   {selectedProduct.category !== "Bags" && (
                     <button
@@ -495,7 +518,12 @@ export function GlobalModals() {
                     className="dark-button add-to-bag"
                     style={{ flex: 1, justifyContent: "center" }}
                     onClick={() => {
-                      addToCart(selectedProduct, modalSize || selectedProduct.sizes[0], modalQuantity);
+                      addToCart(selectedProduct, modalSize || selectedProduct.sizes[0], modalQuantity, {
+                        color: modalColor,
+                        leather: modalLeather,
+                        shape: modalShape,
+                        monogram: modalMonogram.trim(),
+                      });
                       setSelectedProduct(null);
                     }}
                   >

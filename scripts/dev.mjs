@@ -1,35 +1,50 @@
 import { spawn } from "node:child_process";
+import { resolve } from "node:path";
+import { existsSync } from "node:fs";
 
 const rawArgs = process.argv.slice(2);
 const nextArgs = ["dev"];
 
+let host = "0.0.0.0";
+let port = "3000";
+
 for (let i = 0; i < rawArgs.length; i++) {
   const arg = rawArgs[i];
   if (arg === "--host") {
-    const nextVal = rawArgs[++i] || "0.0.0.0";
-    nextArgs.push("-H", nextVal);
+    if (i + 1 < rawArgs.length && !rawArgs[i + 1].startsWith("-")) {
+      host = rawArgs[++i];
+    }
   } else if (arg.startsWith("--host=")) {
-    nextArgs.push("-H", arg.slice(7));
+    host = arg.slice(7);
+  } else if (arg === "-H" || arg === "--hostname") {
+    if (i + 1 < rawArgs.length && !rawArgs[i + 1].startsWith("-")) {
+      host = rawArgs[++i];
+    }
   } else if (arg === "--port") {
-    const nextVal = rawArgs[++i] || "3000";
-    nextArgs.push("-p", nextVal);
+    if (i + 1 < rawArgs.length && !rawArgs[i + 1].startsWith("-")) {
+      port = rawArgs[++i];
+    }
   } else if (arg.startsWith("--port=")) {
-    nextArgs.push("-p", arg.slice(7));
+    port = arg.slice(7);
+  } else if (arg === "-p") {
+    if (i + 1 < rawArgs.length && !rawArgs[i + 1].startsWith("-")) {
+      port = rawArgs[++i];
+    }
   } else {
-    nextArgs.push(arg);
+    // Only forward flags Next.js dev supports
+    if (arg === "--turbo" || arg === "--turbopack" || arg === "--experimental-https") {
+      nextArgs.push(arg);
+    }
   }
 }
 
-if (!nextArgs.includes("-p") && !nextArgs.includes("--port")) {
-  nextArgs.push("-p", "3000");
-}
-if (!nextArgs.includes("-H") && !nextArgs.includes("--hostname")) {
-  nextArgs.push("-H", "0.0.0.0");
-}
+nextArgs.push("-p", port, "-H", host);
 
-const child = spawn("next", nextArgs, {
+const nextBinCandidate = resolve(process.cwd(), "node_modules/next/dist/bin/next");
+const binary = existsSync(nextBinCandidate) ? nextBinCandidate : resolve(process.cwd(), "node_modules/.bin/next");
+
+const child = spawn(process.execPath, [binary, ...nextArgs], {
   stdio: "inherit",
-  shell: process.platform === "win32",
   env: process.env,
 });
 

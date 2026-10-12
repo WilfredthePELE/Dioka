@@ -219,7 +219,7 @@ export default function CartPage() {
 
                 return (
                   <div
-                    key={item.id + item.size}
+                    key={item.itemKey || item.id + item.size}
                     style={{
                       display: "grid",
                       gridTemplateColumns: "110px 1fr auto",
@@ -247,15 +247,23 @@ export default function CartPage() {
                       <Link href={`/products/${product.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                         <h3 style={{ margin: "4px 0 6px", fontSize: "18px", color: "#123d32" }}>{product.name}</h3>
                       </Link>
-                      <p style={{ margin: "0 0 10px", fontSize: "13px", color: "#666" }}>
-                        Size: <strong>{item.size}</strong> · Color: {product.color}
+                      <p style={{ margin: "0 0 4px", fontSize: "13px", color: "#444" }}>
+                        Size: <strong>{item.size}</strong> · Colour: <strong>{item.color || product.color}</strong>
+                      </p>
+                      <p style={{ margin: "0 0 10px", fontSize: "12px", color: "#666" }}>
+                        Leather: <em>{item.leather || "Full-Grain"}</em> · Shape: <em>{item.shape || "The Classic"}</em>
+                        {item.monogram ? (
+                          <span style={{ color: "#8a4f27", fontWeight: 700, marginLeft: "6px" }}>
+                            · [24k Monogram: {item.monogram}]
+                          </span>
+                        ) : null}
                       </p>
 
                       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                         <div className="quantity" style={{ margin: 0 }}>
                           <button
                             type="button"
-                            onClick={() => changeQuantity(item.id, item.size, -1)}
+                            onClick={() => changeQuantity(item.itemKey || item.id, item.size, -1)}
                             aria-label="Decrease quantity"
                           >
                             <Minus size={13} />
@@ -263,7 +271,7 @@ export default function CartPage() {
                           <span>{item.quantity}</span>
                           <button
                             type="button"
-                            onClick={() => changeQuantity(item.id, item.size, 1)}
+                            onClick={() => changeQuantity(item.itemKey || item.id, item.size, 1)}
                             disabled={item.quantity >= maxQty}
                             aria-label="Increase quantity"
                             style={{ opacity: item.quantity >= maxQty ? 0.4 : 1 }}
@@ -274,7 +282,7 @@ export default function CartPage() {
 
                         <button
                           type="button"
-                          onClick={() => removeFromCart(item.id, item.size)}
+                          onClick={() => removeFromCart(item.itemKey || item.id, item.size)}
                           style={{
                             background: "none",
                             border: 0,

@@ -17,6 +17,12 @@ import {
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { useStore } from "@/lib/store-context";
+import {
+  ATELIER_COLORS,
+  ATELIER_LEATHERS,
+  ATELIER_SHAPES,
+  type AtelierColor,
+} from "@/lib/products";
 
 export default function BagsPage() {
   const {
@@ -29,6 +35,9 @@ export default function BagsPage() {
   } = useStore();
 
   const [subCategory, setSubCategory] = useState<string>("all");
+  const [cardColors, setCardColors] = useState<Record<string, AtelierColor>>({});
+  const [cardLeathers, setCardLeathers] = useState<Record<string, string>>({});
+  const [cardShapes, setCardShapes] = useState<Record<string, string>>({});
 
   // Filter bags from catalog
   const bags = catalog.filter((p) => p.category === "Bags");
@@ -183,21 +192,111 @@ export default function BagsPage() {
 
                   <p className="product-meta-sub">{product.subtitle}</p>
 
-                  {/* Size label */}
-                  <div style={{ marginTop: "4px" }}>
-                    <span style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "#5b1f2b" }}>
-                      Size: One Size
-                    </span>
+                  {/* Bespoke Colour Selector (6 Atelier Shades) */}
+                  <div style={{ marginTop: "8px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
+                      <span style={{ fontSize: "10.5px", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "#123d32" }}>
+                        Colour: <strong style={{ color: "#5b1f2b" }}>{cardColors[product.id] || "Cognac"}</strong>
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", gap: "5px" }}>
+                      {ATELIER_COLORS.map((c) => {
+                        const isActive = (cardColors[product.id] || "Cognac") === c.name;
+                        return (
+                          <button
+                            key={c.name}
+                            type="button"
+                            onClick={() => setCardColors((prev) => ({ ...prev, [product.id]: c.name }))}
+                            title={`${c.name} Leather`}
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                              borderRadius: "50%",
+                              background: c.hex,
+                              border: isActive ? "2px solid #123d32" : `1px solid ${c.border}`,
+                              outline: isActive ? "1px solid #123d32" : "none",
+                              outlineOffset: "1px",
+                              cursor: "pointer",
+                              padding: 0,
+                              transition: "all .15s",
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Leather & Shape selection chips */}
+                  <div style={{ marginTop: "8px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
+                    <div>
+                      <span style={{ fontSize: "10px", fontWeight: 700, textTransform: "uppercase", color: "#666", display: "block", marginBottom: "3px" }}>
+                        Leather:
+                      </span>
+                      <select
+                        value={cardLeathers[product.id] || "Full-Grain"}
+                        onChange={(e) => setCardLeathers((prev) => ({ ...prev, [product.id]: e.target.value }))}
+                        style={{
+                          width: "100%",
+                          padding: "4px 6px",
+                          fontSize: "11px",
+                          fontWeight: 600,
+                          borderRadius: "2px",
+                          border: "1px solid #d4cdc5",
+                          background: "#fff",
+                          color: "#123d32",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {ATELIER_LEATHERS.map((l) => (
+                          <option key={l.id} value={l.name}>
+                            {l.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <span style={{ fontSize: "10px", fontWeight: 700, textTransform: "uppercase", color: "#666", display: "block", marginBottom: "3px" }}>
+                        Shape:
+                      </span>
+                      <select
+                        value={cardShapes[product.id] || "The Classic"}
+                        onChange={(e) => setCardShapes((prev) => ({ ...prev, [product.id]: e.target.value }))}
+                        style={{
+                          width: "100%",
+                          padding: "4px 6px",
+                          fontSize: "11px",
+                          fontWeight: 600,
+                          borderRadius: "2px",
+                          border: "1px solid #d4cdc5",
+                          background: "#fff",
+                          color: "#123d32",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {ATELIER_SHAPES.map((s) => (
+                          <option key={s.id} value={s.name}>
+                            {s.name} {s.symbol || "✨"}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
                   {/* ACTION BUTTONS */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "14px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "12px" }}>
                     {/* Add to Bag button */}
                     <button
                       type="button"
                       className="card-add-to-bag-btn"
                       disabled={!inStock}
-                      onClick={() => addToCart(product, currentSelectedSize)}
+                      onClick={() =>
+                        addToCart(product, currentSelectedSize, 1, {
+                          color: cardColors[product.id] || "Cognac",
+                          leather: cardLeathers[product.id] || "Full-Grain",
+                          shape: cardShapes[product.id] || "The Classic",
+                        })
+                      }
                       style={{ width: "100%", justifyContent: "center" }}
                     >
                       <ShoppingBag size={15} />
@@ -211,7 +310,7 @@ export default function BagsPage() {
                         className="quick-view-btn"
                         onClick={() => setSelectedProduct(product)}
                       >
-                        <Eye size={13} /> Quick View
+                        <Eye size={13} /> Quick View / Customize
                       </button>
                       <Link
                         href={`/products/${product.id}`}

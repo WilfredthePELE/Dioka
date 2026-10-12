@@ -23,6 +23,11 @@ export interface CartItem {
   size: string;
   quantity: number;
   addedAt?: string;
+  color?: string;
+  leather?: string;
+  shape?: string;
+  monogram?: string;
+  itemKey?: string;
 }
 
 export interface UserProfile {
@@ -71,9 +76,19 @@ interface StoreContextType {
   setCartOpen: (open: boolean) => void;
   wishlist: string[];
   toggleWishlist: (productId: string, e?: React.MouseEvent) => void;
-  addToCart: (product: Product, size?: string, quantity?: number) => void;
-  changeQuantity: (id: string, size: string, delta: number) => void;
-  removeFromCart: (id: string, size: string) => void;
+  addToCart: (
+    product: Product,
+    size?: string,
+    quantity?: number,
+    customization?: {
+      color?: string;
+      leather?: string;
+      shape?: string;
+      monogram?: string;
+    }
+  ) => void;
+  changeQuantity: (idOrKey: string, size?: string, delta?: number) => void;
+  removeFromCart: (idOrKey: string, size?: string) => void;
   clearCart: () => void;
   toast: string | null;
   showToast: (msg: string) => void;
@@ -85,6 +100,10 @@ interface StoreContextType {
   setSizeGuideOpen: (open: boolean) => void;
   checkoutModalOpen: boolean;
   setCheckoutModalOpen: (open: boolean) => void;
+
+  // Master Designer Consultation Chatbox
+  designerChatOpen: boolean;
+  setDesignerChatOpen: (open: boolean) => void;
 
   // Supabase Backend Modal & Integration
   supabaseModalOpen: boolean;
@@ -131,6 +150,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [orderTrackingOpen, setOrderTrackingOpen] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
+  const [designerChatOpen, setDesignerChatOpen] = useState(false);
   const [supabaseModalOpen, setSupabaseModalOpen] = useState(false);
   const isSupabaseActive = typeof window !== "undefined" ? isSupabaseConfigured() : false;
 
@@ -427,12 +447,37 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  // Add to cart with specialized feedback
-  const addToCart = (product: Product, size?: string, quantity: number = 1) => {
+  // Add to cart with specialized feedback & bespoke customizations
+  const addToCart = (
+    product: Product,
+    size?: string,
+    quantity: number = 1,
+    customization?: {
+      color?: string;
+      leather?: string;
+      shape?: string;
+      monogram?: string;
+    }
+  ) => {
     const finalSize = size || (product.sizes && product.sizes.length > 0 ? product.sizes[0] : "One size");
+    const finalColor = customization?.color || product.color || "Cognac";
+    const finalLeather = customization?.leather || "Full-Grain";
+    const finalShape = customization?.shape || "The Classic";
+    const finalMonogram = customization?.monogram || "";
+    const itemKey = `${product.id}__${finalSize}__${finalColor}__${finalLeather}__${finalShape}__${finalMonogram}`;
 
     setCart((prev) => {
-      const existingIdx = prev.findIndex((item) => item.id === product.id && item.size === finalSize);
+      const existingIdx = prev.findIndex(
+        (item) =>
+          item.itemKey === itemKey ||
+          (item.id === product.id &&
+            item.size === finalSize &&
+            (item.color || "") === finalColor &&
+            (item.leather || "") === finalLeather &&
+            (item.shape || "") === finalShape &&
+            (item.monogram || "") === finalMonogram)
+      );
+
       if (existingIdx > -1) {
         const next = [...prev];
         next[existingIdx] = {
@@ -441,6 +486,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         };
         return next;
       }
+
       return [
         ...prev,
         {
@@ -452,22 +498,30 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           size: finalSize,
           quantity,
           addedAt: new Date().toISOString(),
+          color: finalColor,
+          leather: finalLeather,
+          shape: finalShape,
+          monogram: finalMonogram,
+          itemKey,
         },
       ];
     });
 
     const userMsg = user
-      ? `Added to ${user.name.split(" ")[0]}'s bag (${finalSize})`
-      : `Added to bag (${finalSize})`;
+      ? `Added to ${user.name.split(" ")[0]}'s bag (${finalColor} · ${finalLeather})`
+      : `Added to bag (${finalColor} · ${finalLeather})`;
     showToast(userMsg);
     setCartOpen(true);
   };
 
-  const changeQuantity = (id: string, size: string, delta: number) => {
+  const changeQuantity = (idOrKey: string, size?: string, delta: number = 1) => {
     setCart((prev) =>
       prev
         .map((item) => {
-          if (item.id === id && item.size === size) {
+          const matches =
+            item.itemKey === idOrKey ||
+            (item.id === idOrKey && (!size || item.size === size));
+          if (matches) {
             const nextQty = item.quantity + delta;
             return nextQty > 0 ? { ...item, quantity: nextQty } : null;
           }
@@ -477,8 +531,14 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
-  const removeFromCart = (id: string, size: string) => {
-    setCart((prev) => prev.filter((item) => !(item.id === id && item.size === size)));
+  const removeFromCart = (idOrKey: string, size?: string) => {
+    setCart((prev) =>
+      prev.filter((item) => {
+        if (item.itemKey && item.itemKey === idOrKey) return false;
+        if (item.id === idOrKey && (!size || item.size === size)) return false;
+        return true;
+      })
+    );
     showToast("Item removed from bag");
   };
 
@@ -533,6 +593,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         setSizeGuideOpen,
         checkoutModalOpen,
         setCheckoutModalOpen,
+        designerChatOpen,
+        setDesignerChatOpen,
         supabaseModalOpen,
         setSupabaseModalOpen,
         isSupabaseActive,

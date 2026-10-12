@@ -113,8 +113,9 @@ export function AccountModal() {
           </div>
           <DialogTitle
             style={{
-              fontFamily: "var(--dioka-serif, serif)",
-              fontSize: "26px",
+              fontFamily: "var(--dioka-sans, sans-serif)",
+              fontSize: "24px",
+              fontWeight: 700,
               color: "#123d32",
               lineHeight: 1.2,
             }}

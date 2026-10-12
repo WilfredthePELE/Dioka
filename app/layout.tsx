@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/cormorant-garamond/wght.css";
+import "@fontsource-variable/cormorant-garamond";
 import "@fontsource-variable/cormorant-garamond/wght-italic.css";
 import "./globals.css";
 import "./editorial-theme.css";
@@ -7,8 +7,12 @@ import "./editorial-theme.css";
 import { ClientProviders } from "@/components/ClientProviders";
 
 export const metadata: Metadata = {
-  title: "Dioka — Bags, Footwear & Leather Jackets",
+  title: "Dioka",
   description: "Bags, Footwear & Leather Jackets storefront",
+  openGraph: {
+    title: "Dioka",
+    description: "Bags, Footwear & Leather Jackets storefront",
+  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Heart,
   Menu,
+  MessageSquare,
   ShoppingBag,
   User,
   X,
@@ -18,7 +18,6 @@ export function SiteHeader() {
   const {
     cartCount,
     setCartOpen,
-    wishlist,
     currency,
     setCurrency,
     setOrderTrackingOpen,
@@ -26,6 +25,8 @@ export function SiteHeader() {
     isAuthenticated,
     setAccountModalOpen,
     setAccountModalTab,
+    designerChatOpen,
+    setDesignerChatOpen,
   } = useStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -37,35 +38,9 @@ export function SiteHeader() {
 
   return (
     <>
-      {/* 1. TOP ANNOUNCEMENT BAR */}
-      <div className="announcement">
-        <span>
-          FREE WORLDWIDE EXPRESS DELIVERY · 30-DAY COMPLIMENTARY RETURNS · HANDCRAFTED IN ATELIER
-        </span>
-        <span>
-          <button
-            type="button"
-            onClick={() => setOrderTrackingOpen(true)}
-            style={{
-              background: "none",
-              border: 0,
-              color: "#fff",
-              textDecoration: "underline",
-              cursor: "pointer",
-              fontSize: "11px",
-              fontWeight: 600,
-              padding: 0,
-              letterSpacing: ".06em",
-            }}
-          >
-            Track Order
-          </button>
-        </span>
-      </div>
-
-      {/* 2. MAIN HEADER (Clean, spacious, professional Italian atelier layout) */}
+      {/* MAIN HEADER (Clean white background) */}
       <header className="site-header">
-        {/* Navigation: Exactly Bags, Shoes & Boots, Jacket, Dioka */}
+        {/* Navigation: Bags, Shoes & Boots, Jacket, Customize */}
         <nav className="header-left" aria-label="Main navigation">
           <button
             type="button"
@@ -117,20 +92,20 @@ export function SiteHeader() {
           </Link>
 
           <Link
-            href="/"
-            className={isActive("/") ? "active" : ""}
+            href="/customize"
+            className={isActive("/customize") ? "active" : ""}
             style={{
-              fontWeight: isActive("/") ? 700 : 500,
-              color: isActive("/") ? "#123d32" : undefined,
-              textDecoration: isActive("/") ? "underline" : undefined,
+              fontWeight: isActive("/customize") ? 700 : 500,
+              color: isActive("/customize") ? "#123d32" : undefined,
+              textDecoration: isActive("/customize") ? "underline" : undefined,
               textUnderlineOffset: "6px",
             }}
           >
-            Dioka
+            Customize
           </Link>
         </nav>
 
-        {/* Center Wordmark Logo */}
+        {/* Center Wordmark Logo (The only Dioka brand mark) */}
         <Link className="wordmark" href="/" aria-label="Dioka home">
           DIOKA<span>®</span>
         </Link>
@@ -151,20 +126,41 @@ export function SiteHeader() {
             <option value="NGN">NGN (₦)</option>
           </select>
 
-          {/* Wishlist button */}
+
+          {/* Master Designer Consultation Chatbox Icon */}
           <button
             type="button"
-            className="wishlist-trigger"
-            onClick={() => setCartOpen(true)}
-            aria-label={`Favorites with ${wishlist.length} items`}
-            title="View saved favorites"
+            className="designer-chat-trigger"
+            onClick={() => setDesignerChatOpen(!designerChatOpen)}
+            aria-label="Chat with Master Designer"
+            title="Chat with Master Designer Wilfred Owubokiri"
+            style={{
+              position: "relative",
+              background: designerChatOpen ? "rgba(18, 61, 50, 0.12)" : "none",
+              border: designerChatOpen ? "1px solid rgba(18, 61, 50, 0.3)" : "1px solid transparent",
+              color: "#123d32",
+              cursor: "pointer",
+              padding: "6px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "2px",
+            }}
           >
-            <Heart
-              size={18}
-              strokeWidth={1.8}
-              fill={wishlist.length > 0 ? "currentColor" : "none"}
+            <MessageSquare size={18} strokeWidth={1.8} />
+            <span
+              style={{
+                position: "absolute",
+                top: "3px",
+                right: "3px",
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                background: "#22c55e",
+                border: "1px solid #ffffff",
+              }}
+              title="Master Designer Online"
             />
-            <span>{wishlist.length}</span>
           </button>
 
           {/* User Account / Sign In button */}
@@ -273,8 +269,8 @@ export function SiteHeader() {
           <Link href="/jackets" onClick={() => setMobileMenuOpen(false)}>
             Jacket
           </Link>
-          <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-            Dioka
+          <Link href="/customize" onClick={() => setMobileMenuOpen(false)}>
+            Customize
           </Link>
 
           {/* Mobile Currency Selector */}
@@ -325,6 +321,22 @@ export function SiteHeader() {
           <Link href="/cart" onClick={() => setMobileMenuOpen(false)}>
             Your Bag ({cartCount})
           </Link>
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setDesignerChatOpen(true);
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              color: "#123d32",
+              fontWeight: 700,
+            }}
+          >
+            <MessageSquare size={16} /> Chat with Master Designer
+          </button>
           <button
             type="button"
             onClick={() => {
