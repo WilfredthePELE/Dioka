@@ -38,7 +38,7 @@ export function SiteHeader() {
 
   return (
     <>
-      {/* MAIN HEADER (Clean white background) */}
+      {/* MAIN HEADER (Fast, high-performance responsive navbar) */}
       <header className="site-header">
         {/* Navigation: Bags, Shoes & Boots, Jacket, Customize */}
         <nav className="header-left" aria-label="Main navigation">
@@ -54,6 +54,7 @@ export function SiteHeader() {
 
           <Link
             href="/bags"
+            prefetch={true}
             className={isActive("/bags") ? "active" : ""}
             style={{
               fontWeight: isActive("/bags") ? 700 : 500,
@@ -67,6 +68,7 @@ export function SiteHeader() {
 
           <Link
             href="/footwear"
+            prefetch={true}
             className={isActive("/footwear") ? "active" : ""}
             style={{
               fontWeight: isActive("/footwear") ? 700 : 500,
@@ -80,6 +82,7 @@ export function SiteHeader() {
 
           <Link
             href="/jackets"
+            prefetch={true}
             className={isActive("/jackets") ? "active" : ""}
             style={{
               fontWeight: isActive("/jackets") ? 700 : 500,
@@ -93,6 +96,7 @@ export function SiteHeader() {
 
           <Link
             href="/customize"
+            prefetch={true}
             className={isActive("/customize") ? "active" : ""}
             style={{
               fontWeight: isActive("/customize") ? 700 : 500,
@@ -106,7 +110,7 @@ export function SiteHeader() {
         </nav>
 
         {/* Center Wordmark Logo (The only Dioka brand mark) */}
-        <Link className="wordmark" href="/" aria-label="Dioka home">
+        <Link className="wordmark" href="/" prefetch={true} aria-label="Dioka home">
           DIOKA<span>®</span>
         </Link>
 
@@ -127,40 +131,61 @@ export function SiteHeader() {
           </select>
 
 
-          {/* Master Designer Consultation Chatbox Icon */}
+          {/* Master Designer Consultation Chatbox Button */}
           <button
             type="button"
             className="designer-chat-trigger"
-            onClick={() => setDesignerChatOpen(!designerChatOpen)}
+            onClick={() => {
+              const next = !designerChatOpen;
+              setDesignerChatOpen(next);
+              if (next && typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("open-dioka-chat"));
+              }
+            }}
             aria-label="Chat with Master Designer"
             title="Chat with Master Designer Wilfred Owubokiri"
             style={{
               position: "relative",
-              background: designerChatOpen ? "rgba(18, 61, 50, 0.12)" : "none",
-              border: designerChatOpen ? "1px solid rgba(18, 61, 50, 0.3)" : "1px solid transparent",
+              background: designerChatOpen ? "rgba(18, 61, 50, 0.12)" : "rgba(18, 61, 50, 0.05)",
+              border: designerChatOpen ? "1px solid rgba(18, 61, 50, 0.35)" : "1px solid rgba(18, 61, 50, 0.15)",
               color: "#123d32",
               cursor: "pointer",
-              padding: "6px",
+              padding: "6px 12px",
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "2px",
+              gap: "7px",
+              borderRadius: "4px",
+              transition: "all 0.2s ease",
             }}
           >
-            <MessageSquare size={18} strokeWidth={1.8} />
+            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+              <MessageSquare size={17} strokeWidth={2} />
+              <span
+                style={{
+                  position: "absolute",
+                  top: "-2px",
+                  right: "-2px",
+                  width: "7px",
+                  height: "7px",
+                  borderRadius: "50%",
+                  background: "#22c55e",
+                  border: "1.5px solid #ffffff",
+                }}
+                title="Master Designer Online"
+              />
+            </div>
             <span
               style={{
-                position: "absolute",
-                top: "3px",
-                right: "3px",
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: "#22c55e",
-                border: "1px solid #ffffff",
+                fontFamily: "var(--dioka-sans)",
+                fontSize: "11px",
+                fontWeight: 700,
+                letterSpacing: ".06em",
+                textTransform: "uppercase",
               }}
-              title="Master Designer Online"
-            />
+              className="hidden sm:inline"
+            >
+              Live Chat
+            </span>
           </button>
 
           {/* User Account / Sign In button */}

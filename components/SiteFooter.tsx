@@ -500,6 +500,28 @@ export function SiteFooter() {
                     Contact Atelier Concierge
                   </button>
                 </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== "undefined") {
+                        window.dispatchEvent(new CustomEvent("show-atelier-splash"));
+                      }
+                    }}
+                    style={{
+                      background: "none",
+                      border: 0,
+                      color: "#e8ded1",
+                      cursor: "pointer",
+                      padding: 0,
+                      fontSize: "13px",
+                      textAlign: "left",
+                    }}
+                    className="hover:underline"
+                  >
+                    ▶ Watch Atelier Crafting Film
+                  </button>
+                </li>
               </ul>
             </div>
 

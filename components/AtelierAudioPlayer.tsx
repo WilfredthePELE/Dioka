@@ -40,11 +40,7 @@ export function AtelierAudioPlayer() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(160);
 
-  // Real animated equalizer frequency bands state
-  const [freqBars, setFreqBars] = useState<number[]>([12, 24, 18, 30, 22, 14, 28, 16]);
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const animFrameRef = useRef<number | null>(null);
   const currentTrack = PLAYLIST[currentTrackIndex];
 
   // Initialize audio element
@@ -97,40 +93,7 @@ export function AtelierAudioPlayer() {
     audio.volume = isMuted ? 0 : volume;
   }, [volume, isMuted]);
 
-  // Dynamic real music equalizer effect loop
-  useEffect(() => {
-    if (!isPlaying) {
-      const resetId = requestAnimationFrame(() => {
-        setFreqBars([4, 6, 4, 8, 5, 4, 6, 4]);
-      });
-      return () => cancelAnimationFrame(resetId);
-    }
-
-    let step = 0;
-    const animateFrequency = () => {
-      step += 0.08;
-      // Generates organic multi-harmonic soundwave amplitudes
-      const newBars = [
-        Math.floor(10 + Math.sin(step * 1.8) * 8 + Math.cos(step * 0.9) * 4),
-        Math.floor(18 + Math.sin(step * 2.5) * 12 + Math.cos(step * 1.2) * 6),
-        Math.floor(14 + Math.sin(step * 3.1) * 9 + Math.cos(step * 2.1) * 5),
-        Math.floor(26 + Math.sin(step * 1.4) * 14 + Math.sin(step * 3.7) * 7),
-        Math.floor(20 + Math.cos(step * 2.2) * 10 + Math.sin(step * 1.5) * 6),
-        Math.floor(12 + Math.sin(step * 3.4) * 8 + Math.cos(step * 0.7) * 4),
-        Math.floor(22 + Math.cos(step * 1.9) * 11 + Math.sin(step * 2.8) * 7),
-        Math.floor(15 + Math.sin(step * 2.7) * 10 + Math.cos(step * 1.6) * 5),
-      ].map((val) => Math.max(3, Math.min(32, val)));
-
-      setFreqBars(newBars);
-      animFrameRef.current = requestAnimationFrame(animateFrequency);
-    };
-
-    animFrameRef.current = requestAnimationFrame(animateFrequency);
-
-    return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    };
-  }, [isPlaying]);
+  // Dynamic CSS-driven visualizer when playing without expensive JS rerender loops
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -283,18 +246,18 @@ export function AtelierAudioPlayer() {
               }}
               aria-label="Real-time audio visualizer"
             >
-              {freqBars.map((height, i) => (
+              {[6, 12, 9, 14, 11, 8, 13, 7].map((height, i) => (
                 <span
                   key={i}
                   style={{
                     width: "2.5px",
-                    height: `${height}px`,
+                    height: isPlaying ? `${height}px` : "4px",
                     maxHeight: "14px",
                     background: isPlaying
                       ? `linear-gradient(180deg, #f7c57d 0%, #e09f3e 60%, #b87333 100%)`
                       : "rgba(255, 255, 255, 0.2)",
                     borderRadius: "1px",
-                    transition: "height 0.08s ease-out",
+                    transition: "height 0.2s ease-out",
                   }}
                 />
               ))}

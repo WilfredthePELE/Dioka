@@ -4,11 +4,13 @@ import React from "react";
 import { StoreProvider } from "@/lib/store-context";
 import { GlobalModals } from "@/components/GlobalModals";
 import { AtelierAudioPlayer } from "@/components/AtelierAudioPlayer";
+import { AtelierSplashScreen } from "@/components/AtelierSplashScreen";
 import { DesignerChatbox } from "@/components/DesignerChatbox";
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <StoreProvider>
+      <AtelierSplashScreen />
       {children}
       <GlobalModals />
       <DesignerChatbox />

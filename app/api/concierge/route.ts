@@ -27,6 +27,20 @@ POLICIES:
 - Order Tracking: Order IDs follow the pattern DK-XXXX (e.g. DK-9402).
 `;
 
+function isValidGeminiApiKey(key: string | undefined): boolean {
+  if (!key) return false;
+  const trimmed = key.trim();
+  if (
+    trimmed === "" ||
+    trimmed === "your-gemini-api-key" ||
+    trimmed === "placeholder" ||
+    trimmed.startsWith("AQ.")
+  ) {
+    return false;
+  }
+  return trimmed.startsWith("AIzaSy");
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -39,11 +53,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const rawApiKey = process.env.GEMINI_API_KEY;
 
-    if (apiKey) {
+    if (isValidGeminiApiKey(rawApiKey)) {
       try {
-        const ai = new GoogleGenAI({ apiKey });
+        const ai = new GoogleGenAI({ apiKey: rawApiKey!.trim() });
 
         const formattedHistory = Array.isArray(history)
           ? history.slice(-6).map((m: { sender: string; text: string }) => ({
@@ -84,8 +98,8 @@ ${DIOKA_CATALOG_CONTEXT}`;
           reply: replyText.trim(),
           source: "gemini",
         });
-      } catch (geminiError) {
-        console.warn("Gemini call failed, falling back to intelligent concierge:", geminiError);
+      } catch {
+        // Silently fall back to the intelligent atelier concierge engine
       }
     }
 
@@ -95,8 +109,7 @@ ${DIOKA_CATALOG_CONTEXT}`;
       reply,
       source: "concierge-engine",
     });
-  } catch (error) {
-    console.error("Error in concierge chat route:", error);
+  } catch {
     return NextResponse.json(
       {
         reply:

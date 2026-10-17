@@ -96,23 +96,7 @@ export function DiokaMessenger() {
     showToast,
   } = useStore();
 
-  const [messages, setMessages] = useState<MessengerMessage[]>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const saved = localStorage.getItem("dioka_messenger_v2");
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            return parsed;
-          }
-        }
-      } catch {
-        // Ignore
-      }
-    }
-    return INITIAL_MESSENGER_MESSAGES;
-  });
-
+  const [messages, setMessages] = useState<MessengerMessage[]>(INITIAL_MESSENGER_MESSAGES);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -120,12 +104,38 @@ export function DiokaMessenger() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [isPlayingAudioNote, setIsPlayingAudioNote] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
-  const [hasUnread, setHasUnread] = useState(true);
-  const [showTeaser, setShowTeaser] = useState(true);
   const [activeSwatch, setActiveSwatch] = useState<string>("Cognac");
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const audioIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Hydration-safe initial load from localStorage
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      try {
+        const saved = localStorage.getItem("dioka_messenger_v2");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setMessages(parsed);
+          }
+        }
+      } catch {
+        // Ignore
+      }
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Listen to custom open event
+  useEffect(() => {
+    const handleOpen = () => {
+      setIsMinimized(false);
+      setDesignerChatOpen(true);
+    };
+    window.addEventListener("open-dioka-chat", handleOpen);
+    return () => window.removeEventListener("open-dioka-chat", handleOpen);
+  }, [setDesignerChatOpen]);
 
   // Play synthesized messenger pop chime
   const playChime = useCallback((type: "send" | "receive" = "receive") => {
@@ -201,12 +211,6 @@ export function DiokaMessenger() {
       if (audioIntervalRef.current) clearInterval(audioIntervalRef.current);
     };
   }, [isPlayingAudioNote]);
-
-  const openMessenger = () => {
-    setDesignerChatOpen(true);
-    setHasUnread(false);
-    setShowTeaser(false);
-  };
 
   const handleSend = async (customText?: string) => {
     const textToSend = (customText || inputText).trim();
@@ -310,187 +314,7 @@ export function DiokaMessenger() {
 
   return (
     <>
-      {/* 1. FLOATING MESSENGER LAUNCHER BUTTON & TEASER (Bottom-Right) */}
-      {!designerChatOpen && (
-        <aside
-          aria-label="Dioka Atelier Concierge Chat"
-          style={{
-            position: "fixed",
-            bottom: "26px",
-            right: "26px",
-            zIndex: 9998,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-end",
-            gap: "10px",
-          }}
-        >
-          {/* Floating Teaser Speech Bubble (Dismissible or click to open) */}
-          {showTeaser && (
-            <div
-              onClick={openMessenger}
-              style={{
-                background: "#ffffff",
-                color: "#123d32",
-                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.08)",
-                borderRadius: "18px 18px 4px 18px",
-                padding: "12px 16px",
-                fontSize: "13px",
-                maxWidth: "280px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                border: "1px solid #e5e0d8",
-                position: "relative",
-                animation: "fadeInUp 0.3s ease-out",
-              }}
-            >
-              <div
-                style={{
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, #123d32 0%, #206050 100%)",
-                  color: "#ffffff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 700,
-                  fontSize: "14px",
-                  flexShrink: 0,
-                  position: "relative",
-                  boxShadow: "0 2px 6px rgba(18, 61, 50, 0.25)",
-                }}
-              >
-                D
-                <span
-                  style={{
-                    position: "absolute",
-                    bottom: "-1px",
-                    right: "-1px",
-                    width: "10px",
-                    height: "10px",
-                    borderRadius: "50%",
-                    background: "#22c55e",
-                    border: "2px solid #ffffff",
-                  }}
-                />
-              </div>
-
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 700, fontSize: "12.5px", color: "#123d32" }}>
-                  Dioka Atelier · Florence
-                </div>
-                <div style={{ fontSize: "12px", color: "#6b7280", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                  Master Wilfred is online. Chat now
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowTeaser(false);
-                }}
-                style={{
-                  background: "none",
-                  border: 0,
-                  color: "#9ca3af",
-                  cursor: "pointer",
-                  padding: "2px",
-                  borderRadius: "50%",
-                  display: "flex",
-                }}
-                aria-label="Dismiss teaser"
-              >
-                <X size={14} />
-              </button>
-            </div>
-          )}
-
-          {/* Facebook Messenger Circular Trigger */}
-          <button
-            type="button"
-            onClick={openMessenger}
-            aria-label="Open Dioka Messenger Chat"
-            title="Chat with Dioka Atelier on Messenger"
-            style={{
-              width: "60px",
-              height: "60px",
-              borderRadius: "50%",
-              background: "linear-gradient(135deg, #0084ff 0%, #0062cc 50%, #123d32 100%)",
-              boxShadow: "0 8px 24px rgba(0, 132, 255, 0.38), 0 4px 12px rgba(18, 61, 50, 0.3)",
-              border: "2.5px solid #ffffff",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#ffffff",
-              position: "relative",
-              transition: "transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.08)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "scale(1)";
-            }}
-          >
-            {/* Facebook Messenger SVG Glyph */}
-            <svg width="30" height="30" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M14 2C7.37 2 2 7.04 2 13.25C2 16.79 3.73 19.93 6.44 21.94V26L10.37 23.84C11.53 24.16 12.74 24.34 14 24.34C20.63 24.34 26 19.3 26 13.09C26 6.88 20.63 2 14 2ZM15.42 16.73L12.33 13.43L6.3 16.73L12.93 9.69L16.02 12.99L22.05 9.69L15.42 16.73Z"
-                fill="white"
-              />
-            </svg>
-
-            {/* Active Green Dot */}
-            <span
-              style={{
-                position: "absolute",
-                bottom: "3px",
-                right: "3px",
-                width: "14px",
-                height: "14px",
-                borderRadius: "50%",
-                background: "#22c55e",
-                border: "2.5px solid #ffffff",
-                boxShadow: "0 0 6px rgba(34, 197, 94, 0.8)",
-              }}
-              title="Active now"
-            />
-
-            {/* Unread Message Badge */}
-            {hasUnread && (
-              <span
-                style={{
-                  position: "absolute",
-                  top: "-4px",
-                  right: "-4px",
-                  background: "#ef4444",
-                  color: "#ffffff",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  width: "20px",
-                  height: "20px",
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  border: "2px solid #ffffff",
-                  boxShadow: "0 2px 6px rgba(239, 68, 68, 0.4)",
-                  animation: "bounce 2s infinite",
-                }}
-              >
-                1
-              </span>
-            )}
-          </button>
-        </aside>
-      )}
-
-      {/* 2. FACEBOOK MESSENGER FULL CONVERSATION WINDOW */}
+      {/* FACEBOOK MESSENGER FULL CONVERSATION WINDOW (Triggered only from Navbar) */}
       {designerChatOpen && (
         <aside
           role="dialog"
