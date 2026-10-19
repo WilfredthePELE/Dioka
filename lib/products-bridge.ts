@@ -11,7 +11,7 @@ export type { AdminProduct };
 
 export async function getProductsBridge(): Promise<Product[] | null> {
   const list = await adminListProducts();
-  return list.length > 0 ? list : null;
+  return list;
 }
 
 export async function getProductBridge(id: string): Promise<Product | null> {

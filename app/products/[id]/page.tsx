@@ -32,6 +32,7 @@ export default function ProductDetailPage({
 
   const {
     catalog,
+    catalogLoaded,
     formatPrice,
     addToCart,
     wishlist,
@@ -51,6 +52,7 @@ export default function ProductDetailPage({
   const [activeTab, setActiveTab] = useState<"overview" | "features" | "materials" | "care">("overview");
 
   if (!product) {
+    if (!catalogLoaded) return <main style={{ minHeight: "80vh", display: "grid", placeItems: "center", color: "#123d32", background: "#f7f5ef" }}>Opening this piece…</main>;
     return notFound();
   }
 

@@ -44,3 +44,8 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
+/data/
+*.tsbuildinfo
+/.npm-cache/
+/test-results/
+!.env.example

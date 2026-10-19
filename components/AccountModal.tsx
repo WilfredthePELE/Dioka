@@ -78,11 +78,6 @@ export function AccountModal() {
     }
   };
 
-  const fillDemoAccount = () => {
-    setEmail("client@dioka.com");
-    setPassword("atelier2026");
-    setError(null);
-  };
 
   return (
     <Dialog open={accountModalOpen} onOpenChange={setAccountModalOpen}>
@@ -327,39 +322,6 @@ export function AccountModal() {
               )}
             </button>
 
-            {/* Quick Demo Credentials */}
-            <div
-              style={{
-                marginTop: "8px",
-                padding: "10px 12px",
-                background: "#f9f9f9",
-                border: "1px dashed #d1d5db",
-                borderRadius: "3px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                fontSize: "12px",
-                color: "#555",
-              }}
-            >
-              <span>Test with demo account?</span>
-              <button
-                type="button"
-                onClick={fillDemoAccount}
-                style={{
-                  background: "none",
-                  border: "1px solid #123d32",
-                  color: "#123d32",
-                  padding: "4px 8px",
-                  borderRadius: "2px",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                }}
-              >
-                Use Demo Login
-              </button>
-            </div>
           </form>
         )}
 
@@ -447,10 +409,10 @@ export function AccountModal() {
               <input
                 type="password"
                 required
-                minLength={6}
+                minLength={12}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="At least 6 characters"
+                placeholder="At least 12 characters"
                 style={{
                   width: "100%",
                   padding: "11px 12px",

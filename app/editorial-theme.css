@@ -2209,3 +2209,19 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     align-items: flex-start;
   }
 }
+
+/* Keep the storefront controls within narrow phone viewports. */
+@media (max-width: 760px) {
+  .site-header { grid-template-columns: 26px minmax(0, 1fr) auto; gap: 8px; }
+  .site-header .wordmark { font-size: 28px; min-width: 0; }
+  .site-header .header-right { gap: 5px; min-width: 0; }
+  .site-header .header-right .currency-select,
+  .site-header .header-right .account-trigger > span,
+  .site-header .header-right .cart-trigger > span,
+  .site-header .header-right .designer-chat-trigger > span { display: none; }
+  .site-header .header-right button { padding: 7px !important; flex-shrink: 0; }
+  .shop-controls, .shop-controls > *, .filter-row, .search-sort-bar { min-width: 0; max-width: 100%; width: 100%; }
+  .filter-row { overflow-x: auto; flex-wrap: nowrap; }
+  .filter-row button { flex-shrink: 0; }
+  .mobile-menu { position: fixed; top: 68px; max-height: calc(100dvh - 68px); overflow-y: auto; z-index: 60; }
+}

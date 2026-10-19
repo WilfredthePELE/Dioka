@@ -29,9 +29,7 @@ import {
 } from "@/components/ui/dialog";
 import { useStore } from "@/lib/store-context";
 import { AccountModal } from "@/components/AccountModal";
-import { SupabaseModal } from "@/components/SupabaseModal";
 import { CurrencyConverterModal } from "@/components/CurrencyConverterModal";
-import { syncOrderToSupabase } from "@/lib/supabase";
 import { ItemCustomizerSelector } from "@/components/ItemCustomizerSelector";
 import type { AtelierColor } from "@/lib/products";
 
@@ -39,6 +37,7 @@ export function GlobalModals() {
   const router = useRouter();
   const {
     catalog,
+    showToast,
     cart,
     cartCount,
     subtotal,
@@ -100,12 +99,16 @@ export function GlobalModals() {
   const activeZip = user?.shippingAddress?.postalCode || checkoutForm.zip;
   const activeCountry = user?.shippingAddress?.country || checkoutForm.country;
 
-  const handleTrackOrder = (e: React.FormEvent) => {
+  const handleTrackOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!trackingCode.trim()) return;
-    setTrackingResult(
-      `Order ${trackingCode.trim().toUpperCase()}: In transit via Express Courier. Out for delivery in 2 business days. Tracking details updated.`
-    );
+    try {
+      const response = await fetch(`/api/orders?id=${encodeURIComponent(trackingCode.trim())}`);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      const order = data.orders?.[0];
+      setTrackingResult(order ? `${order.id}: ${order.status}${order.trackingCode ? ` · Tracking: ${order.trackingCode}` : " · Shipment reference will be added after dispatch."}` : "No matching order was found in your account. Please contact our team if you checked out as a guest.");
+    } catch (error) { setTrackingResult(error instanceof Error ? error.message : "Unable to retrieve tracking. Please try again."); }
   };
 
   const handleCompleteOrder = async (e: React.FormEvent) => {
@@ -113,8 +116,7 @@ export function GlobalModals() {
     setCheckoutBusy(true);
 
     try {
-      // Record order in backend
-      const res = await fetch("/api/orders", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -132,50 +134,13 @@ export function GlobalModals() {
         }),
       });
 
-      let orderRef = `DIOKA-${Math.floor(100000 + Math.random() * 900000)}`;
-      if (res.ok) {
-        const data = await res.json();
-        if (data.order?.orderId) orderRef = data.order.orderId;
-        else if (data.orderId) orderRef = data.orderId;
-      }
-
-      // Sync completed order to Supabase if configured
-      syncOrderToSupabase({
-        orderId: orderRef,
-        userId: user?.id,
-        customerName: activeName,
-        customerEmail: activeEmail,
-        shippingAddress: `${activeAddress}, ${activeCity}, ${activeZip}, ${activeCountry}`,
-        items: cart,
-        total: subtotal,
-        currency,
-      }).catch(() => {});
-
-      const totalFormatted = formatPrice(subtotal);
-      clearCart();
-      setCheckoutBusy(false);
-      setCheckoutModalOpen(false);
-      router.push(
-        `/order-confirmation?order_id=${orderRef}&name=${encodeURIComponent(
-          activeName
-        )}&email=${encodeURIComponent(activeEmail)}&total=${encodeURIComponent(
-          totalFormatted
-        )}&items_count=${cartCount}`
-      );
-    } catch {
-      const orderRef = `DIOKA-${Math.floor(100000 + Math.random() * 900000)}`;
-      const totalFormatted = formatPrice(subtotal);
-      clearCart();
-      setCheckoutBusy(false);
-      setCheckoutModalOpen(false);
-      router.push(
-        `/order-confirmation?order_id=${orderRef}&name=${encodeURIComponent(
-          activeName
-        )}&email=${encodeURIComponent(activeEmail)}&total=${encodeURIComponent(
-          totalFormatted
-        )}&items_count=${cartCount}`
-      );
-    }
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || "Unable to start secure checkout.");
+      try { localStorage.setItem("dioka_checkout_session", data.sessionId); } catch {}
+      window.location.assign(data.url);
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : "Checkout is unavailable. Your bag has been kept.");
+    } finally { setCheckoutBusy(false); }
   };
 
   return (
@@ -738,7 +703,6 @@ export function GlobalModals() {
       <AccountModal />
 
       {/* SUPABASE BACKEND INTEGRATION MODAL */}
-      <SupabaseModal open={supabaseModalOpen} onOpenChange={setSupabaseModalOpen} />
 
       {/* REAL-TIME CURRENCY CONVERTER MODAL */}
       <CurrencyConverterModal

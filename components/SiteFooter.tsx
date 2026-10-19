@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUp, Mail } from "lucide-react";
+import { useSiteContent } from "@/components/EditableContent";
 import { useStore } from "@/lib/store-context";
 import {
   Dialog,
@@ -18,6 +19,7 @@ interface InfoModalState {
 }
 
 export function SiteFooter() {
+  const published = useSiteContent();
   const {
     setOrderTrackingOpen,
     setSizeGuideOpen,
@@ -235,7 +237,7 @@ export function SiteFooter() {
                     type="button"
                     onClick={() =>
                       setActiveInfoModal({
-                        title: "Complimentary Worldwide Express Delivery",
+                        title: "Shipping & Delivery",
                         category: "SHIPPING & DISPATCH",
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
@@ -266,7 +268,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Shipping & Duties Covered
+                    Shipping & Delivery
                   </button>
                 </li>
                 <li>
@@ -274,7 +276,7 @@ export function SiteFooter() {
                     type="button"
                     onClick={() =>
                       setActiveInfoModal({
-                        title: "30-Day Complimentary Returns & Exchanges",
+                        title: "Returns & Exchanges",
                         category: "HASSLE-FREE RETURNS",
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
@@ -302,7 +304,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    30-Day Easy Returns
+                    Returns & Exchanges
                   </button>
                 </li>
                 <li>
@@ -310,7 +312,7 @@ export function SiteFooter() {
                     type="button"
                     onClick={() =>
                       setActiveInfoModal({
-                        title: "2-Year Atelier Craftsmanship Warranty",
+                        title: "Craftsmanship & Care",
                         category: "ATELIER GUARANTEE",
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
@@ -338,7 +340,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    2-Year Workshop Warranty
+                    Craftsmanship & Care
                   </button>
                 </li>
               </ul>
@@ -457,30 +459,18 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              Our client advisors and master craftsmen are available 7 days a week for sizing recommendations, leather samples, and bespoke requests:
+                              Contact our team for sizing, materials, delivery and bespoke requests:
                             </p>
                             <div style={{ display: "grid", gap: "10px", margin: "16px 0" }}>
                               <div style={{ display: "flex", alignItems: "center", gap: "10px", background: "#f8f6f0", padding: "12px" }}>
                                 <Mail size={18} color="#123d32" />
                                 <div>
                                   <strong style={{ display: "block", color: "#123d32" }}>Email Concierge</strong>
-                                  <span style={{ color: "#666" }}>concierge@dioka-atelier.com (Average reply: &lt; 2 hours)</span>
+                                  <span style={{ color: "#666" }}>{published?.supportEmail || "contactus@diokacraft.com"}</span>
                                 </div>
                               </div>
-                              <div style={{ display: "flex", alignItems: "center", gap: "10px", background: "#f8f6f0", padding: "12px" }}>
-                                <Phone size={18} color="#123d32" />
-                                <div>
-                                  <strong style={{ display: "block", color: "#123d32" }}>Phone & WhatsApp</strong>
-                                  <span style={{ color: "#666" }}>+44 20 7946 0912 · Monday–Saturday, 9am–7pm GMT</span>
-                                </div>
-                              </div>
-                              <div style={{ display: "flex", alignItems: "center", gap: "10px", background: "#f8f6f0", padding: "12px" }}>
-                                <MapPin size={18} color="#123d32" />
-                                <div>
-                                  <strong style={{ display: "block", color: "#123d32" }}>European Workshop</strong>
-                                  <span style={{ color: "#666" }}>Via dell&apos;Artigianato 18, Florence & Savile Row, London</span>
-                                </div>
-                              </div>
+
+
                             </div>
                           </div>
                         ),
@@ -810,7 +800,7 @@ export function SiteFooter() {
               </div>
 
               <DialogDescription style={{ color: "#444", margin: "16px 0 20px", lineHeight: "1.6" }}>
-                {activeInfoModal.content}
+                {activeInfoModal.category === "SHIPPING & DISPATCH" ? published?.shippingPolicy || "Contact our team for delivery options and current lead times." : activeInfoModal.category === "HASSLE-FREE RETURNS" ? published?.returnsPolicy || "Contact our team before returning an item." : activeInfoModal.category === "ATELIER GUARANTEE" ? "Contact our team about repairs, product care and the support available for your piece." : activeInfoModal.title.includes("Privacy") ? "We store account details, orders and customer-care messages to provide our services. Payments are handled by Stripe. Contact our team to ask about your data or request account assistance." : activeInfoModal.title.includes("Terms") ? "Checkout charges the item total shown in USD. Contact our team about delivery, returns and any personalized order before purchasing. Your order is confirmed after payment is verified." : activeInfoModal.content}
               </DialogDescription>
 
               <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>

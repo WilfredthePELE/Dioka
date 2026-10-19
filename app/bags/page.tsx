@@ -43,9 +43,9 @@ export default function BagsPage() {
   const bags = catalog.filter((p) => p.category === "Bags");
 
   const visibleBags = bags.filter((bag) => {
-    if (subCategory === "shoulder") return bag.id.includes("shoulder");
-    if (subCategory === "crossbody") return bag.id.includes("saddle");
-    if (subCategory === "duffle") return bag.id.includes("weekender");
+    if (subCategory === "shoulder") return bag.bagType === "Shoulder Bags";
+    if (subCategory === "crossbody") return bag.bagType === "Crossbody Bags";
+    if (subCategory === "duffle") return bag.bagType === "Travel & Duffle Bags";
     return true;
   });
 

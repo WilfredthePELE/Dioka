@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { HomeIntroduction, StorePolicies } from "@/components/EditableContent";
 import { useStore } from "@/lib/store-context";
 import {
   type Filter,
@@ -54,11 +55,14 @@ export default function Home() {
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail.trim()) return;
-    setNewsletterSuccess(true);
-    setNewsletterEmail("");
+    try {
+      const response = await fetch("/api/newsletter", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: newsletterEmail }) });
+      const data = await response.json(); if (!response.ok) throw new Error(data.error);
+      setNewsletterSuccess(true); setNewsletterEmail("");
+    } catch (error) { window.alert(error instanceof Error ? error.message : "Unable to subscribe. Please try again."); }
   };
 
   // Filtered & sorted products for storefront grid
@@ -88,13 +92,14 @@ export default function Home() {
   }, [catalog, filter, searchQuery, sortBy]);
 
   // Featured hero products for Trending Collections showcase
-  const featuredBag = catalog.find((p) => p.id === "arc-shoulder-bag") || catalog[0];
-  const featuredShoe = catalog.find((p) => p.id === "column-ankle-boot") || catalog[3];
-  const featuredJacket = catalog.find((p) => p.id === "transit-leather-jacket") || catalog[6];
+  const featuredBag = catalog.find((p) => p.id === "arc-shoulder-bag") || catalog.find(p => p.category === "Bags");
+  const featuredShoe = catalog.find((p) => p.id === "column-ankle-boot") || catalog.find(p => p.category === "Footwear");
+  const featuredJacket = catalog.find((p) => p.id === "transit-leather-jacket") || catalog.find(p => p.category === "Jackets");
 
   return (
     <main>
       <SiteHeader />
+      <HomeIntroduction />
 
       {/* TRENDING COLLECTIONS */}
       <section id="collections" className="collections-section">
@@ -116,18 +121,18 @@ export default function Home() {
             onClick={(e) => {
               const el = e.target as HTMLElement;
               if (el.closest("button") || el.closest("a")) return;
-              router.push("/products/arc-shoulder-bag");
+              router.push(featuredBag ? `/products/${featuredBag.id}` : "/bags");
             }}
             style={{ cursor: "pointer" }}
           >
             <Link
-              href="/products/arc-shoulder-bag"
+              href={featuredBag ? `/products/${featuredBag.id}` : "/bags"}
               className="collection-media"
               style={{ display: "block", textDecoration: "none" }}
               title="View Arc Shoulder Bag details"
             >
               <Image
-                src="/dioka-brown-bag.webp"
+                src={featuredBag?.image || "/dioka-brown-bag.webp"}
                 alt="Arc Leather Shoulder Bag in Cognac Brown"
                 fill
                 sizes="(max-width: 900px) 100vw, 60vw"
@@ -137,18 +142,18 @@ export default function Home() {
             <div className="collection-label">
               <div style={{ flex: 1 }}>
                 <span className="collection-number">01 / FEATURED BAG</span>
-                <Link href="/products/arc-shoulder-bag" style={{ textDecoration: "none", color: "inherit" }}>
-                  <strong>Arc Shoulder Bag</strong>
+                <Link href={featuredBag ? `/products/${featuredBag.id}` : "/bags"} style={{ textDecoration: "none", color: "inherit" }}>
+                  <strong>{featuredBag?.name || "Arc Shoulder Bag"}</strong>
                 </Link>
                 <p style={{ margin: "4px 0 0", fontSize: "14px", color: "#666" }}>
-                  Curved silhouette in rich full-grain calfskin · {formatPrice(featuredBag.price)}
+                  Curved silhouette in rich full-grain calfskin{featuredBag ? ` · ${formatPrice(featuredBag.price)}` : ""}
                 </p>
               </div>
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
                 <button
                   type="button"
                   className="quick-action-pill"
-                  onClick={() => setSelectedProduct(featuredBag)}
+                  onClick={() => featuredBag && setSelectedProduct(featuredBag)}
                 >
                   <Eye size={14} /> Quick View
                 </button>
@@ -157,7 +162,7 @@ export default function Home() {
                   className="quick-action-pill active"
                   style={{ textDecoration: "none" }}
                 >
-                  Shop All Bags (3) <ArrowRight size={14} />
+                  Shop All Bags ({catalog.filter(p => p.category === "Bags").length}) <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
@@ -169,18 +174,18 @@ export default function Home() {
             onClick={(e) => {
               const el = e.target as HTMLElement;
               if (el.closest("button") || el.closest("a")) return;
-              router.push("/products/column-ankle-boot");
+              router.push(featuredShoe ? `/products/${featuredShoe.id}` : "/footwear");
             }}
             style={{ cursor: "pointer" }}
           >
             <Link
-              href="/products/column-ankle-boot"
+              href={featuredShoe ? `/products/${featuredShoe.id}` : "/footwear"}
               className="collection-media"
               style={{ display: "block", textDecoration: "none" }}
               title="View Chelsea Ankle Boot"
             >
               <Image
-                src="/dioka-footwear-editorial.png"
+                src={featuredShoe?.image || "/dioka-footwear-editorial.png"}
                 alt="Chelsea Heeled Ankle Boot"
                 fill
                 sizes="(max-width: 900px) 100vw, 40vw"
@@ -190,18 +195,18 @@ export default function Home() {
             <div className="collection-label">
               <div style={{ flex: 1 }}>
                 <span className="collection-number">02 / SHOES & BOOTS</span>
-                <Link href="/products/column-ankle-boot" style={{ textDecoration: "none", color: "inherit" }}>
-                  <strong>Heeled Ankle Boots</strong>
+                <Link href={featuredShoe ? `/products/${featuredShoe.id}` : "/footwear"} style={{ textDecoration: "none", color: "inherit" }}>
+                  <strong>{featuredShoe?.name || "Heeled Ankle Boots"}</strong>
                 </Link>
                 <p style={{ margin: "4px 0 0", fontSize: "14px", color: "#666" }}>
-                  Stacked heel with cushioned support · {formatPrice(featuredShoe.price)}
+                  Stacked heel with cushioned support{featuredShoe ? ` · ${formatPrice(featuredShoe.price)}` : ""}
                 </p>
               </div>
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
                 <button
                   type="button"
                   className="quick-action-pill"
-                  onClick={() => setSelectedProduct(featuredShoe)}
+                  onClick={() => featuredShoe && setSelectedProduct(featuredShoe)}
                 >
                   <Eye size={14} /> Quick View
                 </button>
@@ -210,7 +215,7 @@ export default function Home() {
                   className="quick-action-pill active"
                   style={{ textDecoration: "none" }}
                 >
-                  Shop Shoes (3) <ArrowRight size={14} />
+                  Shop Shoes ({catalog.filter(p => p.category === "Footwear").length}) <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
@@ -222,18 +227,18 @@ export default function Home() {
             onClick={(e) => {
               const el = e.target as HTMLElement;
               if (el.closest("button") || el.closest("a")) return;
-              router.push("/products/transit-leather-jacket");
+              router.push(featuredJacket ? `/products/${featuredJacket.id}` : "/jackets");
             }}
             style={{ cursor: "pointer" }}
           >
             <Link
-              href="/products/transit-leather-jacket"
+              href={featuredJacket ? `/products/${featuredJacket.id}` : "/jackets"}
               className="collection-media"
               style={{ display: "block", textDecoration: "none" }}
               title="View Lambskin Leather Jacket"
             >
               <Image
-                src="/dioka-jacket-editorial.png"
+                src={featuredJacket?.image || "/dioka-jacket-editorial.png"}
                 alt="Classic Lambskin Leather Jacket"
                 fill
                 sizes="(max-width: 900px) 100vw, 40vw"
@@ -243,18 +248,18 @@ export default function Home() {
             <div className="collection-label">
               <div style={{ flex: 1 }}>
                 <span className="collection-number">03 / LEATHER JACKETS</span>
-                <Link href="/products/transit-leather-jacket" style={{ textDecoration: "none", color: "inherit" }}>
-                  <strong>Lambskin Jacket</strong>
+                <Link href={featuredJacket ? `/products/${featuredJacket.id}` : "/jackets"} style={{ textDecoration: "none", color: "inherit" }}>
+                  <strong>{featuredJacket?.name || "Lambskin Jacket"}</strong>
                 </Link>
                 <p style={{ margin: "4px 0 0", fontSize: "14px", color: "#666" }}>
-                  Buttery-soft lambskin tailored fit · {formatPrice(featuredJacket.price)}
+                  Buttery-soft lambskin tailored fit{featuredJacket ? ` · ${formatPrice(featuredJacket.price)}` : ""}
                 </p>
               </div>
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
                 <button
                   type="button"
                   className="quick-action-pill"
-                  onClick={() => setSelectedProduct(featuredJacket)}
+                  onClick={() => featuredJacket && setSelectedProduct(featuredJacket)}
                 >
                   <Eye size={14} /> Quick View
                 </button>
@@ -263,7 +268,7 @@ export default function Home() {
                   className="quick-action-pill active"
                   style={{ textDecoration: "none" }}
                 >
-                  Shop Jackets (3) <ArrowRight size={14} />
+                  Shop Jackets ({catalog.filter(p => p.category === "Jackets").length}) <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
@@ -731,14 +736,14 @@ export default function Home() {
       {/* 10. NEWSLETTER & DISCOUNT */}
       <section className="newsletter-section">
         <div className="newsletter-box">
-          <p className="eyebrow">SPECIAL OFFER</p>
-          <h3>Get 15% off your first order</h3>
-          <p>Subscribe for exclusive discounts, new product drop announcements, and style guides.</p>
+          <p className="eyebrow">ATELIER NOTES</p>
+          <h3>Stay close to the atelier</h3>
+          <p>Subscribe for collection announcements, atelier news, and style guides.</p>
 
           {newsletterSuccess ? (
             <div style={{ display: "flex", alignItems: "center", gap: 10, color: "#123d32", fontWeight: 600 }}>
               <Check size={20} color="#123d32" />
-              <span>You&apos;re subscribed! Use promo code <strong>WELCOME15</strong> at checkout for 15% off.</span>
+              <span>You&apos;re subscribed. Thank you for joining the Dioka community.</span>
             </div>
           ) : (
             <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
@@ -749,12 +754,13 @@ export default function Home() {
                 value={newsletterEmail}
                 onChange={(e) => setNewsletterEmail(e.target.value)}
               />
-              <button type="submit">Get 15% Off</button>
+              <button type="submit">Subscribe</button>
             </form>
           )}
         </div>
       </section>
 
+      <StorePolicies />
       <SiteFooter />
     </main>
   );

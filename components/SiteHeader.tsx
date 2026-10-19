@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useStore } from "@/lib/store-context";
 import { CURRENCY_CONFIG, type Currency } from "@/lib/products";
+import { Announcement } from "@/components/EditableContent";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -38,6 +39,7 @@ export function SiteHeader() {
 
   return (
     <>
+      <Announcement />
       {/* MAIN HEADER (Fast, high-performance responsive navbar) */}
       <header className="site-header">
         {/* Navigation: Bags, Shoes & Boots, Jacket, Customize */}
@@ -142,8 +144,8 @@ export function SiteHeader() {
                 window.dispatchEvent(new CustomEvent("open-dioka-chat"));
               }
             }}
-            aria-label="Chat with Master Designer"
-            title="Chat with Master Designer Wilfred Owubokiri"
+            aria-label="Open customer care"
+            title="Chat with the Dioka team"
             style={{
               position: "relative",
               background: designerChatOpen ? "rgba(18, 61, 50, 0.12)" : "rgba(18, 61, 50, 0.05)",
@@ -360,7 +362,7 @@ export function SiteHeader() {
               fontWeight: 700,
             }}
           >
-            <MessageSquare size={16} /> Chat with Master Designer
+            <MessageSquare size={16} /> Chat with the Dioka team
           </button>
           <button
             type="button"
