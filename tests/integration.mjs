@@ -46,6 +46,13 @@ try {
   assert.equal(signup.status, 200); assert.equal((await customer.call('/api/admin')).status, 403);
   assert.equal((await admin.call('/api/products', 'POST', {}, { Origin: 'https://evil.example' })).status, 403);
   checked('Customer roles and cross-origin write protection');
+  assert.equal((await guest.call('/api/admin/media')).status,401);
+  assert.equal((await guest.call('/api/admin/media','POST',{})).status,401);
+  assert.equal((await customer.call('/api/admin/media')).status,403);
+  assert.equal((await admin.call('/api/admin/media')).data.enabled,false);
+  assert.equal((await admin.call('/api/admin/media','POST',{})).status,503);
+  await import('./media.mjs').then(m => m.mediaValidationChecks());
+  checked('Protected media access, honest unconfigured state and upload validation');
   const product = { id: 'test-atelier-bag', name: 'Test Atelier Bag', category: 'Bags', bagType: 'Shoulder Bags', price: 125, stockQuantity: 3, image: '/dioka-brown-bag.webp', position: 'center', color: 'Cognac', sizes: ['One size'], description: 'A test of the real catalogue and checkout flow.' };
   assert.equal((await admin.call('/api/products', 'POST', product)).status, 200);
   assert.equal((await admin.call('/api/products', 'POST', { ...product, price: -1 })).status, 400);

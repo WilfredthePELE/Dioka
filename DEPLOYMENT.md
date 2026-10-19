@@ -68,3 +68,5 @@ Official references: [Next.js deployment](https://nextjs.org/docs/app/getting-st
 ## Truehost / diokacraft.com
 
 Use [TRUEHOST.md](TRUEHOST.md) for the cPanel or VPS deployment. `server.cjs` is the Passenger-compatible production entry point. Set the canonical origin to `https://diokacraft.com` and the owner allowlist to `contactus@diokacraft.com`.
+
+For a new Supabase backend, follow [SUPABASE-SETUP.md](SUPABASE-SETUP.md), including the media migration and seed. The admin now includes a Media library and product image upload control.

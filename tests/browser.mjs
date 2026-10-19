@@ -16,6 +16,9 @@ export async function browserChecks({ origin, password }) {
     await admin.getByRole('button', { name: 'Enter the atelier' }).click();
     await admin.getByRole('heading', { name: /Welcome to/ }).waitFor();
     await admin.screenshot({ path: 'test-results/admin-overview.png', fullPage: true });
+    await admin.getByRole('button', { name: 'Media', exact: true }).click();
+    await admin.getByText("Connect the store's Supabase project to enable uploads.", { exact: true }).waitFor();
+    await admin.screenshot({ path: 'test-results/admin-media.png', fullPage: true });
     await admin.getByRole('button', { name: 'Products', exact: true }).click();
     await admin.getByRole('button', { name: 'Add a piece' }).click();
     await admin.getByLabel('Product name', { exact: true }).fill('The Browser Bag');

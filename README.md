@@ -34,3 +34,5 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for storage migration, owner provisioning, pa
 For **diokacraft.com on Truehost**, follow [TRUEHOST.md](TRUEHOST.md). The cPanel startup file is `server.cjs`; the owner allowlist example uses `contactus@diokacraft.com`.
 
 See [OWNER-GUIDE.md](OWNER-GUIDE.md) for admin access and editable areas, and [GOOGLE-SIGN-IN.md](GOOGLE-SIGN-IN.md) to enable Google customer/admin sign-in.
+
+See [SUPABASE-SETUP.md](SUPABASE-SETUP.md) for the database, public/private file buckets, initial data and safe local-data import.
