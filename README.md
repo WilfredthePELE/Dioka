@@ -32,3 +32,5 @@ The integration checks use temporary data and a deterministic Stripe fixture. Ac
 See [DEPLOYMENT.md](DEPLOYMENT.md) for storage migration, owner provisioning, payments, backups, Docker and hosting compatibility. The legacy Sites identity is retained, but this standalone Node build is not a Cloudflare Worker bundle.
 
 For **diokacraft.com on Truehost**, follow [TRUEHOST.md](TRUEHOST.md). The cPanel startup file is `server.cjs`; the owner allowlist example uses `contactus@diokacraft.com`.
+
+See [OWNER-GUIDE.md](OWNER-GUIDE.md) for admin access and editable areas, and [GOOGLE-SIGN-IN.md](GOOGLE-SIGN-IN.md) to enable Google customer/admin sign-in.

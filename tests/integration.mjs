@@ -11,7 +11,7 @@ const origin = `http://127.0.0.1:${port}`;
 const bootstrap = randomBytes(32).toString('hex'); const webhookSecret = randomBytes(32).toString('hex');
 const password = randomBytes(18).toString('base64url');
 let server; let output = ''; let checks = 0;
-const env = { ...process.env, NODE_ENV: 'production', DIOKA_ADMIN_EMAILS: 'owner@example.test', DIOKA_BOOTSTRAP_SECRET: bootstrap, DIOKA_DATA_DIR: directory, SUPABASE_URL: '', NEXT_PUBLIC_SUPABASE_URL: '', SUPABASE_SERVICE_ROLE_KEY: '', DIOKA_SITE_URL: origin, DIOKA_TRUST_PROXY: 'true', STRIPE_SECRET_KEY: 'sk_test_fixture', STRIPE_WEBHOOK_SECRET: webhookSecret, DIOKA_STORE_LIVE: 'true', DIOKA_TEST_STRIPE: '1', PORT: String(port), NODE_OPTIONS: `--import=${pathToFileURL(resolve('tests/stripe-fixture.mjs')).href}` };
+const env = { ...process.env, NODE_ENV: 'production', DIOKA_ADMIN_EMAILS: 'owner@example.test', DIOKA_BOOTSTRAP_SECRET: bootstrap, DIOKA_DATA_DIR: directory, SUPABASE_URL: '', NEXT_PUBLIC_SUPABASE_URL: '', SUPABASE_SERVICE_ROLE_KEY: '', DIOKA_SITE_URL: origin, DIOKA_TRUST_PROXY: 'true', STRIPE_SECRET_KEY: 'sk_test_fixture', STRIPE_WEBHOOK_SECRET: webhookSecret, DIOKA_STORE_LIVE: 'true', DIOKA_TEST_STRIPE: '1', PORT: String(port), GOOGLE_CLIENT_ID: 'dioka-fixture.apps.googleusercontent.com', GOOGLE_CLIENT_SECRET: 'fixture-only', NODE_OPTIONS: `--import=${pathToFileURL(resolve('tests/stripe-fixture.mjs')).href}` };
 async function start() {
   server = spawn(process.execPath, process.env.DIOKA_CUSTOM_SERVER === '1' ? ['server.cjs'] : ['node_modules/next/dist/bin/next', 'start', '-p', String(port), '-H', '127.0.0.1'], { cwd: process.cwd(), env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
   server.stdout.on('data', value => { output += value; }); server.stderr.on('data', value => { output += value; });
@@ -73,6 +73,8 @@ try {
   assert.equal((await admin.call('/api/products', 'POST', product)).status, 409, 'Stale editor must not overwrite reserved inventory');
   assert.equal((await otherGuest.call('/api/checkout', 'POST', { items: [{ ...cartItem, quantity: 2 }] })).status, 400);
   checked('Server-authoritative pricing and atomic inventory reservations prevent overselling');
+  await import('./google.mjs').then(m => m.googleChecks({ origin, password }));
+  checked('Google sign-in security and cart continuity');
   const event = { id: `evt_${randomUUID()}`, type: 'checkout.session.completed', data: { object: { id: sessionId, payment_status: 'paid', amount_total: 25000, currency: 'usd', customer_details: { name: 'Test Customer', email: 'shopper@example.test' } } } };
   const payload = JSON.stringify(event); const timestamp = String(Math.floor(Date.now() / 1000)); const signature = createHmac('sha256', webhookSecret).update(`${timestamp}.${payload}`).digest('hex');
   const webhook = async (header) => fetch(origin + '/api/webhooks/stripe', { method: 'POST', headers: { 'Content-Type': 'application/json', 'stripe-signature': header }, body: payload });

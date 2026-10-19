@@ -19,6 +19,7 @@ import {
   Loader2,
 } from "lucide-react";
 import Link from "next/link";
+import { GoogleSignIn } from "@/components/GoogleSignIn";
 
 export function AccountModal() {
   const {
@@ -189,6 +190,9 @@ export function AccountModal() {
             </button>
           </div>
         )}
+
+        {!isAuthenticated && <GoogleSignIn />}
+        {isAuthenticated && <><GoogleSignIn connect /><Link href="/admin" style={{ color: "#123d32", fontSize: 13 }}>Open administration (owner access)</Link></>}
 
         {/* Messages */}
         {error && (

@@ -748,6 +748,7 @@ export function SiteFooter() {
               </Link>
             </div>
 
+            <Link href="/admin" style={{ color: "#fff", textDecoration: "underline" }}>Administration</Link>
             <span>© {new Date().getFullYear()} Dioka Atelier Ltd. All rights reserved.</span>
           </div>
         </div>

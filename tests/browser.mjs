@@ -58,6 +58,15 @@ export async function browserChecks({ origin, password }) {
     await admin.setViewportSize({ width: 390, height: 844 });
     await admin.screenshot({ path: 'test-results/admin-mobile.png', fullPage: true });
     assert.ok(await admin.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Admin must not overflow on mobile');
+    const oauth = await browser.newContext();
+    const google = await oauth.newPage(); google.setDefaultTimeout(20000);
+    await google.route('https://accounts.google.com/**', route => route.fulfill({ contentType: 'text/html', body: '<h1>Google test authorization</h1>' }));
+    await google.goto(origin + '/admin');
+    await google.getByRole('button', { name: 'Continue with Google', exact: true }).waitFor();
+    await google.screenshot({ path: 'test-results/google-sign-in.png' });
+    await google.getByRole('button', { name: 'Continue with Google', exact: true }).click();
+    await google.waitForURL('https://accounts.google.com/**');
+    assert.equal(new URL(google.url()).searchParams.get('redirect_uri'), origin + '/api/auth/google/callback');
     assert.deepEqual(errors, [], 'Browser console must not contain unhandled application errors');
     console.log('PASS browser: owner login, product publishing, new product URLs, content publishing, two-way chat, mobile layouts and clean page execution');
   } catch (error) {

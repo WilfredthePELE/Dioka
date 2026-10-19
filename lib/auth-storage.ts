@@ -6,7 +6,7 @@ const scrypt = promisify(crypto.scrypt);
 export interface StoredCartItem { id: string; size: string; quantity: number; addedAt?: string; color?: string; leather?: string; shape?: string; monogram?: string; itemKey?: string }
 export interface UserOrder { orderId: string; items: StoredCartItem[]; subtotal: number; total: number; currency: string; shippingAddress?: UserAccount["shippingAddress"]; status: "Confirmed" | "Crafting" | "Dispatched" | "Delivered"; trackingCode: string; createdAt: string }
 export interface UserAccount {
-  id: string; name: string; email: string; passwordHash: string; salt: string; tier: string;
+  id: string; name: string; email: string; googleSubject?: string; passwordHash: string; salt: string; tier: string;
   cart: StoredCartItem[]; wishlist: string[]; orders: UserOrder[];
   shippingAddress?: { fullName?: string; street?: string; city?: string; country?: string; postalCode?: string; phone?: string };
   createdAt: string; updatedAt: string;
@@ -16,6 +16,7 @@ const empty: DatabaseStructure = { users: {}, sessions: {}, processedPayments: {
 export const cartSchema = z.array(z.object({ id: z.string().min(1).max(100), size: z.string().min(1).max(100), quantity: z.number().int().min(1).max(10), addedAt: z.string().max(100).optional(), color: z.string().max(100).optional(), leather: z.string().max(100).optional(), shape: z.string().max(100).optional(), monogram: z.string().max(3).optional(), itemKey: z.string().max(500).optional() })).max(50);
 export async function hashPassword(password: string, salt: string) { return (await scrypt(password, salt, 64) as Buffer).toString("hex"); }
 export async function verifyPassword(password: string, user: UserAccount) {
+  if (!user.passwordHash || !user.salt) return false;
   const expected = Buffer.from(user.passwordHash, "hex");
   const actual = Buffer.from(await hashPassword(password, user.salt), "hex");
   return expected.length === actual.length && crypto.timingSafeEqual(expected, actual);
@@ -81,5 +82,37 @@ export async function recordUserOrder(userId: string, orderData: Omit<UserOrder,
     const user = Object.values(db.users).find(u => u.id === userId); if (!user) throw new Error("User not found.");
     const order: UserOrder = { ...orderData, orderId: `DK-${crypto.randomUUID()}`, trackingCode: "", status: "Confirmed", createdAt: new Date().toISOString() };
     user.orders.unshift(order); user.cart = []; return order;
+  });
+}
+
+export async function googleAccount(identity: { subject: string; email: string; name: string; authoritative: boolean }, administrator: boolean, linkUserId?: string) {
+  return mutateState("accounts", empty, db => {
+    const subjectUser = Object.values(db.users).find(u => u.googleSubject === identity.subject);
+    if (subjectUser) {
+      if (linkUserId && subjectUser.id !== linkUserId) throw new Error("Google account is already connected.");
+      return subjectUser;
+    }
+    const existing = db.users[identity.email];
+    if (linkUserId && (!existing || existing.id !== linkUserId)) throw new Error("Connect the Google account with the same email as your Dioka account.");
+    if (existing) {
+      if (existing.googleSubject || (!identity.authoritative && existing.id !== linkUserId)) throw new Error("Sign in with your password before connecting Google.");
+      existing.googleSubject = identity.subject; existing.updatedAt = new Date().toISOString(); return existing;
+    }
+    if (administrator && !identity.authoritative) throw new Error("Administrator Google identity must be a verified Google Workspace or Gmail account.");
+    const now = new Date().toISOString();
+    const user: UserAccount = { id: crypto.randomUUID(), name: identity.name, email: identity.email, googleSubject: identity.subject, passwordHash: "", salt: "", tier: "Dioka Atelier Member", cart: [], wishlist: [], orders: [], createdAt: now, updatedAt: now };
+    db.users[user.email] = user; return user;
+  });
+}
+export async function mergeUserCart(userId: string, incoming: StoredCartItem[]) {
+  const items = cartSchema.parse(incoming);
+  return mutateState("accounts", empty, db => {
+    const user = Object.values(db.users).find(u => u.id === userId); if (!user) throw new Error("User not found.");
+    for (const item of items) {
+      const existing = user.cart.find(m => m.id === item.id && m.size === item.size && (m.color || "") === (item.color || "") && (m.leather || "") === (item.leather || "") && (m.shape || "") === (item.shape || "") && (m.monogram || "") === (item.monogram || ""));
+      if (existing) existing.quantity = Math.min(10, existing.quantity + item.quantity);
+      else user.cart.push(item);
+    }
+    user.cart = user.cart.slice(0, 50); user.updatedAt = new Date().toISOString(); return user.cart;
   });
 }

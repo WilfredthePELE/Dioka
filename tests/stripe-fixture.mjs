@@ -1,3 +1,4 @@
+import './google-fixture.mjs';
 // Explicit test preload only. Never imported by application or production code.
 import { randomUUID } from 'node:crypto';
 if (process.env.DIOKA_TEST_STRIPE !== '1') throw new Error('Stripe fixture is test-only.');
