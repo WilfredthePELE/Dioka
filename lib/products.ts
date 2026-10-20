@@ -47,6 +47,7 @@ export const ATELIER_SHAPES: ShapeOption[] = [
 export type BagType = "Shoulder Bags" | "Crossbody Bags" | "Travel & Duffle Bags";
 
 export type Product = {
+  version?: number;
   id: string;
   name: string;
   category: Category;

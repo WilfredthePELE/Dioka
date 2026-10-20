@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.env*
+data
+.sites-runtime
+.wrangler
+*.tsbuildinfo
+Dioka-build

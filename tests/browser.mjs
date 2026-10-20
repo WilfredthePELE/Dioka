@@ -1,0 +1,86 @@
+import assert from 'node:assert/strict';
+import { mkdir } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
+export async function browserChecks({ origin, password }) {
+  const { chromium } = await import(pathToFileURL(process.env.DIOKA_BROWSER_PACKAGE).href);
+  const browser = await chromium.launch({ headless: true, ...(process.env.DIOKA_BROWSER_CHANNEL ? { channel: process.env.DIOKA_BROWSER_CHANNEL } : {}) });
+  const errors = [];
+  try {
+    await mkdir('test-results', { recursive: true });
+    const staff = await browser.newContext({ viewport: { width: 1440, height: 1050 } });
+    staff.setDefaultTimeout(20000);
+    const admin = await staff.newPage(); admin.on('pageerror', error => errors.push(error.message));
+    await admin.goto(origin + '/admin');
+    await admin.getByLabel('Email address', { exact: true }).fill('owner@example.test');
+    await admin.getByLabel('Password', { exact: true }).fill(password);
+    await admin.getByRole('button', { name: 'Enter the atelier' }).click();
+    await admin.getByRole('heading', { name: /Welcome to/ }).waitFor();
+    await admin.screenshot({ timeout:60000, animations:"disabled", path: 'test-results/admin-overview.png', fullPage: true });
+    await admin.getByRole('button', { name: 'Media', exact: true }).click();
+    await admin.getByText("Connect the store's Supabase project to enable uploads.", { exact: true }).waitFor();
+    await admin.screenshot({ timeout:60000, animations:"disabled", path: 'test-results/admin-media.png', fullPage: true });
+    await admin.getByRole('button', { name: 'Products', exact: true }).click();
+    await admin.getByRole('button', { name: 'Add a piece' }).click();
+    await admin.getByLabel('Product name', { exact: true }).fill('The Browser Bag');
+    await admin.getByLabel(/^Product ID/).fill('browser-bag');
+    await admin.getByLabel('Price / USD', { exact: true }).fill('145');
+    await admin.getByLabel('Available quantity', { exact: true }).fill('7');
+    await admin.getByLabel('Description', { exact: true }).fill('A leather bag created through the real administration screen.');
+    await admin.getByRole('button', { name: 'Save piece', exact: true }).click();
+    await admin.getByRole('dialog', { name: 'Product editor' }).waitFor({ state: 'hidden' });
+    await admin.getByText('The Browser Bag', { exact: true }).waitFor();
+    await admin.screenshot({ timeout:60000, animations:"disabled", path: 'test-results/admin-products.png', fullPage: true });
+    await admin.getByRole('button', { name: 'Website', exact: true }).click();
+    await admin.getByLabel('Homepage headline', { exact: true }).fill('Beautifully considered.');
+    await admin.getByLabel('Find website content',{exact:true}).fill('TRENDING COLLECTIONS');
+    await admin.getByLabel('Field value',{exact:true}).fill('Curated for you.');
+    await admin.getByRole('button', { name: 'Publish changes' }).click();
+    await admin.getByRole('status').getByText('Your website has been updated.').waitFor();
+    const shopper = await browser.newContext({ viewport: { width: 1365, height: 1000 } });
+    await shopper.addInitScript(() => sessionStorage.setItem('dioka_splash_viewed', 'true'));
+    shopper.setDefaultTimeout(20000);
+    const shop = await shopper.newPage(); shop.on('pageerror', error => errors.push(error.message));
+    await shop.goto(origin + '/products/browser-bag');
+    await shop.getByRole('heading', { name: 'The Browser Bag', exact: true }).waitFor();
+    await shop.goto(origin + '/');
+    await shop.getByRole('heading', { name: 'Beautifully considered.', exact: true }).waitFor();
+    await shop.getByText('Curated for you.',{exact:true}).waitFor();
+    await shop.getByRole('button', { name: 'Chat with Dioka', exact: true }).click();
+    await shop.getByLabel('Your name (optional)', { exact: true }).fill('Browser Client');
+    await shop.getByLabel('Your email (optional)', { exact: true }).fill('browser@example.test');
+    await shop.getByLabel('Your message', { exact: true }).fill('Can you help me choose a leather finish?');
+    await shop.getByRole('button', { name: 'Send message', exact: true }).click();
+    await shop.getByText('AUTOMATIC RECEIPT', { exact: true }).waitFor();
+    await admin.getByRole('button', { name: 'Conversations', exact: false }).first().click();
+    await admin.getByRole('button').filter({ hasText: 'Browser Client' }).click();
+    await admin.getByLabel('Reply to customer').fill('Absolutely. Our team can help you choose the right finish.');
+    await admin.getByRole('button', { name: 'Send reply', exact: true }).click();
+    await shop.getByText('Absolutely. Our team can help you choose the right finish.', { exact: true }).waitFor({ timeout: 15000 });
+    await admin.screenshot({ timeout:60000, animations:"disabled", path: 'test-results/admin-inbox.png', fullPage: true });
+    await shop.screenshot({ timeout:60000, animations:"disabled", path: 'test-results/customer-chat.png' });
+    await shop.setViewportSize({ width: 390, height: 844 });
+    await shop.screenshot({ timeout:60000, animations:"disabled", path: 'test-results/customer-chat-mobile.png' });
+    assert.ok(await shop.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Storefront must not overflow on mobile');
+    await admin.setViewportSize({ width: 390, height: 844 });
+    await admin.screenshot({ timeout:60000, animations:"disabled", path: 'test-results/admin-mobile.png', fullPage: true });
+    assert.ok(await admin.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Admin must not overflow on mobile');
+    const oauth = await browser.newContext();
+    const google = await oauth.newPage(); google.setDefaultTimeout(20000);
+    await google.route('https://accounts.google.com/**', route => route.fulfill({ contentType: 'text/html', body: '<h1>Google test authorization</h1>' }));
+    await google.goto(origin + '/admin');
+    await google.getByRole('button', { name: 'Continue with Google', exact: true }).waitFor();
+    await google.screenshot({ timeout:60000, animations:"disabled", path: 'test-results/google-sign-in.png' });
+    await google.getByRole('button', { name: 'Continue with Google', exact: true }).click();
+    await google.waitForURL('https://accounts.google.com/**');
+    assert.equal(new URL(google.url()).searchParams.get('redirect_uri'), origin + '/api/auth/google/callback');
+    await import('./account-browser.mjs').then(m=>m.accountBrowserChecks({browser,origin,password}));
+    assert.deepEqual(errors, [], 'Browser console must not contain unhandled application errors');
+    console.log('PASS browser: owner login, product publishing, new product URLs, content publishing, two-way chat, mobile layouts and clean page execution');
+  } catch (error) {
+    for (const [index, context] of browser.contexts().entries()) for (const [pageIndex, page] of context.pages().entries()) {
+      await page.screenshot({ timeout:60000, animations:"disabled", path: `test-results/failure-${index}-${pageIndex}.png`, fullPage: true }).catch(() => {});
+      console.error((await page.locator('body').innerText().catch(() => '')).slice(-4000));
+    }
+    throw error;
+  } finally { await browser.close(); }
+}

@@ -1,174 +1,19 @@
 import Link from "next/link";
-import { CheckCircle2, PackageCheck, Truck, ShieldCheck, ArrowRight, Printer } from "lucide-react";
-
-export default async function OrderConfirmation({
-  searchParams,
-}: {
-  searchParams: Promise<{
-    session_id?: string;
-    order_id?: string;
-    name?: string;
-    email?: string;
-    total?: string;
-    items_count?: string;
-  }>;
-}) {
-  const { session_id, order_id, name, email, total, items_count } = await searchParams;
-  const secret = process.env.STRIPE_SECRET_KEY;
-  let isPaymentVerified = Boolean(order_id);
-
-  if (secret && session_id?.startsWith("cs_")) {
+import { CheckCircle2, Clock3, ArrowUpRight } from "lucide-react";
+import { fulfillPaidSession } from "@/lib/orders";
+import { ClearPaidCart } from "@/components/ClearPaidCart";
+export const dynamic = "force-dynamic";
+export default async function OrderConfirmation({ searchParams }: { searchParams: Promise<{ session_id?: string }> }) {
+  const { session_id } = await searchParams;
+  let order = null;
+  if (process.env.STRIPE_SECRET_KEY && session_id && /^cs_[a-zA-Z0-9_]+$/.test(session_id)) {
     try {
-      const response = await fetch(
-        `https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(session_id)}`,
-        {
-          headers: { Authorization: `Bearer ${secret}` },
-          cache: "no-store",
-        }
-      );
-      if (response.ok) {
-        const session = (await response.json()) as { payment_status?: string };
-        isPaymentVerified = session.payment_status === "paid";
-      }
-    } catch (error) {
-      console.error("Could not verify checkout session", error);
-    }
+      const response = await fetch(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(session_id)}`, { headers: { Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}` }, cache: "no-store", signal: AbortSignal.timeout(15000) });
+      if (response.ok) order = await fulfillPaidSession(await response.json());
+    } catch (error) { console.error("Receipt verification failed", error); }
   }
-
-  const displayOrderId = order_id || (session_id ? `DIOKA-${session_id.slice(-6).toUpperCase()}` : "DIOKA-849201");
-  const customerName = name || "Valued Client";
-  const customerEmail = email || "client@dioka-atelier.com";
-
-  return (
-    <main className="confirmation-page" style={{ minHeight: "100vh", padding: "40px 6%", background: "#fbfaf7", color: "#171713" }}>
-      <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #dcd7ce", paddingBottom: "24px" }}>
-        <Link className="wordmark" href="/" style={{ textDecoration: "none", color: "#123d32", fontSize: "36px", fontWeight: "700", letterSpacing: "0.08em" }}>
-          DIOKA<span>®</span>
-        </Link>
-        <span style={{ fontSize: "13px", letterSpacing: "0.08em", textTransform: "uppercase", color: "#5b1f2b", fontWeight: "600" }}>
-          Order Receipt & Tracking
-        </span>
-      </header>
-
-      <div style={{ maxWidth: "840px", margin: "48px auto", background: "#fff", border: "1px solid #dcd7ce", padding: "48px 40px", boxShadow: "0 12px 32px rgba(18, 61, 50, 0.04)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", color: "#123d32", marginBottom: "16px" }}>
-          <CheckCircle2 size={32} strokeWidth={1.5} color="#123d32" />
-          <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: "700" }}>
-            Order Confirmed
-          </span>
-        </div>
-
-        <h1 style={{ fontSize: "clamp(34px, 4.5vw, 52px)", lineHeight: "1.1", margin: "0 0 16px", color: "#123d32", fontWeight: "600" }}>
-          Thank you for your order, {customerName}!
-        </h1>
-
-        <p style={{ fontSize: "17px", color: "#596f64", lineHeight: "1.6", margin: "0 0 36px" }}>
-          We have received your order and our team is getting it packaged for dispatch. A copy of your receipt and real-time tracking details have been sent to <strong>{customerEmail}</strong>.
-        </p>
-
-        {/* Order Details Card */}
-        <div style={{ background: "#f8f7f3", border: "1px solid #e2ddd4", padding: "28px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "24px", marginBottom: "36px" }}>
-          <div>
-            <span style={{ display: "block", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#777167", marginBottom: "6px" }}>Order Number</span>
-            <strong style={{ fontSize: "16px", color: "#123d32", letterSpacing: "0.05em" }}>{displayOrderId}</strong>
-          </div>
-          <div>
-            <span style={{ display: "block", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#777167", marginBottom: "6px" }}>Shipping Status</span>
-            <strong style={{ fontSize: "16px", color: "#5b1f2b" }}>Preparing to Ship</strong>
-          </div>
-          <div>
-            <span style={{ display: "block", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#777167", marginBottom: "6px" }}>Estimated Delivery</span>
-            <strong style={{ fontSize: "16px", color: "#123d32" }}>2–4 Business Days</strong>
-          </div>
-          {total && (
-            <div>
-              <span style={{ display: "block", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#777167", marginBottom: "6px" }}>Order Total</span>
-              <strong style={{ fontSize: "18px", color: "#5b1f2b" }}>{total}</strong>
-            </div>
-          )}
-          {items_count && (
-            <div>
-              <span style={{ display: "block", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#777167", marginBottom: "6px" }}>Items Ordered</span>
-              <strong style={{ fontSize: "16px", color: "#123d32" }}>{items_count} {items_count === "1" ? "Item" : "Items"}</strong>
-            </div>
-          )}
-          <div>
-            <span style={{ display: "block", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#777167", marginBottom: "6px" }}>Payment Status</span>
-            <strong style={{ fontSize: "16px", color: isPaymentVerified ? "#123d32" : "#5b1f2b" }}>
-              {isPaymentVerified ? "Confirmed & Paid" : "Payment Processing"}
-            </strong>
-          </div>
-        </div>
-
-        {/* Steps */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "24px", marginBottom: "40px" }}>
-          <div style={{ display: "flex", gap: "16px" }}>
-            <PackageCheck size={24} color="#123d32" style={{ flexShrink: 0, marginTop: "2px" }} />
-            <div>
-              <h4 style={{ margin: "0 0 4px", fontSize: "15px", fontWeight: "600" }}>1. Packaging & Inspection</h4>
-              <p style={{ margin: 0, fontSize: "13px", color: "#596f64", lineHeight: "1.5" }}>Inspected for quality and placed in a protective dust bag.</p>
-            </div>
-          </div>
-
-          <div style={{ display: "flex", gap: "16px" }}>
-            <Truck size={24} color="#123d32" style={{ flexShrink: 0, marginTop: "2px" }} />
-            <div>
-              <h4 style={{ margin: "0 0 4px", fontSize: "15px", fontWeight: "600" }}>2. Express Courier Dispatch</h4>
-              <p style={{ margin: 0, fontSize: "13px", color: "#596f64", lineHeight: "1.5" }}>Handed to DHL Express with real-time tracking provided.</p>
-            </div>
-          </div>
-
-          <div style={{ display: "flex", gap: "16px" }}>
-            <ShieldCheck size={24} color="#123d32" style={{ flexShrink: 0, marginTop: "2px" }} />
-            <div>
-              <h4 style={{ margin: "0 0 4px", fontSize: "15px", fontWeight: "600" }}>3. 30-Day Easy Returns</h4>
-              <p style={{ margin: 0, fontSize: "13px", color: "#596f64", lineHeight: "1.5" }}>Try it on at home. Hassle-free exchanges or full refunds.</p>
-            </div>
-          </div>
-        </div>
-
-        {/* CTAs */}
-        <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center", borderTop: "1px solid #e2ddd4", paddingTop: "32px" }}>
-          <Link
-            className="dark-button"
-            href="/"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "18px",
-              background: "#123d32",
-              color: "#fff",
-              padding: "16px 28px",
-              textDecoration: "none",
-              fontSize: "14px",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              fontWeight: "600",
-            }}
-          >
-            Return to Storefront <ArrowRight size={18} />
-          </Link>
-          <button
-            onClick={() => {}}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "10px",
-              background: "none",
-              border: "1px solid #123d32",
-              color: "#123d32",
-              padding: "15px 22px",
-              fontSize: "14px",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              fontWeight: "600",
-              cursor: "pointer",
-            }}
-          >
-            <Printer size={16} /> Print Receipt
-          </button>
-        </div>
-      </div>
-    </main>
-  );
+  return <main style={{ minHeight: "100vh", background: "#f7f5ef", color: "#123d32", padding: "40px 6%" }}><header style={{ paddingBottom: 25, borderBottom: "1px solid #dcded3" }}><Link href="/" style={{ color: "inherit", textDecoration: "none", font: "bold 32px Georgia,serif", letterSpacing: 3 }}>DIOKA<sup style={{ fontSize: 10 }}>®</sup></Link></header><section style={{ maxWidth: 700, margin: "70px auto", padding: "40px 25px", border: "1px solid #dcded3", background: "#fcfbf7" }}>
+    {order ? <><ClearPaidCart sessionId={order.sessionId}/><CheckCircle2 size={32}/><p style={{ font: "10px Arial", letterSpacing: 2, marginTop: 24 }}>PAYMENT VERIFIED</p><h1 style={{ fontSize: "clamp(40px,6vw,62px)", fontWeight: 400, lineHeight: 1.05, margin: "15px 0 25px" }}>A beautiful choice.<br/><em>Thank you.</em></h1><p style={{ font: "14px/1.8 Arial", color: "#66775f" }}>Your payment is confirmed and your order has been saved. Our team will update its progress as your pieces are prepared.</p><dl style={{ font: "13px/2 Arial", overflowWrap: "anywhere" }}><dt>Order reference</dt><dd style={{ margin: "0 0 20px" }}>{order.id}</dd><dt>Total paid</dt><dd style={{ margin: "0 0 20px" }}>{new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(order.total)}</dd><dt>Current status</dt><dd style={{ margin: 0 }}>{order.status}</dd></dl></> : <><Clock3 size={32}/><h1 style={{ fontSize: 48, fontWeight: 400, lineHeight: 1.1 }}>We are checking<br/><em>your payment.</em></h1><p style={{ font: "14px/1.8 Arial" }}>A payment has not been verified on this page. If you just completed checkout, refresh shortly. Your bag stays available until payment is confirmed. Contact our team if you need help.</p></>}
+    <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 20, marginTop: 35, padding: "15px 22px", color: "#fff", background: "#123d32", textDecoration: "none", font: "12px Arial" }}>Return to the collection <ArrowUpRight size={16}/></Link>
+  </section></main>;
 }

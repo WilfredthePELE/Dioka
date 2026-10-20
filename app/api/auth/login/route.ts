@@ -1,92 +1,24 @@
-import { NextRequest, NextResponse } from "next/server";
-import {
-  findUserByEmail,
-  hashPasswordWithSalt,
-  createSession,
-  updateUserCart,
-  StoredCartItem,
-} from "@/lib/auth-storage";
-
-export async function POST(req: NextRequest) {
+import { NextResponse } from "next/server";
+import { findUserByEmail, verifyPassword, createSession, updateUserCart, cartSchema } from "@/lib/auth-storage";
+import { assertOrigin, bodyJson, failure, HttpError, isAdminEmail, limit } from "@/lib/http";
+import { z } from "zod";
+import { customerView } from "@/lib/customer-view";
+export async function POST(request: Request) {
   try {
-    const body = await req.json();
-    const { email, password, incomingCart } = body as {
-      email?: string;
-      password?: string;
-      incomingCart?: StoredCartItem[];
-    };
-
-    if (!email || !password) {
-      return NextResponse.json(
-        { error: "Email and password are required." },
-        { status: 400 }
-      );
+    assertOrigin(request); await limit(request, "login", 10);
+    const body = z.object({ email: z.string().email().max(254), password: z.string().min(1).max(128), incomingCart: cartSchema.optional() }).safeParse(await bodyJson(request));
+    if (!body.success) throw new HttpError(400, "Enter a valid email and password.");
+    const user = await findUserByEmail(body.data.email);
+    if (!user || !await verifyPassword(body.data.password, user)) throw new HttpError(401, "Email or password is incorrect.");
+    if (body.data.incomingCart?.length) {
+      const merged = structuredClone(user.cart);
+      for (const item of body.data.incomingCart) { const existing = merged.find(m => m.id === item.id && m.size === item.size && (m.color || "") === (item.color || "") && (m.leather || "") === (item.leather || "") && (m.shape || "") === (item.shape || "") && (m.monogram || "") === (item.monogram || "")); if (existing) existing.quantity = Math.min(10, existing.quantity + item.quantity); else merged.push(item); }
+      user.cart = await updateUserCart(user.id, merged.slice(0, 50));
     }
-
-    const user = await findUserByEmail(email);
-    if (!user) {
-      return NextResponse.json(
-        { error: "No account found with this email. Please check or sign up." },
-        { status: 401 }
-      );
-    }
-
-    const computedHash = hashPasswordWithSalt(password, user.salt);
-    if (computedHash !== user.passwordHash) {
-      return NextResponse.json(
-        { error: "Incorrect password. Please try again." },
-        { status: 401 }
-      );
-    }
-
-    // If guest had items in their cart, merge into user's specialized cart
-    if (incomingCart && Array.isArray(incomingCart) && incomingCart.length > 0) {
-      const mergedCart = [...user.cart];
-      for (const item of incomingCart) {
-        const existingIdx = mergedCart.findIndex(
-          (m) => m.id === item.id && m.size === item.size
-        );
-        if (existingIdx >= 0) {
-          mergedCart[existingIdx].quantity = Math.min(
-            10,
-            mergedCart[existingIdx].quantity + item.quantity
-          );
-        } else {
-          mergedCart.push(item);
-        }
-      }
-      user.cart = await updateUserCart(user.id, mergedCart);
-    }
-
     const token = await createSession(user.id);
-
-    const response = NextResponse.json({
-      success: true,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        tier: user.tier,
-        cart: user.cart,
-        wishlist: user.wishlist,
-        shippingAddress: user.shippingAddress,
-        orders: user.orders,
-      },
-      token,
-      message: `Welcome back, ${user.name}! Your specialized bag has been synchronized.`,
-    });
-
-    response.cookies.set("dioka_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 30 * 24 * 60 * 60,
-      path: "/",
-    });
-
+    const safe = await customerView(user);
+    const response = NextResponse.json({ success: true, user: safe, admin: isAdminEmail(user.email) });
+    response.cookies.set("dioka_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", maxAge: 7 * 86400, path: "/" });
     return response;
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Authentication failed.";
-    return NextResponse.json({ error: message }, { status: 500 });
-  }
+  } catch (error) { return failure(error); }
 }

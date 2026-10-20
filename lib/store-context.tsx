@@ -8,11 +8,6 @@ import {
   CURRENCY_CONFIG,
   formatPrice as formatPriceWithConfig,
 } from "@/lib/products";
-import {
-  syncCartToSupabase,
-  fetchCartFromSupabase,
-  isSupabaseConfigured,
-} from "@/lib/supabase";
 
 export interface CartItem {
   id: string;
@@ -31,6 +26,8 @@ export interface CartItem {
 }
 
 export interface UserProfile {
+  googleConnected?: boolean;
+  administrator?: boolean;
   id: string;
   name: string;
   email: string;
@@ -60,6 +57,7 @@ export interface UserProfile {
 
 interface StoreContextType {
   catalog: Product[];
+  catalogLoaded: boolean;
   cart: CartItem[];
   cartCount: number;
   subtotal: number;
@@ -136,6 +134,8 @@ const DEFAULT_EXCHANGE_RATES: Record<Currency, number> = {
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [catalog, setCatalog] = useState<Product[]>(defaultProducts);
+  const [catalogLoaded, setCatalogLoaded] = useState(false);
+  const [catalogError, setCatalogError] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [wishlist, setWishlist] = useState<string[]>([]);
@@ -152,7 +152,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
   const [designerChatOpen, setDesignerChatOpen] = useState(false);
   const [supabaseModalOpen, setSupabaseModalOpen] = useState(false);
-  const isSupabaseActive = typeof window !== "undefined" ? isSupabaseConfigured() : false;
+  const isSupabaseActive = false;
 
   // User Auth & Specialized Cart State
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -228,16 +228,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Fetch live products if available
   useEffect(() => {
     fetch("/api/products")
-      .then((res) => res.json())
+      .then((res) => { if (!res.ok) throw new Error("Catalogue unavailable."); return res.json(); })
       .then((data: { products?: Product[] }) => {
-        if (data.products && Array.isArray(data.products) && data.products.length > 0) {
+        if (data.products && Array.isArray(data.products)) {
           setCatalog(data.products);
         }
       })
-      .catch(() => {});
+      .catch(() => { setCatalogError(true); setCatalog([]); })
+      .finally(() => setCatalogLoaded(true));
   }, []);
 
-  // Sync user's specialized cart to backend and Supabase
+  // Sync the signed-in shopper's cart through the server API.
   const syncCartToBackend = useCallback(async (currentCart: CartItem[]) => {
     const timer = setTimeout(() => setIsCartSyncing(true), 0);
     try {
@@ -248,10 +249,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ items: currentCart }),
       });
 
-      // 2. Sync to Supabase if configured and user is active
-      if (user?.id && isSupabaseConfigured()) {
-        await syncCartToSupabase(user.id, currentCart);
-      }
     } catch {
       // offline fallback
     } finally {
@@ -272,18 +269,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           if (data.authenticated && data.user && mounted) {
             setUser(data.user);
 
-            // Attempt Supabase cart restore if available
-            if (isSupabaseConfigured()) {
-              const supaCart = await fetchCartFromSupabase(data.user.id);
-              if (supaCart && supaCart.length > 0) {
-                setCart(supaCart);
-                setLoaded(true);
-                setAuthLoading(false);
-                return;
-              }
-            }
-
-            if (Array.isArray(data.user.cart) && data.user.cart.length > 0) {
+            if (Array.isArray(data.user.cart)) {
               setCart(data.user.cart);
             }
             if (Array.isArray(data.user.wishlist) && data.user.wishlist.length > 0) {
@@ -371,7 +357,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({
           email,
           password: pass,
-          guestCart: cart,
+          incomingCart: cart,
         }),
       });
 
@@ -402,7 +388,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           name,
           email,
           password: pass,
-          guestCart: cart,
+          initialCart: cart,
         }),
       });
 
@@ -445,7 +431,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   }, [currency, exchangeRates]);
 
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((acc, item) => acc + (catalog.find(p => p.id === item.id)?.price ?? item.price ?? 0) * item.quantity, 0);
 
   // Add to cart with specialized feedback & bespoke customizations
   const addToCart = (
@@ -459,6 +445,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       monogram?: string;
     }
   ) => {
+    if (product.inStock === false || (product.stockQuantity ?? 10) < 1) { showToast("This piece is currently unavailable."); return; }
+    quantity = Math.max(1, Math.min(10, product.stockQuantity ?? 10, Math.floor(quantity)));
     const finalSize = size || (product.sizes && product.sizes.length > 0 ? product.sizes[0] : "One size");
     const finalColor = customization?.color || product.color || "Cognac";
     const finalLeather = customization?.leather || "Full-Grain";
@@ -482,7 +470,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         const next = [...prev];
         next[existingIdx] = {
           ...next[existingIdx],
-          quantity: next[existingIdx].quantity + quantity,
+          quantity: Math.min(10, product.stockQuantity ?? 10, next[existingIdx].quantity + quantity),
         };
         return next;
       }
@@ -523,7 +511,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             (item.id === idOrKey && (!size || item.size === size));
           if (matches) {
             const nextQty = item.quantity + delta;
-            return nextQty > 0 ? { ...item, quantity: nextQty } : null;
+            return nextQty > 0 ? { ...item, quantity: Math.min(10, catalog.find(p => p.id === item.id)?.stockQuantity ?? 10, nextQty) } : null;
           }
           return item;
         })
@@ -563,6 +551,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     <StoreContext.Provider
       value={{
         catalog,
+        catalogLoaded,
         cart,
         cartCount,
         subtotal,
@@ -612,6 +601,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         syncCartToBackend,
       }}
     >
+      {catalogError && <div role="alert" style={{ background: "#fff0eb", color: "#8d3527", padding: "14px 6%", fontSize: 13 }}>The collection could not be loaded. Please refresh shortly or contact our team. Your saved bag has been kept.</div>}
       {children}
     </StoreContext.Provider>
   );

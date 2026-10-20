@@ -1,4 +1,5 @@
 "use client";
+import { CmsLink, CmsText } from "@/components/SiteControls";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import {
 } from "lucide-react";
 import { useStore } from "@/lib/store-context";
 import { CURRENCY_CONFIG, type Currency } from "@/lib/products";
+import { Announcement } from "@/components/EditableContent";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -38,6 +40,7 @@ export function SiteHeader() {
 
   return (
     <>
+      <Announcement />
       {/* MAIN HEADER (Fast, high-performance responsive navbar) */}
       <header className="site-header">
         {/* Navigation: Bags, Shoes & Boots, Jacket, Customize */}
@@ -52,7 +55,7 @@ export function SiteHeader() {
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
 
-          <Link
+          <CmsLink
             href="/bags"
             prefetch={true}
             className={isActive("/bags") ? "active" : ""}
@@ -61,12 +64,11 @@ export function SiteHeader() {
               color: isActive("/bags") ? "#123d32" : undefined,
               textDecoration: isActive("/bags") ? "underline" : undefined,
               textUnderlineOffset: "6px",
-            }}
+            }} hrefKey="33633b6b3e97ba0e"
           >
-            Bags
-          </Link>
+            <CmsText field="9833898d3436d360" fallback="Bags"/></CmsLink>
 
-          <Link
+          <CmsLink
             href="/footwear"
             prefetch={true}
             className={isActive("/footwear") ? "active" : ""}
@@ -75,12 +77,11 @@ export function SiteHeader() {
               color: isActive("/footwear") ? "#123d32" : undefined,
               textDecoration: isActive("/footwear") ? "underline" : undefined,
               textUnderlineOffset: "6px",
-            }}
+            }} hrefKey="dd5f2d39a255b5be"
           >
-            Shoes & Boots
-          </Link>
+            <CmsText field="a8c080abb3036e72" fallback="Shoes & Boots"/></CmsLink>
 
-          <Link
+          <CmsLink
             href="/jackets"
             prefetch={true}
             className={isActive("/jackets") ? "active" : ""}
@@ -89,12 +90,11 @@ export function SiteHeader() {
               color: isActive("/jackets") ? "#123d32" : undefined,
               textDecoration: isActive("/jackets") ? "underline" : undefined,
               textUnderlineOffset: "6px",
-            }}
+            }} hrefKey="bd1da611533531e2"
           >
-            Jacket
-          </Link>
+            <CmsText field="48acdf882f1e63a6" fallback="Jacket"/></CmsLink>
 
-          <Link
+          <CmsLink
             href="/customize"
             prefetch={true}
             className={isActive("/customize") ? "active" : ""}
@@ -103,16 +103,15 @@ export function SiteHeader() {
               color: isActive("/customize") ? "#123d32" : undefined,
               textDecoration: isActive("/customize") ? "underline" : undefined,
               textUnderlineOffset: "6px",
-            }}
+            }} hrefKey="a4160eaddc40dfd4"
           >
-            Customize
-          </Link>
+            <CmsText field="deb7663497809514" fallback="Customize"/></CmsLink>
         </nav>
 
         {/* Center Wordmark Logo (The only Dioka brand mark) */}
-        <Link className="wordmark" href="/" prefetch={true} aria-label="Dioka home">
-          DIOKA<span>®</span>
-        </Link>
+        <CmsLink className="wordmark" href="/" prefetch={true} aria-label="Dioka home" hrefKey="412b35298c5da7a8">
+          <CmsText field="f9923307692c5efd" fallback="DIOKA"/><span><CmsText field="16fbfa34a5d2636a" fallback="®"/></span>
+        </CmsLink>
 
         {/* Header Right Actions */}
         <div className="header-right">
@@ -142,8 +141,8 @@ export function SiteHeader() {
                 window.dispatchEvent(new CustomEvent("open-dioka-chat"));
               }
             }}
-            aria-label="Chat with Master Designer"
-            title="Chat with Master Designer Wilfred Owubokiri"
+            aria-label="Open customer care"
+            title="Chat with the Dioka team"
             style={{
               position: "relative",
               background: designerChatOpen ? "rgba(18, 61, 50, 0.12)" : "rgba(18, 61, 50, 0.05)",
@@ -184,8 +183,7 @@ export function SiteHeader() {
               }}
               className="hidden sm:inline"
             >
-              Live Chat
-            </span>
+              <CmsText field="0d4394d9bcdd354d" fallback="Live Chat"/></span>
           </button>
 
           {/* User Account / Sign In button */}
@@ -244,7 +242,7 @@ export function SiteHeader() {
             title="Open your shopping bag"
           >
             <ShoppingBag size={19} strokeWidth={1.8} />
-            <span>Bag ({cartCount})</span>
+            <span><CmsText field="226de659b1182cf4" fallback="Bag ("/>{cartCount}<CmsText field="5a62d262b1205431" fallback=")"/></span>
           </button>
         </div>
       </header>
@@ -285,18 +283,14 @@ export function SiteHeader() {
           </button>
 
           {/* Clean 4 navigation links */}
-          <Link href="/bags" onClick={() => setMobileMenuOpen(false)}>
-            Bags
-          </Link>
-          <Link href="/footwear" onClick={() => setMobileMenuOpen(false)}>
-            Shoes & Boots
-          </Link>
-          <Link href="/jackets" onClick={() => setMobileMenuOpen(false)}>
-            Jacket
-          </Link>
-          <Link href="/customize" onClick={() => setMobileMenuOpen(false)}>
-            Customize
-          </Link>
+          <CmsLink href="/bags" onClick={() => setMobileMenuOpen(false)} hrefKey="4ef2bb2770a2428d">
+            <CmsText field="f515c7cc04645350" fallback="Bags"/></CmsLink>
+          <CmsLink href="/footwear" onClick={() => setMobileMenuOpen(false)} hrefKey="68e2fa615e067a29">
+            <CmsText field="9769c054cdb058d4" fallback="Shoes & Boots"/></CmsLink>
+          <CmsLink href="/jackets" onClick={() => setMobileMenuOpen(false)} hrefKey="a40c4acc2936b20f">
+            <CmsText field="031a635eaebcbc00" fallback="Jacket"/></CmsLink>
+          <CmsLink href="/customize" onClick={() => setMobileMenuOpen(false)} hrefKey="e95c316c366ab744">
+            <CmsText field="1633752b47a1f3e1" fallback="Customize"/></CmsLink>
 
           {/* Mobile Currency Selector */}
           <div
@@ -317,8 +311,7 @@ export function SiteHeader() {
                 marginBottom: "8px",
               }}
             >
-              Currency:
-            </div>
+              <CmsText field="99c36d03e071e6e7" fallback="Currency:"/></div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "6px" }}>
               {(["USD", "EUR", "GBP", "NGN"] as Currency[]).map((c) => (
@@ -343,9 +336,8 @@ export function SiteHeader() {
             </div>
           </div>
 
-          <Link href="/cart" onClick={() => setMobileMenuOpen(false)}>
-            Your Bag ({cartCount})
-          </Link>
+          <CmsLink href="/cart" onClick={() => setMobileMenuOpen(false)} hrefKey="56a5e94ad36096e2">
+            <CmsText field="36a07524d2c12db6" fallback="Your Bag ("/>{cartCount}<CmsText field="1702eaab6ee0d6e8" fallback=")"/></CmsLink>
           <button
             type="button"
             onClick={() => {
@@ -360,8 +352,7 @@ export function SiteHeader() {
               fontWeight: 700,
             }}
           >
-            <MessageSquare size={16} /> Chat with Master Designer
-          </button>
+            <MessageSquare size={16} /> <CmsText field="fb833e7dfaeafae0" fallback="Chat with the Dioka team"/></button>
           <button
             type="button"
             onClick={() => {
@@ -369,8 +360,7 @@ export function SiteHeader() {
               setOrderTrackingOpen(true);
             }}
           >
-            Track Your Order
-          </button>
+            <CmsText field="a7782f0d893817a9" fallback="Track Your Order"/></button>
         </nav>
       )}
     </>

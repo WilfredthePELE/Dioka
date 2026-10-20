@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { deleteSession } from "@/lib/auth-storage";
+import { assertOrigin, failure } from "@/lib/http";
 
 export async function POST(req: NextRequest) {
   try {
+    assertOrigin(req);
     const cookieToken = req.cookies.get("dioka_token")?.value;
     const authHeader = req.headers.get("authorization");
     const bearerToken = authHeader?.startsWith("Bearer ")
@@ -22,7 +24,6 @@ export async function POST(req: NextRequest) {
     response.cookies.delete("dioka_token");
     return response;
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Logout error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return failure(err);
   }
 }

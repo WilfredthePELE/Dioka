@@ -46,21 +46,8 @@ alter table public.dioka_profiles enable row level security;
 alter table public.dioka_carts enable row level security;
 alter table public.dioka_orders enable row level security;
 
--- Allow public / anon operations for seamless guest & shopper flows
-create policy "Allow all operations on dioka_profiles"
-  on public.dioka_profiles for all
-  using (true)
-  with check (true);
-
-create policy "Allow all operations on dioka_carts"
-  on public.dioka_carts for all
-  using (true)
-  with check (true);
-
-create policy "Allow all operations on dioka_orders"
-  on public.dioka_orders for all
-  using (true)
-  with check (true);
+-- No public table policies: all customer operations go through the server.
+-- For production, also apply supabase/production.sql.
 
 -- 6. Indexes for ultra-fast lookup
 create index if not exists idx_dioka_carts_user_id on public.dioka_carts (user_id);

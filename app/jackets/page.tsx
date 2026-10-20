@@ -1,4 +1,5 @@
 "use client";
+import { CmsLink, CmsPage, CmsSection, CmsText } from "@/components/SiteControls";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -32,31 +33,27 @@ export default function JacketsPage() {
   const jackets = catalog.filter((p) => p.category === "Jackets");
 
   return (
-    <main>
+    <CmsPage pageKey="app/jackets/page.tsx">
       <SiteHeader />
 
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "16px 5% 0" }}>
         <nav aria-label="Breadcrumb" style={{ fontSize: "12px", color: "#888", display: "flex", gap: "8px" }}>
-          <Link href="/" style={{ color: "#666", textDecoration: "none" }}>
-            Home
-          </Link>
-          <span>/</span>
-          <span style={{ color: "#123d32", fontWeight: 700 }}>Leather Jackets</span>
+          <CmsLink href="/" style={{ color: "#666", textDecoration: "none" }} hrefKey="bdb35dd063bed1e9">
+            <CmsText field="87cb1e47ef3c912d" fallback="Home"/></CmsLink>
+          <span><CmsText field="42d6ee93f5afc931" fallback="/"/></span>
+          <span style={{ color: "#123d32", fontWeight: 700 }}><CmsText field="c115cc9b72b75713" fallback="Leather Jackets"/></span>
         </nav>
       </div>
 
-      <section style={{ maxWidth: "1280px", margin: "0 auto", padding: "24px 5% 48px" }}>
+      <CmsSection style={{ maxWidth: "1280px", margin: "0 auto", padding: "24px 5% 48px" }} sectionKey="ca807a19e1ca40a1">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "24px", borderBottom: "1px solid #e2ddd5", paddingBottom: "32px" }}>
           <div style={{ maxWidth: "680px" }}>
             <p className="eyebrow" style={{ color: "#5b1f2b", marginBottom: "8px" }}>
-              COLLECTION · EUROPEAN LAMBSKIN & SHEARLING
-            </p>
+              <CmsText field="be9b3a08524f8f48" fallback="COLLECTION · EUROPEAN LAMBSKIN & SHEARLING"/></p>
             <h1 style={{ fontFamily: "var(--dioka-font)", fontSize: "clamp(38px, 5vw, 64px)", lineHeight: "0.95", margin: "0 0 16px", color: "#123d32", fontWeight: 600 }}>
-              Leather Jackets
-            </h1>
+              <CmsText field="5c2f27e83813b5b7" fallback="Leather Jackets"/></h1>
             <p style={{ fontSize: "17px", color: "#596f64", lineHeight: "1.5", margin: 0 }}>
-              Tailored leather jackets crafted from butter-soft European lambskin, calfskin, and plush Merino shearling. Timeless cuts engineered for modern layering.
-            </p>
+              <CmsText field="8f1b70da7ebfb833" fallback="Tailored leather jackets crafted from butter-soft European lambskin, calfskin, and plush Merino shearling. Timeless cuts engineered for modern layering."/></p>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px", fontWeight: 600, color: "#123d32" }}>
@@ -65,14 +62,11 @@ export default function JacketsPage() {
               onClick={() => setSizeGuideOpen(true)}
               style={{ background: "none", border: 0, textDecoration: "underline", color: "#123d32", cursor: "pointer", textAlign: "left", padding: 0 }}
             >
-              Jacket Size Guide →
-            </button>
+              <CmsText field="6c93dbb076dad139" fallback="Jacket Size Guide →"/></button>
             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <Check size={16} color="#166534" /> 100% Genuine Lambskin & Shearling
-            </span>
+              <Check size={16} color="#166534" /> <CmsText field="a6aff53eed2d60c2" fallback="100% Genuine Lambskin & Shearling"/></span>
             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <Truck size={16} color="#166534" /> Free Express Delivery & Insurance
-            </span>
+              <Truck size={16} color="#166534" /> <CmsText field="c851f5076308bf5d" fallback="Free Express Delivery & Insurance"/></span>
           </div>
         </div>
 
@@ -100,8 +94,7 @@ export default function JacketsPage() {
                   />
                   <div className="product-card-hover-overlay">
                     <span className="hover-view-tag">
-                      <Eye size={14} /> View Details
-                    </span>
+                      <Eye size={14} /> <CmsText field="3d247bb073641d19" fallback="View Details"/></span>
                   </div>
                 </Link>
 
@@ -115,15 +108,14 @@ export default function JacketsPage() {
                   <Heart size={16} fill={isWishlisted ? "currentColor" : "none"} strokeWidth={2} />
                 </button>
 
-                <span className="product-badge">TOP RATED</span>
+                <span className="product-badge"><CmsText field="dabe512c49f4f174" fallback="TOP RATED"/></span>
 
                 <div className="product-meta">
                   <div className="product-meta-top">
                     <span className="product-meta-category">{product.color}</span>
                     <span className="product-meta-rating">
                       <Star size={12} fill="#5b1f2b" color="#5b1f2b" />
-                      {product.rating ?? 4.9} ({product.reviews ?? 32} reviews)
-                    </span>
+                      {product.rating ?? 4.9} <CmsText field="f66c66370509f34e" fallback="("/>{product.reviews ?? 32} <CmsText field="2978464e65fd7c91" fallback="reviews)"/></span>
                   </div>
 
                   <div className="product-meta-main">
@@ -141,8 +133,7 @@ export default function JacketsPage() {
                   {/* Size selection */}
                   <div style={{ marginTop: "6px" }}>
                     <span style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "#5b1f2b", display: "block", marginBottom: "4px" }}>
-                      Select Size:
-                    </span>
+                      <CmsText field="efb2c53fec3e5b8a" fallback="Select Size:"/></span>
                     <div className="card-size-selector">
                       {product.sizes.map((sz) => (
                         <button
@@ -175,8 +166,7 @@ export default function JacketsPage() {
                         className="quick-view-btn"
                         onClick={() => setSelectedProduct(product)}
                       >
-                        <Eye size={13} /> Quick View
-                      </button>
+                        <Eye size={13} /> <CmsText field="4ca5b448dabf7ca7" fallback="Quick View"/></button>
                       <Link
                         href={`/products/${product.id}`}
                         className="quick-view-btn"
@@ -187,7 +177,7 @@ export default function JacketsPage() {
                           color: "#123d32",
                         }}
                       >
-                        Details <ArrowRight size={13} />
+                        <CmsText field="96837e983f31eb01" fallback="Details "/><ArrowRight size={13} />
                       </Link>
                     </div>
                   </div>
@@ -196,9 +186,9 @@ export default function JacketsPage() {
             );
           })}
         </div>
-      </section>
+      </CmsSection>
 
       <SiteFooter />
-    </main>
+    </CmsPage>
   );
 }
