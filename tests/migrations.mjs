@@ -6,7 +6,7 @@ const {PGlite}=await import(pathToFileURL(process.env.DIOKA_PGLITE_PACKAGE).href
 const db=new PGlite();
 try{
 await db.exec('create role anon; create role authenticated; create role service_role bypassrls; create schema storage; create table storage.buckets(id text primary key, name text, public boolean, file_size_limit bigint, allowed_mime_types text[]);');
-const core=await readFile('supabase/production.sql','utf8'), media=await readFile('supabase/migrations/202610190001_media.sql','utf8');
+const core=await readFile('supabase/production.sql','utf8'), media=await readFile('supabase/migrations/20261020084445_dioka_media_storage.sql','utf8');
 await db.exec(core);await db.exec(media);await db.exec(core);await db.exec(media);
 const seed=await readFile("supabase/seed.sql","utf8");await db.exec(seed);await db.exec(seed);
 const initial=(await db.query("select value from public.dioka_app_state where key=$1",["catalogue-v1"])).rows[0].value;assert.equal(initial.products.length,12);assert.ok(initial.products.every(p=>p.stockQuantity===0&&p.inStock===false));

@@ -2,12 +2,26 @@
 
 ## Provisioning status
 
-The user requested a new project named Dioka. Project creation and cloud migrations still require a working connection to the owner's Supabase account, the selected organization **diokacraft website** and any required cost acceptance. The repository does not claim that a live project or buckets already exist.
+Created and verified on 20 October 2026:
+
+- Project: **Dioka**, ID plwxwgqlpurfvqgzcuin.
+- Organization: **diokacraft website**, ID uswkjwcmzmvtcduqlfwb.
+- Region: London (eu-west-2).
+- Dashboard: https://supabase.com/dashboard/project/plwxwgqlpurfvqgzcuin .
+- API URL: https://plwxwgqlpurfvqgzcuin.supabase.co .
+- Applied migrations: 20261020084440 dioka_app_state and 20261020084445 dioka_media_storage.
+- Seeded six application records and 12 products with zero stock.
+- Provisioned the owner account contactus@diokacraft.com. Its generated password is in the ignored local outputs/cloud-admin-access.txt file. This is separate from the SQLite preview account.
+- Verified live SQL row-security/permissions and bucket privacy. Real anonymous REST requests returned 401 for both app tables.
+
+The database is fully provisioned. At the owner's request, secret credentials are left blank for manual configuration. The app is not connected to this cloud database until its server-only secret key is configured privately. The local .env.local file contains the project URL and an empty SUPABASE_SERVICE_ROLE_KEY field. No service key was retrieved or committed.
+
+Supabase security advisors reported informational notices about the intentionally absent browser-role policies on these server-only tables ([explanation](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy)). The unused media date index is expected before uploads exist ([explanation](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index)). No warning/error-level findings were returned.
 
 ## Apply in order
 
 1. supabase/production.sql — app data table and server-only permissions.
-2. supabase/migrations/202610190001_media.sql — upload metadata and public/private buckets.
+2. supabase/migrations/20261020084445_dioka_media_storage.sql — upload metadata and public/private buckets.
 3. supabase/seed.sql — initial catalogue and website content; existing records are kept. Stock starts at zero until the owner enters actual quantities. Regenerate this seed with node scripts/generate-supabase-seed.mjs after changing source catalogue defaults.
 
 ## Data model actually used by the app
@@ -32,3 +46,9 @@ The local preview database is outputs/preview-data/dioka.sqlite. It is not copie
 Before launch verify anonymous users cannot read either app table or private objects, only administrators can upload, a valid image uploads and displays on a product, a PDF opens only through its expiring admin link, and products/chat/accounts/orders survive an app restart. Run Supabase security advisors after migrations. Check backups and storage limits for the selected plan.
 
 The isolated PostgreSQL checks use a local storage-schema fixture; they do not substitute for exercising the deployed Supabase API and Storage service. No live upload is claimed before that test.
+
+## Final live checks
+
+A transaction inserted and version-updated a temporary record, asserted success, then rolled back; no test rows remain. The owner record exists with a salted password hash. The environment template is .env.example; .env.local is an ignored local copy with blank secrets for the owner to fill. All payment and Google credentials also remain blank.
+
+The local preview launcher intentionally uses SQLite and disables cloud credentials. For a Supabase-backed local run after filling .env.local, stop the preview and run npm run dev with DIOKA_SITE_URL=http://localhost:3000 in the local environment. On Truehost set DIOKA_SITE_URL=https://diokacraft.com. Use the cloud owner credentials after switching databases; preview credentials are separate.
