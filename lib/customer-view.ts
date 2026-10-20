@@ -7,6 +7,6 @@ export async function displayCart(items: StoredCartItem[]) {
 }
 export async function customerView(user: UserAccount) {
   const { passwordHash: _hash, salt: _salt, googleSubject: _googleSubject, ...safe } = user;
-  const [cart, orders] = await Promise.all([displayCart(user.cart), listOrders()]);
+  const [cart, orders] = await Promise.all([displayCart(user.cart), listOrders(user.id)]);
   return { ...safe, cart, orders: Object.values(orders).filter(o => o.userId === user.id).map(o => ({ orderId: o.id, items: o.items, subtotal: o.total, total: o.total, currency: o.currency, status: o.status, trackingCode: o.trackingCode, createdAt: o.createdAt })) };
 }

@@ -1,14 +1,16 @@
-import { readState, mutateState } from "@/lib/persistence";
+import { readState, mutateState, atomicStates, listStates } from "@/lib/persistence";
 import { createHash, randomUUID } from "node:crypto";
 export interface ChatMessage { id: string; sender: "client" | "team" | "system"; text: string; createdAt: string }
 export interface Conversation { id: string; name: string; email: string; status: "open" | "closed"; messages: ChatMessage[]; updatedAt: string }
 export type Inbox = Record<string, Conversation>;
 export const conversationId = (token: string) => createHash("sha256").update(token).digest("hex");
-export const getInbox = () => readState("inbox", {} as Inbox);
+export async function getInbox(){return Object.fromEntries((await listStates<Conversation>("thread:")).map(row=>[row.value.id,row.value]));}
+export const getConversation=(id:string)=>readState<Conversation|null>("thread:"+id,null);
+export function changeConversation<R>(id:string,change:(conversation:Conversation)=>R){return mutateState<Conversation|null,R>("thread:"+id,null,conversation=>{if(!conversation)throw new Error("Conversation not found.");return change(conversation);});}
 export async function sendCustomerMessage(id: string, message: { id: string; text: string; name?: string; email?: string }) {
-  return mutateState("inbox", {} as Inbox, inbox => {
+  return atomicStates({["thread:"+id]:null}, rows => {
     const now = new Date().toISOString();
-    const conversation = inbox[id] ||= { id, name: message.name || "Atelier guest", email: message.email || "", status: "open", messages: [], updatedAt: now };
+    const conversation: Conversation = rows["thread:"+id] ||= { id, name: message.name || "Atelier guest", email: message.email || "", status: "open", messages: [], updatedAt: now };
     if (conversation.messages.some(m => m.id === message.id)) return conversation;
     if (conversation.messages.length >= 1000) throw new Error("This conversation is full. Please contact support.");
     if (message.name) conversation.name = message.name;

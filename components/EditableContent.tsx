@@ -8,7 +8,7 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const controller = new AbortController();
     const refresh = async () => { try { const response = await fetch("/api/content", { cache: "no-store", signal: controller.signal }); if (response.ok) setContent((await response.json()).content); } catch { /* Keep the last published content during transient failures. */ } };
-    void refresh(); const timer = setInterval(() => { if (!document.hidden) void refresh(); }, 30000);
+    void refresh(); const timer = setInterval(() => { if (!document.hidden) void refresh(); }, 60000);
     return () => { clearInterval(timer); controller.abort(); };
   }, []);
   return <Context.Provider value={content}>{children}</Context.Provider>;

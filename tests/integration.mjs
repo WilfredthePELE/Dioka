@@ -11,7 +11,7 @@ const origin = `http://127.0.0.1:${port}`;
 const bootstrap = randomBytes(32).toString('hex'); const webhookSecret = randomBytes(32).toString('hex');
 const password = randomBytes(18).toString('base64url');
 let server; let output = ''; let checks = 0;
-const env = { ...process.env, NODE_ENV: 'production', DIOKA_ADMIN_EMAILS: 'owner@example.test', DIOKA_BOOTSTRAP_SECRET: bootstrap, DIOKA_DATA_DIR: directory, SUPABASE_URL: '', NEXT_PUBLIC_SUPABASE_URL: '', SUPABASE_SERVICE_ROLE_KEY: '', DIOKA_SITE_URL: origin, DIOKA_TRUST_PROXY: 'true', STRIPE_SECRET_KEY: 'sk_test_fixture', STRIPE_WEBHOOK_SECRET: webhookSecret, DIOKA_STORE_LIVE: 'true', DIOKA_TEST_STRIPE: '1', PORT: String(port), GOOGLE_CLIENT_ID: 'dioka-fixture.apps.googleusercontent.com', GOOGLE_CLIENT_SECRET: 'fixture-only', NODE_OPTIONS: `--import=${pathToFileURL(resolve('tests/stripe-fixture.mjs')).href}` };
+const env = { ...process.env, NODE_ENV: 'production', DIOKA_ADMIN_EMAILS: 'owner@example.test', DIOKA_BOOTSTRAP_SECRET: bootstrap, DIOKA_DATA_DIR: directory, SUPABASE_URL: '', NEXT_PUBLIC_SUPABASE_URL: '', SUPABASE_SERVICE_ROLE_KEY: '', DIOKA_SITE_URL: origin, DIOKA_TRUST_PROXY: 'true', STRIPE_SECRET_KEY: 'sk_test_fixture', STRIPE_WEBHOOK_SECRET: webhookSecret, DIOKA_STORE_LIVE: 'true', DIOKA_TEST_STRIPE: '1', DIOKA_CHECKOUT_RATE: '1000', PORT: String(port), GOOGLE_CLIENT_ID: 'dioka-fixture.apps.googleusercontent.com', GOOGLE_CLIENT_SECRET: 'fixture-only', NODE_OPTIONS: `--import=${pathToFileURL(resolve('tests/stripe-fixture.mjs')).href}` };
 async function start() {
   server = spawn(process.execPath, process.env.DIOKA_CUSTOM_SERVER === '1' ? ['server.cjs'] : ['node_modules/next/dist/bin/next', 'start', '-p', String(port), '-H', '127.0.0.1'], { cwd: process.cwd(), env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
   server.stdout.on('data', value => { output += value; }); server.stderr.on('data', value => { output += value; });
@@ -34,6 +34,7 @@ try {
   await start();
   const guest = client('10.0.0.1'), otherGuest = client('10.0.0.2'), admin = client('10.0.0.3'), customer = client('10.0.0.4');
   assert.equal((await guest.call('/api/admin')).status, 401);
+  assert.equal((await guest.call('/api/admin/reconcile','POST')).status,401);
   for (const method of ['POST', 'PATCH', 'DELETE']) assert.equal((await guest.call('/api/products', method, {})).status, 401);
   checked('Anonymous users cannot read administration or edit products');
   assert.equal((await guest.call('/api/auth/register', 'POST', { name: 'Owner impostor', email: 'owner@example.test', password })).status, 403);
@@ -57,12 +58,17 @@ try {
   assert.equal((await admin.call('/api/products', 'POST', product)).status, 200);
   assert.equal((await admin.call('/api/products', 'POST', { ...product, price: -1 })).status, 400);
   assert.equal((await guest.call('/api/products')).data.products.find(p => p.id === product.id).price, 125);
-  checked('Validated product CRUD is immediately visible to storefront visitors');
+  assert.match((await guest.call('/api/products')).response.headers.get('cache-control'),/public/);
+  assert.match((await admin.call('/api/admin')).response.headers.get('cache-control'),/no-store/);
+  checked('Validated product CRUD, public catalogue caching and private administration responses');
   const initial = await admin.call('/api/admin'); const content = { ...initial.data.content, headline: 'An updated atelier.' };
   assert.equal((await admin.call('/api/admin', 'PATCH', { action: 'content', content })).status, 200);
   assert.equal((await guest.call('/api/content')).data.content.headline, content.headline);
   assert.equal((await guest.call('/api/newsletter', 'POST', { email: 'subscriber@example.test' })).status, 200);
-  checked('Published website content and newsletter records persist on the server');
+  const registry=JSON.parse(await (await import('node:fs/promises')).readFile('lib/site-editable.json','utf8')); const managed=registry.find(f=>f.kind==='text'&&f.defaultValue==='TRENDING COLLECTIONS'); const section=registry.find(f=>f.kind==='section'&&f.page==='Home');const link=registry.find(f=>f.kind==='link');
+  const fullContent=(await admin.call('/api/admin')).data.content;const controlled={...fullContent,controls:{...fullContent.controls,texts:{[managed.id]:'CURATED FOR YOU'},assets:{[link.id]:'/bags'},sections:{[section.id]:false},order:{}}};
+  assert.equal((await admin.call('/api/admin','PATCH',{action:'content',content:controlled})).status,200);assert.equal((await guest.call('/api/content')).data.content.controls.texts[managed.id],'CURATED FOR YOU');assert.equal((await admin.call('/api/admin','PATCH',{action:'content',content:{...controlled,controls:{...controlled.controls,assets:{[link.id]:'javascript:alert(1)'}}}})).status,400);assert.equal((await admin.call('/api/admin','PATCH',{action:'content',content:fullContent})).status,200);
+  checked('Published website fields, visibility, safe links and newsletter persistence');
   const message = { id: randomUUID(), text: 'Can you help me with sizing?', name: 'Test Guest', email: 'guest@example.test' };
   const sent = await guest.call('/api/chat', 'POST', message); assert.equal(sent.status, 200);
   const duplicate = await guest.call('/api/chat', 'POST', message); assert.equal(duplicate.data.conversation.messages.filter(m => m.id === message.id).length, 1);
@@ -102,6 +108,10 @@ try {
   const receipt = await fetch(origin + '/order-confirmation?order_id=FORGED'); assert.ok(!(await receipt.text()).includes('PAYMENT VERIFIED'));
   assert.equal((await guest.call('/api/orders', 'POST', { total: 0 })).status, 405);
   checked('Real shipment updates and rejection of forged order confirmations');
+  await import('./checkout-concurrency.mjs').then(m=>m.checkoutConcurrency({origin,admin}));
+  assert.equal((await admin.call('/api/admin/reconcile','POST')).status,200);
+  checked('Overlapping checkouts, no overselling, payment timeout recovery and protected reconciliation');
+  if(process.env.DIOKA_RUN_LOAD==='1')await import('./load-checkout.mjs').then(m=>m.loadCheckout({origin,admin}));
   await stop(); await start();
   assert.equal((await admin.call('/api/admin')).data.products.find(p => p.id === product.id).stockQuantity, 1);
   assert.equal((await guest.call('/api/chat')).data.conversation.messages.at(-1).sender, 'team');

@@ -1,7 +1,7 @@
 import { createHash, randomBytes } from "node:crypto";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 import { z } from "zod";
-import { readState, mutateState } from "@/lib/persistence";
+import { readState, atomicStates, setState } from "@/lib/persistence";
 import { HttpError } from "@/lib/http";
 import type { StoredCartItem } from "@/lib/auth-storage";
 export const googleReady = () => Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.DIOKA_SITE_URL);
@@ -17,21 +17,14 @@ const hash = (value: string) => createHash("sha256").update(value).digest("base6
 export async function beginGoogle(returnTo: "/" | "/admin", cart: StoredCartItem[], linkUserId?: string) {
   const config = googleConfig();
   const state = randomBytes(32).toString("base64url"), verifier = randomBytes(48).toString("base64url"), nonce = randomBytes(32).toString("base64url");
-  await mutateState("google-oauth", {} as Transactions, rows => {
-    for (const key of Object.keys(rows)) if (rows[key].expiresAt < Date.now()) delete rows[key];
-    rows[hash(state)] = { nonce, verifier, returnTo, cart, linkUserId, expiresAt: Date.now() + 600000 };
-  });
+  await setState("oauth:"+hash(state),{nonce,verifier,returnTo,cart,linkUserId,expiresAt:Date.now()+600000});
   const url = new URL("https://accounts.google.com/o/oauth2/v2/auth");
   url.search = new URLSearchParams({ client_id: config.clientId, redirect_uri: config.redirectUri, response_type: "code", scope: "openid email profile", state, nonce, code_challenge: hash(verifier), code_challenge_method: "S256", prompt: "select_account" }).toString();
   return { state, url: url.toString() };
 }
 export async function consumeGoogle(state: string, cookie?: string) {
   if (!/^[A-Za-z0-9_-]{43}$/.test(state) || cookie !== state) throw new HttpError(400, "Google sign-in expired. Please try again.");
-  return mutateState("google-oauth", {} as Transactions, rows => {
-    const transaction = rows[hash(state)]; delete rows[hash(state)];
-    if (!transaction || transaction.expiresAt < Date.now()) return null;
-    return transaction;
-  });
+  const id="oauth:"+hash(state);return atomicStates({[id]:null},rows=>{const transaction=rows[id] as Transaction|null;rows[id]=null;return transaction&&transaction.expiresAt>Date.now()?transaction:null;});
 }
 const keys = createRemoteJWKSet(new URL("https://www.googleapis.com/oauth2/v3/certs"), { timeoutDuration: 10000 });
 export async function verifyGoogleToken(token: string, nonce: string) {

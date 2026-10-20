@@ -1,4 +1,5 @@
 "use client";
+import { CmsSource, CmsText, CmsVideo } from "@/components/SiteControls";
 
 import React, { useState, useEffect, useRef } from "react";
 import { ArrowRight, Play, Pause, Sparkles, Volume2, VolumeX } from "lucide-react";
@@ -116,7 +117,7 @@ export function AtelierSplashScreen() {
           zIndex: 1,
         }}
       >
-        <video
+        <CmsVideo
           ref={videoRef}
           autoPlay
           loop
@@ -134,13 +135,13 @@ export function AtelierSplashScreen() {
             transform: "translate(-50%, -50%)",
             objectFit: "cover",
             filter: "brightness(70%) contrast(110%) saturate(108%)",
-          }}
+          }} posterKey="3f8362dc409c5a5e"
         >
-          <source src="/shoemaker-craft-optimized.mp4" type="video/mp4" />
-          <source src="/shoemaker-craft.mp4" type="video/mp4" />
-          <source src="/italian-shoemaker-atelier.mp4" type="video/mp4" />
-          <source src="/shoemaker-daylight-brown.mp4" type="video/mp4" />
-        </video>
+          <CmsSource src="/shoemaker-craft-optimized.mp4" type="video/mp4" srcKey="7b64f1c56dfd234c" />
+          <CmsSource src="/shoemaker-craft.mp4" type="video/mp4" srcKey="faae513ad8fe5722" />
+          <CmsSource src="/italian-shoemaker-atelier.mp4" type="video/mp4" srcKey="ea2ed4dc03ae16dc" />
+          <CmsSource src="/shoemaker-daylight-brown.mp4" type="video/mp4" srcKey="b8ded3d02c832f93" />
+        </CmsVideo>
 
         {/* Ambient Film Vignette & Subtle Warm Tonal Gradients */}
         <div
@@ -185,8 +186,8 @@ export function AtelierSplashScreen() {
             fontFamily: "var(--dioka-sans)",
           }}
         >
-          <span style={{ color: "#22c55e", fontSize: "14px" }}>●</span>
-          <span>Florence Atelier Crafting Film</span>
+          <span style={{ color: "#22c55e", fontSize: "14px" }}><CmsText field="6d8ca1a8beba4aa4" fallback="●"/></span>
+          <span><CmsText field="249bfc6bbf38c946" fallback="Florence Atelier Crafting Film"/></span>
         </div>
 
         {/* Video & Audio Controls */}
@@ -260,8 +261,7 @@ export function AtelierSplashScreen() {
               transition: "all 0.2s",
             }}
           >
-            Skip to Store →
-          </button>
+            <CmsText field="d1f2aecb439df9e6" fallback="Skip to Store →"/></button>
         </div>
       </div>
 
@@ -299,7 +299,7 @@ export function AtelierSplashScreen() {
           }}
         >
           <Sparkles size={12} color="#e09f3e" />
-          <span>FLORENTINE ARTISAN LEATHER ATELIER</span>
+          <span><CmsText field="1d53c8e1df68e7be" fallback="FLORENTINE ARTISAN LEATHER ATELIER"/></span>
         </div>
 
         {/* Brand Wordmark */}
@@ -315,7 +315,7 @@ export function AtelierSplashScreen() {
             textShadow: "0 4px 30px rgba(0,0,0,0.7)",
           }}
         >
-          DIOKA<span>®</span>
+          <CmsText field="6f896fb73aa8aa55" fallback="DIOKA"/><span><CmsText field="db7ff8d3c9e4da79" fallback="®"/></span>
         </h1>
 
         <p
@@ -329,8 +329,7 @@ export function AtelierSplashScreen() {
             textShadow: "0 2px 12px rgba(0,0,0,0.8)",
           }}
         >
-          Watch our Florentine master craftsmen cut, skive, and saddle-stitch Tuscan vegetable-tanned hides. Genuine Goodyear boots, sculpted bags, and drum-dyed lambskin jackets.
-        </p>
+          <CmsText field="978aa40ff63c6444" fallback="Watch our Florentine master craftsmen cut, skive, and saddle-stitch Tuscan vegetable-tanned hides. Genuine Goodyear boots, sculpted bags, and drum-dyed lambskin jackets."/></p>
 
         {/* Enter Atelier Primary CTA */}
         <div style={{ display: "flex", alignItems: "center", gap: "14px", marginTop: "4px" }}>
@@ -363,7 +362,7 @@ export function AtelierSplashScreen() {
               e.currentTarget.style.background = "#ffffff";
             }}
           >
-            <span>Enter Atelier</span>
+            <span><CmsText field="020e7213c081a87b" fallback="Enter Atelier"/></span>
             <ArrowRight size={16} />
           </button>
         </div>
@@ -378,8 +377,7 @@ export function AtelierSplashScreen() {
             fontFamily: "var(--dioka-sans)",
           }}
         >
-          Crafted in Florence & London · 100% Full-Grain Vegetable-Tanned Leather
-        </span>
+          <CmsText field="99b10b849ab81f94" fallback="Crafted in Florence & London · 100% Full-Grain Vegetable-Tanned Leather"/></span>
       </div>
     </div>
   );

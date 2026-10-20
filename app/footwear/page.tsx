@@ -1,4 +1,5 @@
 "use client";
+import { CmsLink, CmsPage, CmsSection, CmsText } from "@/components/SiteControls";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -32,31 +33,27 @@ export default function FootwearPage() {
   const shoes = catalog.filter((p) => p.category === "Footwear");
 
   return (
-    <main>
+    <CmsPage pageKey="app/footwear/page.tsx">
       <SiteHeader />
 
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "16px 5% 0" }}>
         <nav aria-label="Breadcrumb" style={{ fontSize: "12px", color: "#888", display: "flex", gap: "8px" }}>
-          <Link href="/" style={{ color: "#666", textDecoration: "none" }}>
-            Home
-          </Link>
-          <span>/</span>
-          <span style={{ color: "#123d32", fontWeight: 700 }}>Shoes & Boots</span>
+          <CmsLink href="/" style={{ color: "#666", textDecoration: "none" }} hrefKey="ffb0278dadc799c8">
+            <CmsText field="1f3c4e1d8388c2d7" fallback="Home"/></CmsLink>
+          <span><CmsText field="63f5908e63b3d620" fallback="/"/></span>
+          <span style={{ color: "#123d32", fontWeight: 700 }}><CmsText field="2bf74e63f06d0459" fallback="Shoes & Boots"/></span>
         </nav>
       </div>
 
-      <section style={{ maxWidth: "1280px", margin: "0 auto", padding: "24px 5% 48px" }}>
+      <CmsSection style={{ maxWidth: "1280px", margin: "0 auto", padding: "24px 5% 48px" }} sectionKey="f75c99014b36b6a3">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "24px", borderBottom: "1px solid #e2ddd5", paddingBottom: "32px" }}>
           <div style={{ maxWidth: "680px" }}>
             <p className="eyebrow" style={{ color: "#5b1f2b", marginBottom: "8px" }}>
-              COLLECTION · CUSHIONED ARCH SUPPORT
-            </p>
+              <CmsText field="8772c59fa1e7656c" fallback="COLLECTION · CUSHIONED ARCH SUPPORT"/></p>
             <h1 style={{ fontFamily: "var(--dioka-font)", fontSize: "clamp(38px, 5vw, 64px)", lineHeight: "0.95", margin: "0 0 16px", color: "#123d32", fontWeight: 600 }}>
-              Shoes & Boots
-            </h1>
+              <CmsText field="11de9ac85f09713e" fallback="Shoes & Boots"/></h1>
             <p style={{ fontSize: "17px", color: "#596f64", lineHeight: "1.5", margin: 0 }}>
-              Classic Chelsea boots, stacked heeled boots, and Goodyear-welted derby shoes. Designed with multi-density cushioned footbeds for zero-break-in everyday comfort.
-            </p>
+              <CmsText field="1fdca06d9eecd92a" fallback="Classic Chelsea boots, stacked heeled boots, and Goodyear-welted derby shoes. Designed with multi-density cushioned footbeds for zero-break-in everyday comfort."/></p>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px", fontWeight: 600, color: "#123d32" }}>
@@ -65,14 +62,11 @@ export default function FootwearPage() {
               onClick={() => setSizeGuideOpen(true)}
               style={{ background: "none", border: 0, textDecoration: "underline", color: "#123d32", cursor: "pointer", textAlign: "left", padding: 0 }}
             >
-              View Size & Fit Guide →
-            </button>
+              <CmsText field="f1db8e5422020f49" fallback="View Size & Fit Guide →"/></button>
             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <Check size={16} color="#166534" /> True to Standard EU Sizing
-            </span>
+              <Check size={16} color="#166534" /> <CmsText field="f96b3365e3a7cf10" fallback="True to Standard EU Sizing"/></span>
             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <Truck size={16} color="#166534" /> Free Exchanges & Returns
-            </span>
+              <Truck size={16} color="#166534" /> <CmsText field="ce65fc535d07d02c" fallback="Free Exchanges & Returns"/></span>
           </div>
         </div>
 
@@ -100,8 +94,7 @@ export default function FootwearPage() {
                   />
                   <div className="product-card-hover-overlay">
                     <span className="hover-view-tag">
-                      <Eye size={14} /> View Details
-                    </span>
+                      <Eye size={14} /> <CmsText field="e0c707598597bed3" fallback="View Details"/></span>
                   </div>
                 </Link>
 
@@ -115,15 +108,14 @@ export default function FootwearPage() {
                   <Heart size={16} fill={isWishlisted ? "currentColor" : "none"} strokeWidth={2} />
                 </button>
 
-                <span className="product-badge">BEST SELLER</span>
+                <span className="product-badge"><CmsText field="26612f6e9b5f2dd1" fallback="BEST SELLER"/></span>
 
                 <div className="product-meta">
                   <div className="product-meta-top">
                     <span className="product-meta-category">{product.color}</span>
                     <span className="product-meta-rating">
                       <Star size={12} fill="#5b1f2b" color="#5b1f2b" />
-                      {product.rating ?? 4.9} ({product.reviews ?? 32} reviews)
-                    </span>
+                      {product.rating ?? 4.9} <CmsText field="58ceefe988c066e5" fallback="("/>{product.reviews ?? 32} <CmsText field="d6ce27d0cdc0ac38" fallback="reviews)"/></span>
                   </div>
 
                   <div className="product-meta-main">
@@ -141,8 +133,7 @@ export default function FootwearPage() {
                   {/* Size selection */}
                   <div style={{ marginTop: "6px" }}>
                     <span style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "#5b1f2b", display: "block", marginBottom: "4px" }}>
-                      Select Size:
-                    </span>
+                      <CmsText field="2db80326975917db" fallback="Select Size:"/></span>
                     <div className="card-size-selector">
                       {product.sizes.map((sz) => (
                         <button
@@ -175,8 +166,7 @@ export default function FootwearPage() {
                         className="quick-view-btn"
                         onClick={() => setSelectedProduct(product)}
                       >
-                        <Eye size={13} /> Quick View
-                      </button>
+                        <Eye size={13} /> <CmsText field="5df606633a6930db" fallback="Quick View"/></button>
                       <Link
                         href={`/products/${product.id}`}
                         className="quick-view-btn"
@@ -187,7 +177,7 @@ export default function FootwearPage() {
                           color: "#123d32",
                         }}
                       >
-                        Details <ArrowRight size={13} />
+                        <CmsText field="416cba87284aeb23" fallback="Details "/><ArrowRight size={13} />
                       </Link>
                     </div>
                   </div>
@@ -196,9 +186,9 @@ export default function FootwearPage() {
             );
           })}
         </div>
-      </section>
+      </CmsSection>
 
       <SiteFooter />
-    </main>
+    </CmsPage>
   );
 }

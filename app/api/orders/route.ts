@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     const user = await getUserFromSession((await cookies()).get("dioka_token")?.value);
     if (!user) throw new HttpError(401, "Sign in to view your orders. Guests can contact our team with their order reference.");
     const id = new URL(request.url).searchParams.get("id");
-    const orders = Object.values(await listOrders()).filter(order => order.userId === user.id && (!id || order.id.toLowerCase() === id.toLowerCase() || order.trackingCode.toLowerCase() === id.toLowerCase()));
+    const orders = Object.values(await listOrders(user.id)).filter(order => order.userId === user.id && (!id || order.id.toLowerCase() === id.toLowerCase() || order.trackingCode.toLowerCase() === id.toLowerCase()));
     return Response.json({ orders }, { headers: { "Cache-Control": "no-store" } });
   } catch (e) { return failure(e); }
 }

@@ -1,4 +1,5 @@
 "use client";
+import { CmsLink, CmsPage, CmsSection, CmsText } from "@/components/SiteControls";
 
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
@@ -302,46 +303,42 @@ export default function CustomizePage() {
   };
 
   return (
-    <main>
+    <CmsPage pageKey="app/customize/page.tsx">
       <SiteHeader />
 
       {/* Breadcrumbs */}
       <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "16px 5% 0" }}>
         <nav aria-label="Breadcrumb" style={{ fontSize: "12px", color: "#888", display: "flex", gap: "8px" }}>
-          <Link href="/" style={{ color: "#666", textDecoration: "none" }}>
-            Home
-          </Link>
-          <span>/</span>
-          <span style={{ color: "#123d32", fontWeight: 700 }}>Customize (Atelier Bespoke)</span>
+          <CmsLink href="/" style={{ color: "#666", textDecoration: "none" }} hrefKey="a22f09e4cfdc44d2">
+            <CmsText field="df72099776e15e52" fallback="Home"/></CmsLink>
+          <span><CmsText field="8fbe23d47577eb68" fallback="/"/></span>
+          <span style={{ color: "#123d32", fontWeight: 700 }}><CmsText field="d028badd98c9a6cf" fallback="Customize (Atelier Bespoke)"/></span>
         </nav>
       </div>
 
       {/* Hero Header */}
-      <section style={{ maxWidth: "1320px", margin: "0 auto", padding: "20px 5% 36px" }}>
+      <CmsSection style={{ maxWidth: "1320px", margin: "0 auto", padding: "20px 5% 36px" }} sectionKey="51f8dfa31b0e6395">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "24px", borderBottom: "1px solid #e2ddd5", paddingBottom: "24px" }}>
           <div style={{ maxWidth: "760px" }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(18, 61, 50, 0.08)", padding: "4px 10px", borderRadius: "2px", marginBottom: "8px" }}>
               <Crown size={14} color="#123d32" />
               <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "#123d32" }}>
-                DIOKA BESPOKE ATELIER
-              </span>
+                <CmsText field="682b6517038d7723" fallback="DIOKA BESPOKE ATELIER"/></span>
             </div>
             <h1 style={{ fontFamily: "var(--dioka-font)", fontSize: "clamp(34px, 4.5vw, 56px)", lineHeight: "1", margin: "0 0 12px", color: "#123d32", fontWeight: 600 }}>
-              Customize Your Creation
-            </h1>
+              <CmsText field="4f13728639533b96" fallback="Customize Your Creation"/></h1>
             <p style={{ fontSize: "16px", color: "#596f64", lineHeight: "1.5", margin: 0 }}>
-              Work directly with our European workshop. Select your hide, finish, hardware, and personalized 24k gold or blind debossed initials. Hand-stitched to order in 10 to 14 days.
-            </p>
+              <CmsText field="566af0629e070583" fallback="Work directly with our European workshop. Select your hide, finish, hardware, and personalized 24k gold or blind debossed initials. Hand-stitched to order in 10 to 14 days."/></p>
           </div>
 
           <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", fontWeight: 600, color: "#123d32" }}>
               <Scissors size={16} color="#5b1f2b" />
-              <span>Cut & Stitched by Master Artisans</span>
+              <span><CmsText field="281af4834021883d" fallback="Cut & Stitched by Master Artisans"/></span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", fontWeight: 600, color: "#123d32" }}>
               <Truck size={16} color="#166534" />
-              <span>Complimentary Worldwide Courier</span>
+              <span><CmsText field="1127dfec1a207440" fallback="Complimentary Worldwide Courier"/></span>
             </div>
           </div>
         </div>
@@ -371,10 +368,10 @@ export default function CustomizePage() {
             </button>
           ))}
         </div>
-      </section>
+      </CmsSection>
 
       {/* Main Customizer Workspace */}
-      <section style={{ maxWidth: "1320px", margin: "0 auto", padding: "0 5% 72px" }}>
+      <CmsSection style={{ maxWidth: "1320px", margin: "0 auto", padding: "0 5% 72px" }} sectionKey="9abfdc2ae7a63238">
         <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: "40px", alignItems: "start" }}>
 
           {/* LEFT: Live Interactive Preview Card */}
@@ -458,8 +455,7 @@ export default function CustomizePage() {
                     }}
                   >
                     <span style={{ fontSize: "9px", letterSpacing: ".12em", textTransform: "uppercase", color: "#bbb" }}>
-                      MONOGRAM STAMP ({monogramPlacement})
-                    </span>
+                      <CmsText field="ae925fb9b60cd52b" fallback="MONOGRAM STAMP ("/>{monogramPlacement}<CmsText field="0f12b039108f9ca0" fallback=")"/></span>
                     <span
                       style={{
                         fontFamily: "var(--dioka-font)",
@@ -481,14 +477,13 @@ export default function CustomizePage() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                   <div>
                     <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "#888" }}>
-                      CUSTOM COMMISSION SPECIFICATION
-                    </span>
+                      <CmsText field="d6f513f1e3dfeec8" fallback="CUSTOM COMMISSION SPECIFICATION"/></span>
                     <h3 style={{ fontFamily: "var(--dioka-font)", fontSize: "24px", margin: "2px 0 0", color: "#123d32" }}>
                       {currentModel.name}
                     </h3>
                   </div>
                   <div style={{ textAlign: "right" }}>
-                    <span style={{ fontSize: "11px", color: "#888", display: "block" }}>ESTIMATED TOTAL</span>
+                    <span style={{ fontSize: "11px", color: "#888", display: "block" }}><CmsText field="ad43db7f18bd5ef8" fallback="ESTIMATED TOTAL"/></span>
                     <strong style={{ fontSize: "24px", color: "#5b1f2b", fontFamily: "var(--dioka-sans)" }}>
                       {formatPrice(totalPrice)}
                     </strong>
@@ -509,27 +504,27 @@ export default function CustomizePage() {
                   }}
                 >
                   <div>
-                    <span style={{ color: "#888", display: "block" }}>Leather:</span>
+                    <span style={{ color: "#888", display: "block" }}><CmsText field="9b1b16d8fa76d049" fallback="Leather:"/></span>
                     <strong style={{ color: "#123d32" }}>{currentLeather.name}</strong>
                   </div>
                   <div>
-                    <span style={{ color: "#888", display: "block" }}>Color Shade:</span>
+                    <span style={{ color: "#888", display: "block" }}><CmsText field="ee48f0360bd96170" fallback="Color Shade:"/></span>
                     <strong style={{ color: "#123d32" }}>{selectedColor.name}</strong>
                   </div>
                   <div>
-                    <span style={{ color: "#888", display: "block" }}>Hardware:</span>
+                    <span style={{ color: "#888", display: "block" }}><CmsText field="cbb2aea2d05ba995" fallback="Hardware:"/></span>
                     <strong style={{ color: "#123d32" }}>{currentHardware.name}</strong>
                   </div>
                   <div>
-                    <span style={{ color: "#888", display: "block" }}>Interior Lining:</span>
+                    <span style={{ color: "#888", display: "block" }}><CmsText field="a7de1c24389578f8" fallback="Interior Lining:"/></span>
                     <strong style={{ color: "#123d32" }}>{currentLining.name}</strong>
                   </div>
                   <div>
-                    <span style={{ color: "#888", display: "block" }}>Selected Size:</span>
+                    <span style={{ color: "#888", display: "block" }}><CmsText field="abb77f1f430af492" fallback="Selected Size:"/></span>
                     <strong style={{ color: "#123d32" }}>{activeSize}</strong>
                   </div>
                   <div>
-                    <span style={{ color: "#888", display: "block" }}>Personalization:</span>
+                    <span style={{ color: "#888", display: "block" }}><CmsText field="2534f3fd945b3cc6" fallback="Personalization:"/></span>
                     <strong style={{ color: "#123d32" }}>
                       {monogramEnabled && monogramText.trim() ? `${monogramText.toUpperCase()} (${currentFoil.name})` : "Standard Atelier Crest"}
                     </strong>
@@ -558,8 +553,7 @@ export default function CustomizePage() {
                 </button>
 
                 <p style={{ textAlign: "center", fontSize: "12px", color: "#777", margin: "10px 0 0" }}>
-                  Handmade for you in Europe · Free express shipping & 30-day exchange guarantee
-                </p>
+                  <CmsText field="706034ec0b732844" fallback="Handmade for you in Europe · Free express shipping & 30-day exchange guarantee"/></p>
               </div>
             </div>
           </div>
@@ -571,11 +565,9 @@ export default function CustomizePage() {
             <div style={{ borderBottom: "1px solid #e5dfd5", paddingBottom: "24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
                 <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "24px", height: "24px", borderRadius: "50%", background: "#123d32", color: "#fff", fontSize: "12px", fontWeight: 700 }}>
-                  1
-                </span>
+                  <CmsText field="08f5a4bba9fc6fcf" fallback="1"/></span>
                 <h2 style={{ fontSize: "18px", margin: 0, color: "#123d32", fontWeight: 700 }}>
-                  Select Silhouette ({categoryModels.length} available)
-                </h2>
+                  <CmsText field="a98bd8a184c1ff36" fallback="Select Silhouette ("/>{categoryModels.length} <CmsText field="88a3449a00187081" fallback="available)"/></h2>
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "10px" }}>
@@ -602,7 +594,7 @@ export default function CustomizePage() {
                         {model.name}
                       </div>
                       <div style={{ fontSize: "12px", color: "#5b1f2b", fontWeight: 600, marginTop: "4px" }}>
-                        Base {formatPrice(model.basePrice)}
+                        <CmsText field="c2d630ce0c2a80dc" fallback="Base "/>{formatPrice(model.basePrice)}
                       </div>
                     </button>
                   );
@@ -617,11 +609,9 @@ export default function CustomizePage() {
             <div style={{ borderBottom: "1px solid #e5dfd5", paddingBottom: "24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
                 <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "24px", height: "24px", borderRadius: "50%", background: "#123d32", color: "#fff", fontSize: "12px", fontWeight: 700 }}>
-                  2
-                </span>
+                  <CmsText field="f99f8cfd54b82372" fallback="2"/></span>
                 <h2 style={{ fontSize: "18px", margin: 0, color: "#123d32", fontWeight: 700 }}>
-                  Choose Leather Grade & Texture
-                </h2>
+                  <CmsText field="603f8bdc4c6633cc" fallback="Choose Leather Grade & Texture"/></h2>
               </div>
 
               <div style={{ display: "grid", gap: "10px" }}>
@@ -668,11 +658,9 @@ export default function CustomizePage() {
             <div style={{ borderBottom: "1px solid #e5dfd5", paddingBottom: "24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
                 <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "24px", height: "24px", borderRadius: "50%", background: "#123d32", color: "#fff", fontSize: "12px", fontWeight: 700 }}>
-                  3
-                </span>
+                  <CmsText field="50e3655c96253e03" fallback="3"/></span>
                 <h2 style={{ fontSize: "18px", margin: 0, color: "#123d32", fontWeight: 700 }}>
-                  Select Dye & Color Tone ({selectedColor.name})
-                </h2>
+                  <CmsText field="ef2f634283782d11" fallback="Select Dye & Color Tone ("/>{selectedColor.name}<CmsText field="bcc866eaae4ce9c6" fallback=")"/></h2>
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
@@ -717,11 +705,9 @@ export default function CustomizePage() {
             <div style={{ borderBottom: "1px solid #e5dfd5", paddingBottom: "24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
                 <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "24px", height: "24px", borderRadius: "50%", background: "#123d32", color: "#fff", fontSize: "12px", fontWeight: 700 }}>
-                  4
-                </span>
+                  <CmsText field="4b807f76eb0b89e8" fallback="4"/></span>
                 <h2 style={{ fontSize: "18px", margin: 0, color: "#123d32", fontWeight: 700 }}>
-                  Hardware & Metal Accents
-                </h2>
+                  <CmsText field="e3034c9193bdb03e" fallback="Hardware & Metal Accents"/></h2>
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
@@ -766,11 +752,9 @@ export default function CustomizePage() {
             <div style={{ borderBottom: "1px solid #e5dfd5", paddingBottom: "24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
                 <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "24px", height: "24px", borderRadius: "50%", background: "#123d32", color: "#fff", fontSize: "12px", fontWeight: 700 }}>
-                  5
-                </span>
+                  <CmsText field="99ec1deb4f27c99a" fallback="5"/></span>
                 <h2 style={{ fontSize: "18px", margin: 0, color: "#123d32", fontWeight: 700 }}>
-                  Interior Lining Fabric ({currentLining.name})
-                </h2>
+                  <CmsText field="ae41e748f72b8b5d" fallback="Interior Lining Fabric ("/>{currentLining.name}<CmsText field="68e1bf9178aa9954" fallback=")"/></h2>
               </div>
 
               <div style={{ display: "grid", gap: "10px" }}>
@@ -797,7 +781,7 @@ export default function CustomizePage() {
                         <strong style={{ fontSize: "13px", color: "#123d32", display: "block" }}>{lining.name}</strong>
                         <span style={{ fontSize: "12px", color: "#666" }}>{lining.note}</span>
                       </div>
-                      <span style={{ fontSize: "11px", fontWeight: 700, color: "#166534" }}>Included</span>
+                      <span style={{ fontSize: "11px", fontWeight: 700, color: "#166534" }}><CmsText field="b6a456b59b7fbe5c" fallback="Included"/></span>
                     </button>
                   );
                 })}
@@ -809,11 +793,9 @@ export default function CustomizePage() {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                   <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "24px", height: "24px", borderRadius: "50%", background: "#123d32", color: "#fff", fontSize: "12px", fontWeight: 700 }}>
-                    6
-                  </span>
+                    <CmsText field="c1159514f17f0a3f" fallback="6"/></span>
                   <h2 style={{ fontSize: "18px", margin: 0, color: "#123d32", fontWeight: 700 }}>
-                    Personalized Initials & Stamping
-                  </h2>
+                    <CmsText field="c24876b745d43daf" fallback="Personalized Initials & Stamping"/></h2>
                 </div>
                 <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>
                   <input
@@ -821,8 +803,7 @@ export default function CustomizePage() {
                     checked={monogramEnabled}
                     onChange={(e) => setMonogramEnabled(e.target.checked)}
                   />
-                  Enable Monogram (+{formatPrice(25)})
-                </label>
+                  <CmsText field="8f0ddbb8aa394c73" fallback="Enable Monogram (+"/>{formatPrice(25)}<CmsText field="1e4db2fb0fdf6394" fallback=")"/></label>
               </div>
 
               {monogramEnabled && (
@@ -830,8 +811,7 @@ export default function CustomizePage() {
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "14px" }}>
                     <div>
                       <label style={{ display: "block", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", marginBottom: "4px", color: "#123d32" }}>
-                        Initials (1–4 Letters)
-                      </label>
+                        <CmsText field="adf0f1973cad658d" fallback="Initials (1–4 Letters)"/></label>
                       <input
                         type="text"
                         maxLength={4}
@@ -853,8 +833,7 @@ export default function CustomizePage() {
 
                     <div>
                       <label style={{ display: "block", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", marginBottom: "4px", color: "#123d32" }}>
-                        Placement
-                      </label>
+                        <CmsText field="16b4b4a222a3a84b" fallback="Placement"/></label>
                       <select
                         value={monogramPlacement}
                         onChange={(e) => setMonogramPlacement(e.target.value)}
@@ -876,8 +855,7 @@ export default function CustomizePage() {
 
                   <div>
                     <label style={{ display: "block", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", marginBottom: "6px", color: "#123d32" }}>
-                      Foil Embossing Style
-                    </label>
+                      <CmsText field="d49cb73e53d2bd55" fallback="Foil Embossing Style"/></label>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px" }}>
                       {FOIL_STYLES.map((foil) => {
                         const isSelected = foil.id === monogramFoilId;
@@ -911,11 +889,9 @@ export default function CustomizePage() {
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
                 <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "24px", height: "24px", borderRadius: "50%", background: "#123d32", color: "#fff", fontSize: "12px", fontWeight: 700 }}>
-                  7
-                </span>
+                  <CmsText field="cdbfc25fbc9b1131" fallback="7"/></span>
                 <h2 style={{ fontSize: "18px", margin: 0, color: "#123d32", fontWeight: 700 }}>
-                  Size & Fitting
-                </h2>
+                  <CmsText field="6d907d70d7770df9" fallback="Size & Fitting"/></h2>
               </div>
 
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "16px" }}>
@@ -945,8 +921,7 @@ export default function CustomizePage() {
 
               <div>
                 <label style={{ display: "block", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", marginBottom: "4px", color: "#123d32" }}>
-                  Special Artisan Instructions / Fitting Notes (Optional)
-                </label>
+                  <CmsText field="66fbfb3d4ee41044" fallback="Special Artisan Instructions / Fitting Notes (Optional)"/></label>
                 <textarea
                   rows={2}
                   value={customNotes}
@@ -966,56 +941,48 @@ export default function CustomizePage() {
 
           </div>
         </div>
-      </section>
+      </CmsSection>
 
       {/* Atelier Craftsmanship Pillars */}
-      <section style={{ background: "#f5f2eb", padding: "60px 5%", borderTop: "1px solid #e0dad0" }}>
+      <CmsSection style={{ background: "#f5f2eb", padding: "60px 5%", borderTop: "1px solid #e0dad0" }} sectionKey="f13226877b795d33">
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 40px" }}>
-            <p className="eyebrow" style={{ color: "#5b1f2b" }}>THE DIOKA COMMISSION PROMISE</p>
+            <p className="eyebrow" style={{ color: "#5b1f2b" }}><CmsText field="18d263450bc917b1" fallback="THE DIOKA COMMISSION PROMISE"/></p>
             <h2 style={{ fontFamily: "var(--dioka-font)", fontSize: "36px", color: "#123d32", margin: "4px 0" }}>
-              Heirloom Craftsmanship
-            </h2>
+              <CmsText field="9ee7fe9c87a949c9" fallback="Heirloom Craftsmanship"/></h2>
             <p style={{ color: "#666", fontSize: "15px" }}>
-              Every bespoke piece is crafted one at a time by veteran leather artisans in our European workshops.
-            </p>
+              <CmsText field="2a9dc3c4c7ec9ffa" fallback="Every bespoke piece is crafted one at a time by veteran leather artisans in our European workshops."/></p>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px" }}>
             <div style={{ background: "#fff", padding: "24px", border: "1px solid #e2ddd5" }}>
               <Sparkles size={24} color="#123d32" style={{ marginBottom: "12px" }} />
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#123d32", margin: "0 0 6px" }}>
-                Hand-Selected Hides
-              </h3>
+                <CmsText field="b7f7ad876af37c86" fallback="Hand-Selected Hides"/></h3>
               <p style={{ fontSize: "13px", color: "#666", margin: 0, lineHeight: "1.5" }}>
-                We inspect every square decimeter of leather for tensile strength, grain consistency, and natural patina potential.
-              </p>
+                <CmsText field="d10667fc08525d32" fallback="We inspect every square decimeter of leather for tensile strength, grain consistency, and natural patina potential."/></p>
             </div>
 
             <div style={{ background: "#fff", padding: "24px", border: "1px solid #e2ddd5" }}>
               <ShieldCheck size={24} color="#123d32" style={{ marginBottom: "12px" }} />
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#123d32", margin: "0 0 6px" }}>
-                2-Year Atelier Guarantee
-              </h3>
+                <CmsText field="f01ea4e2468b47c8" fallback="2-Year Atelier Guarantee"/></h3>
               <p style={{ fontSize: "13px", color: "#666", margin: 0, lineHeight: "1.5" }}>
-                Stitching, zippers, brass hardware, and structural edges are covered under our full 2-year complimentary workshop warranty.
-              </p>
+                <CmsText field="1efe60cfadb1b7e6" fallback="Stitching, zippers, brass hardware, and structural edges are covered under our full 2-year complimentary workshop warranty."/></p>
             </div>
 
             <div style={{ background: "#fff", padding: "24px", border: "1px solid #e2ddd5" }}>
               <RotateCcw size={24} color="#123d32" style={{ marginBottom: "12px" }} />
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#123d32", margin: "0 0 6px" }}>
-                Fit Perfection Guarantee
-              </h3>
+                <CmsText field="5ae366c6273224d8" fallback="Fit Perfection Guarantee"/></h3>
               <p style={{ fontSize: "13px", color: "#666", margin: 0, lineHeight: "1.5" }}>
-                If your footwear or jacket requires an adjustment upon arrival, our atelier provides complimentary tailoring adjustments.
-              </p>
+                <CmsText field="24c05e0d1b270b9c" fallback="If your footwear or jacket requires an adjustment upon arrival, our atelier provides complimentary tailoring adjustments."/></p>
             </div>
           </div>
         </div>
-      </section>
+      </CmsSection>
 
       <SiteFooter />
-    </main>
+    </CmsPage>
   );
 }

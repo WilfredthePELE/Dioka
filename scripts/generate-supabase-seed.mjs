@@ -7,8 +7,8 @@ const contentSource=await readFile('lib/site-content.ts','utf8');
 const contentCode=contentSource.match(/export const defaultContent = (\{.*\});/)[0];
 const {defaultContent}=await import('data:text/javascript;base64,'+Buffer.from(contentCode).toString('base64'));
 const rows={
- 'catalogue-v1':{products:products.map(p=>({...p,version:1,stockQuantity:0,inStock:false})),reservations:{}},
- content:defaultContent,accounts:{users:{},sessions:{},processedPayments:{}},orders:{},inbox:{},subscribers:{}
+ ...Object.fromEntries(products.map(p=>['product:'+p.id,{...p,version:1,stockQuantity:0,inStock:false}])),
+ content:defaultContent,'schema:partitioned':{ready:true}
 };
 const quote=value=>"'"+JSON.stringify(value).replaceAll("'","''")+"'::jsonb";
 const sql='-- Initial Dioka data. Existing records are never overwritten.\n-- Stock starts at zero until the owner enters actual inventory.\nbegin;\n'+Object.entries(rows).map(([key,value])=>"insert into public.dioka_app_state(key,value,version) values ('"+key+"',"+quote(value)+",1) on conflict(key) do nothing;").join('\n')+'\ncommit;\n';

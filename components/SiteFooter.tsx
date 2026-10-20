@@ -1,4 +1,5 @@
 "use client";
+import { CmsLink, CmsSource, CmsText, CmsVideo } from "@/components/SiteControls";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -44,18 +45,18 @@ export function SiteFooter() {
       <footer className="footer footer-video-bg">
         {/* Background artisan shoemaking video */}
         <div className="footer-video-wrap" aria-hidden="true">
-          <video
+          <CmsVideo
             autoPlay
             loop
             muted
             playsInline
             className="footer-video"
-            poster="/dioka-boots-jacket.webp"
+            poster="/dioka-boots-jacket.webp" posterKey="fa6e01e86f8e83dc"
           >
-            <source src="/italian-shoemaker-atelier.mp4" type="video/mp4" />
-            <source src="/italian-shoemaker-atelier.webm" type="video/webm" />
-            <source src="/shoemaker-daylight-brown.mp4" type="video/mp4" />
-          </video>
+            <CmsSource src="/italian-shoemaker-atelier.mp4" type="video/mp4" srcKey="8e2d454047f8f7dc" />
+            <CmsSource src="/italian-shoemaker-atelier.webm" type="video/webm" srcKey="09d32f42dd1311e7" />
+            <CmsSource src="/shoemaker-daylight-brown.mp4" type="video/mp4" srcKey="6e3e629de359367d" />
+          </CmsVideo>
           <div className="footer-video-overlay" />
         </div>
 
@@ -64,8 +65,7 @@ export function SiteFooter() {
           {/* Top Row: Tagline & Smooth Back to Top */}
           <div className="footer-top">
             <p className="eyebrow" style={{ color: "#fff", textShadow: "0 1px 3px rgba(0,0,0,0.5)", margin: 0 }}>
-              DIOKA · ARTISAN HANDCRAFTED LEATHER ATELIER
-            </p>
+              <CmsText field="221b05e3b78b9bd9" fallback="DIOKA · ARTISAN HANDCRAFTED LEATHER ATELIER"/></p>
             <button
               type="button"
               onClick={scrollToTop}
@@ -89,21 +89,20 @@ export function SiteFooter() {
               onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.22)")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.12)")}
             >
-              <span>Back to top</span>
+              <span><CmsText field="1abd4da0800771b2" fallback="Back to top"/></span>
               <ArrowUp size={14} />
             </button>
           </div>
 
           {/* Central Grand Brand Wordmark (Clickable to Home / Top) */}
           <div style={{ textAlign: "center" }}>
-            <Link
+            <CmsLink
               href="/"
               className="footer-wordmark"
               style={{ textDecoration: "none", display: "inline-block" }}
-              title="Return to Dioka Home"
+              title="Return to Dioka Home" hrefKey="956f5d59122f49bd" titleKey="c2a35277b426bbee"
             >
-              DIOKA
-            </Link>
+              <CmsText field="4787fca805353cde" fallback="DIOKA"/></CmsLink>
           </div>
 
           {/* 4-Column Luxury Navigation Section — Clean Minimalist Typography, No Cluttered Icons */}
@@ -130,53 +129,47 @@ export function SiteFooter() {
                   margin: "0 0 16px",
                 }}
               >
-                Collections
-              </h4>
+                <CmsText field="18180d66951dfa28" fallback="Collections"/></h4>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li>
-                  <Link
+                  <CmsLink
                     href="/bags"
                     style={{ color: "#fff", textDecoration: "none", fontSize: "13px" }}
-                    className="hover:underline"
+                    className="hover:underline" hrefKey="e9cb0d562839465a"
                   >
-                    Leather Bags (Shoulder & Crossbody)
-                  </Link>
+                    <CmsText field="ce805cd45dee305c" fallback="Leather Bags (Shoulder & Crossbody)"/></CmsLink>
                 </li>
                 <li>
-                  <Link
+                  <CmsLink
                     href="/footwear"
                     style={{ color: "#fff", textDecoration: "none", fontSize: "13px" }}
-                    className="hover:underline"
+                    className="hover:underline" hrefKey="d0792b4d5300a1cd"
                   >
-                    Shoes & Boots (Goodyear-Welted)
-                  </Link>
+                    <CmsText field="8680fe4f66619824" fallback="Shoes & Boots (Goodyear-Welted)"/></CmsLink>
                 </li>
                 <li>
-                  <Link
+                  <CmsLink
                     href="/jackets"
                     style={{ color: "#fff", textDecoration: "none", fontSize: "13px" }}
-                    className="hover:underline"
+                    className="hover:underline" hrefKey="4022e400fe499cd3"
                   >
-                    Leather Jackets & Shearling
-                  </Link>
+                    <CmsText field="4828b020910321a4" fallback="Leather Jackets & Shearling"/></CmsLink>
                 </li>
                 <li>
-                  <Link
+                  <CmsLink
                     href="/customize"
                     style={{ color: "#fff", textDecoration: "none", fontSize: "13px", fontWeight: 700 }}
-                    className="hover:underline"
+                    className="hover:underline" hrefKey="48f84f49c02a8765"
                   >
-                    Bespoke Customizer (Monogramming)
-                  </Link>
+                    <CmsText field="6f7de78b07d496a5" fallback="Bespoke Customizer (Monogramming)"/></CmsLink>
                 </li>
                 <li>
-                  <Link
+                  <CmsLink
                     href="/"
                     style={{ color: "#e8ded1", textDecoration: "none", fontSize: "13px" }}
-                    className="hover:underline"
+                    className="hover:underline" hrefKey="afe3a769b4e37b2d"
                   >
-                    All Atelier Products
-                  </Link>
+                    <CmsText field="a7a9ce9e43be09ed" fallback="All Atelier Products"/></CmsLink>
                 </li>
               </ul>
             </div>
@@ -193,8 +186,7 @@ export function SiteFooter() {
                   margin: "0 0 16px",
                 }}
               >
-                Client Care
-              </h4>
+                <CmsText field="a547440aeccc79be" fallback="Client Care"/></h4>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li>
                   <button
@@ -211,8 +203,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Track Your Order Live
-                  </button>
+                    <CmsText field="16987c5b2f1875fb" fallback="Track Your Order Live"/></button>
                 </li>
                 <li>
                   <button
@@ -229,8 +220,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Size & Fit Guide (EU/US)
-                  </button>
+                    <CmsText field="c3886832eeffd28b" fallback="Size & Fit Guide (EU/US)"/></button>
                 </li>
                 <li>
                   <button
@@ -242,17 +232,15 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              Every order placed with Dioka Atelier includes <strong>complimentary express courier delivery</strong> anywhere in the world.
-                            </p>
+                              <CmsText field="34bad0ddcd99d593" fallback="Every order placed with Dioka Atelier includes "/><strong><CmsText field="6ca9d62e36ac429f" fallback="complimentary express courier delivery"/></strong> <CmsText field="18dba510dcf905a8" fallback="anywhere in the world."/></p>
                             <ul style={{ paddingLeft: "20px", margin: "12px 0" }}>
-                              <li><strong>Europe & UK:</strong> 2 to 4 business days via DHL Express / DPD.</li>
-                              <li><strong>North America:</strong> 3 to 5 business days via FedEx International Priority.</li>
-                              <li><strong>Worldwide / Africa / Asia:</strong> 4 to 6 business days with door-to-door courier.</li>
-                              <li><strong>Customs & Import Duties:</strong> 100% pre-paid and covered by Dioka. No surprise customs fees at your doorstep.</li>
+                              <li><strong><CmsText field="6d7779930334bcde" fallback="Europe & UK:"/></strong> <CmsText field="4a3e4dd1aeb06b68" fallback="2 to 4 business days via DHL Express / DPD."/></li>
+                              <li><strong><CmsText field="1900040ad268e878" fallback="North America:"/></strong> <CmsText field="0b73a04f010bb4f7" fallback="3 to 5 business days via FedEx International Priority."/></li>
+                              <li><strong><CmsText field="784c60bf0fc8d932" fallback="Worldwide / Africa / Asia:"/></strong> <CmsText field="8c0ecd3118015c0e" fallback="4 to 6 business days with door-to-door courier."/></li>
+                              <li><strong><CmsText field="04608078ef9efde9" fallback="Customs & Import Duties:"/></strong> <CmsText field="99416f543309e07c" fallback="100% pre-paid and covered by Dioka. No surprise customs fees at your doorstep."/></li>
                             </ul>
                             <p style={{ marginTop: "12px", background: "#f8f6f0", padding: "12px", borderRadius: "3px" }}>
-                              You will receive an automated tracking number via email as soon as master craftsmen package your item.
-                            </p>
+                              <CmsText field="f6b2b0d72976c11c" fallback="You will receive an automated tracking number via email as soon as master craftsmen package your item."/></p>
                           </div>
                         ),
                       })
@@ -268,8 +256,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Shipping & Delivery
-                  </button>
+                    <CmsText field="cbe877c0ce39508d" fallback="Shipping & Delivery"/></button>
                 </li>
                 <li>
                   <button
@@ -281,13 +268,12 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              We want you to feel completely confident wearing Dioka. You have <strong>30 calendar days</strong> from the date of delivery to try on your pieces at home.
-                            </p>
+                              <CmsText field="067fc6ffcc27d0fc" fallback="We want you to feel completely confident wearing Dioka. You have "/><strong><CmsText field="c9bb304223ee5794" fallback="30 calendar days"/></strong> <CmsText field="c64227713bd8d964" fallback="from the date of delivery to try on your pieces at home."/></p>
                             <ul style={{ paddingLeft: "20px", margin: "12px 0" }}>
-                              <li><strong>Prepaid Return Label:</strong> Included inside every delivery parcel. Simply affix and hand to courier.</li>
-                              <li><strong>Free Size Exchanges:</strong> Need a half-size up in boots or a different jacket sleeve fit? Exchanges are completely complimentary.</li>
-                              <li><strong>Condition:</strong> Items must be in unblemished, unworn condition with original dust bag and authenticity cards.</li>
-                              <li><strong>Fast Refunds:</strong> Issued back to your original payment method within 48 hours of atelier inspection.</li>
+                              <li><strong><CmsText field="7e44090edd74fda5" fallback="Prepaid Return Label:"/></strong> <CmsText field="f7b661c0ac54fe70" fallback="Included inside every delivery parcel. Simply affix and hand to courier."/></li>
+                              <li><strong><CmsText field="59ed8f6db6b3efe4" fallback="Free Size Exchanges:"/></strong> <CmsText field="8a5d357b9892d1ae" fallback="Need a half-size up in boots or a different jacket sleeve fit? Exchanges are completely complimentary."/></li>
+                              <li><strong><CmsText field="ba33116573229a39" fallback="Condition:"/></strong> <CmsText field="81abff3c2862b8ae" fallback="Items must be in unblemished, unworn condition with original dust bag and authenticity cards."/></li>
+                              <li><strong><CmsText field="b891e50d0c3c3a2a" fallback="Fast Refunds:"/></strong> <CmsText field="9f0282de354e2d48" fallback="Issued back to your original payment method within 48 hours of atelier inspection."/></li>
                             </ul>
                           </div>
                         ),
@@ -304,8 +290,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Returns & Exchanges
-                  </button>
+                    <CmsText field="6b4358d1c653ae99" fallback="Returns & Exchanges"/></button>
                 </li>
                 <li>
                   <button
@@ -317,13 +302,12 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              Dioka products are engineered to become heirlooms. We back every piece with a comprehensive <strong>2-year workshop warranty</strong> covering:
-                            </p>
+                              <CmsText field="a0616ee61ebbd95b" fallback="Dioka products are engineered to become heirlooms. We back every piece with a comprehensive "/><strong><CmsText field="4fd7b669d6f6b96f" fallback="2-year workshop warranty"/></strong> <CmsText field="0481acff0b36d115" fallback="covering:"/></p>
                             <ul style={{ paddingLeft: "20px", margin: "12px 0" }}>
-                              <li>All structural stitching, seams, and thread tension.</li>
-                              <li>Solid brass hardware, clasps, buckles, and heavy-duty zippers.</li>
-                              <li>Goodyear welts, heels, and outsoles on all footwear.</li>
-                              <li>Complimentary artisan repairs or replacement if a defect arises under normal use.</li>
+                              <li><CmsText field="10456b6c760ef545" fallback="All structural stitching, seams, and thread tension."/></li>
+                              <li><CmsText field="dc88914c3d8468e5" fallback="Solid brass hardware, clasps, buckles, and heavy-duty zippers."/></li>
+                              <li><CmsText field="58d50fc1f45c0f43" fallback="Goodyear welts, heels, and outsoles on all footwear."/></li>
+                              <li><CmsText field="c42ba706905486c4" fallback="Complimentary artisan repairs or replacement if a defect arises under normal use."/></li>
                             </ul>
                           </div>
                         ),
@@ -340,8 +324,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Craftsmanship & Care
-                  </button>
+                    <CmsText field="8700c47fd8c8d2d7" fallback="Craftsmanship & Care"/></button>
                 </li>
               </ul>
             </div>
@@ -358,8 +341,7 @@ export function SiteFooter() {
                   margin: "0 0 16px",
                 }}
               >
-                Account & Atelier
-              </h4>
+                <CmsText field="dc73a1ae9ee8b2ba" fallback="Account & Atelier"/></h4>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li>
                   <button
@@ -387,13 +369,12 @@ export function SiteFooter() {
                   </button>
                 </li>
                 <li>
-                  <Link
+                  <CmsLink
                     href="/cart"
                     style={{ color: "#fff", textDecoration: "none", fontSize: "13px" }}
-                    className="hover:underline"
+                    className="hover:underline" hrefKey="e47de2dbb203b379"
                   >
-                    Shopping Bag ({cartCount} {cartCount === 1 ? "item" : "items"})
-                  </Link>
+                    <CmsText field="0c702b4811b13871" fallback="Shopping Bag ("/>{cartCount} {cartCount === 1 ? "item" : "items"}<CmsText field="65962fbf69246e16" fallback=")"/></CmsLink>
                 </li>
                 <li>
                   <button
@@ -410,8 +391,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Currency Converter (Live Rates)
-                  </button>
+                    <CmsText field="3e92af29208e1db2" fallback="Currency Converter (Live Rates)"/></button>
                 </li>
                 <li>
                   <button
@@ -423,13 +403,12 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              Full-grain leather is a living material that develops a gorgeous, bespoke patina over decades. Follow these simple atelier tips:
-                            </p>
+                              <CmsText field="9182f284dff9a425" fallback="Full-grain leather is a living material that develops a gorgeous, bespoke patina over decades. Follow these simple atelier tips:"/></p>
                             <ul style={{ paddingLeft: "20px", margin: "12px 0" }}>
-                              <li><strong>Regular Dusting:</strong> Wipe gently with a dry microfiber cloth after outdoor wear.</li>
-                              <li><strong>Natural Conditioning:</strong> Apply a dab of organic beeswax or neutral leather balm once every 4 to 6 months to keep fibers supple.</li>
-                              <li><strong>Rain Protection:</strong> If exposed to sudden downpours, dab with a soft towel and let dry naturally at room temperature. Never expose to direct heat radiators.</li>
-                              <li><strong>Storage:</strong> Always store bags in the included breathable cotton dust cover with gentle stuffing to preserve shape.</li>
+                              <li><strong><CmsText field="fa206463c9d53534" fallback="Regular Dusting:"/></strong> <CmsText field="089642bea6a09a08" fallback="Wipe gently with a dry microfiber cloth after outdoor wear."/></li>
+                              <li><strong><CmsText field="8dd35a5358278c8d" fallback="Natural Conditioning:"/></strong> <CmsText field="6d9d82ccad88f796" fallback="Apply a dab of organic beeswax or neutral leather balm once every 4 to 6 months to keep fibers supple."/></li>
+                              <li><strong><CmsText field="e7eefbb7bd513403" fallback="Rain Protection:"/></strong> <CmsText field="c9da744e654b38a6" fallback="If exposed to sudden downpours, dab with a soft towel and let dry naturally at room temperature. Never expose to direct heat radiators."/></li>
+                              <li><strong><CmsText field="c227b4b524fa2fff" fallback="Storage:"/></strong> <CmsText field="8ff8e586e2dd2b13" fallback="Always store bags in the included breathable cotton dust cover with gentle stuffing to preserve shape."/></li>
                             </ul>
                           </div>
                         ),
@@ -446,8 +425,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Leather Care & Balm Guide
-                  </button>
+                    <CmsText field="23e56a10cf7ac48c" fallback="Leather Care & Balm Guide"/></button>
                 </li>
                 <li>
                   <button
@@ -459,13 +437,12 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              Contact our team for sizing, materials, delivery and bespoke requests:
-                            </p>
+                              <CmsText field="b20526af9094266a" fallback="Contact our team for sizing, materials, delivery and bespoke requests:"/></p>
                             <div style={{ display: "grid", gap: "10px", margin: "16px 0" }}>
                               <div style={{ display: "flex", alignItems: "center", gap: "10px", background: "#f8f6f0", padding: "12px" }}>
                                 <Mail size={18} color="#123d32" />
                                 <div>
-                                  <strong style={{ display: "block", color: "#123d32" }}>Email Concierge</strong>
+                                  <strong style={{ display: "block", color: "#123d32" }}><CmsText field="4c0e49ec9511f129" fallback="Email Concierge"/></strong>
                                   <span style={{ color: "#666" }}>{published?.supportEmail || "contactus@diokacraft.com"}</span>
                                 </div>
                               </div>
@@ -487,8 +464,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Contact Atelier Concierge
-                  </button>
+                    <CmsText field="6d52c72ad66d30c5" fallback="Contact Atelier Concierge"/></button>
                 </li>
                 <li>
                   <button
@@ -509,8 +485,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    ▶ Watch Atelier Crafting Film
-                  </button>
+                    <CmsText field="4db2232be1ced88f" fallback="▶ Watch Atelier Crafting Film"/></button>
                 </li>
               </ul>
             </div>
@@ -527,8 +502,7 @@ export function SiteFooter() {
                   margin: "0 0 16px",
                 }}
               >
-                Heritage & Trust
-              </h4>
+                <CmsText field="657d63838929a5cb" fallback="Heritage & Trust"/></h4>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li>
                   <button
@@ -540,14 +514,11 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              Dioka was founded on a simple conviction: luxury should not mean fragile, synthetic shortcuts or artificial exclusivity.
-                            </p>
+                              <CmsText field="2dde3aa0a8b9b1e3" fallback="Dioka was founded on a simple conviction: luxury should not mean fragile, synthetic shortcuts or artificial exclusivity."/></p>
                             <p>
-                              We partner exclusively with generational European tanneries and artisan workshops that have perfected vegetable-tanning and Goodyear-welting across centuries. Every hide is 100% full-grain leather, hand-cut, and assembled with solid brass fittings.
-                            </p>
+                              <CmsText field="4d8a792b6c59ef5d" fallback="We partner exclusively with generational European tanneries and artisan workshops that have perfected vegetable-tanning and Goodyear-welting across centuries. Every hide is 100% full-grain leather, hand-cut, and assembled with solid brass fittings."/></p>
                             <p>
-                              By cutting out unnecessary middlemen, we deliver heirloom-grade craftsmanship directly to clients worldwide at fair, transparent atelier prices.
-                            </p>
+                              <CmsText field="c7400a76d0239fbe" fallback="By cutting out unnecessary middlemen, we deliver heirloom-grade craftsmanship directly to clients worldwide at fair, transparent atelier prices."/></p>
                           </div>
                         ),
                       })
@@ -563,8 +534,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Our Story & Sourcing
-                  </button>
+                    <CmsText field="a2966e5782e3c3c9" fallback="Our Story & Sourcing"/></button>
                 </li>
                 <li>
                   <button
@@ -576,13 +546,12 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              At Dioka, we treat client privacy with the utmost discretion and respect. We comply fully with GDPR and international data standards:
-                            </p>
+                              <CmsText field="bd4366ec7de6cf14" fallback="At Dioka, we treat client privacy with the utmost discretion and respect. We comply fully with GDPR and international data standards:"/></p>
                             <ul style={{ paddingLeft: "20px", margin: "12px 0" }}>
-                              <li>Your shipping details and order history are strictly used to fulfill and track your purchases.</li>
-                              <li>We never sell, rent, or trade client email addresses or profiles with third-party advertisers.</li>
-                              <li>Payment card transactions are tokenized via 256-bit bank-grade encryption; card numbers never touch our servers.</li>
-                              <li>You can view or request deletion of your atelier account at any time through your profile.</li>
+                              <li><CmsText field="425f191045ab2735" fallback="Your shipping details and order history are strictly used to fulfill and track your purchases."/></li>
+                              <li><CmsText field="9b9e93c8b359d37b" fallback="We never sell, rent, or trade client email addresses or profiles with third-party advertisers."/></li>
+                              <li><CmsText field="518d066bb7ebdaa9" fallback="Payment card transactions are tokenized via 256-bit bank-grade encryption; card numbers never touch our servers."/></li>
+                              <li><CmsText field="d541842cf10c6d78" fallback="You can view or request deletion of your atelier account at any time through your profile."/></li>
                             </ul>
                           </div>
                         ),
@@ -599,8 +568,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Privacy & Cookie Policy
-                  </button>
+                    <CmsText field="25fca1fdec149718" fallback="Privacy & Cookie Policy"/></button>
                 </li>
                 <li>
                   <button
@@ -612,13 +580,12 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              Welcome to Dioka Atelier. By placing an order or commissioning a bespoke piece, the following standards apply:
-                            </p>
+                              <CmsText field="92713619cfa0cb60" fallback="Welcome to Dioka Atelier. By placing an order or commissioning a bespoke piece, the following standards apply:"/></p>
                             <ul style={{ paddingLeft: "20px", margin: "12px 0" }}>
-                              <li><strong>Authenticity:</strong> All items are guaranteed 100% genuine full-grain leather certified by European leather guilds.</li>
-                              <li><strong>Pricing:</strong> All listed prices include applicable taxes and duties. Currency conversion is calculated live at international market rates.</li>
-                              <li><strong>Bespoke Commissions:</strong> Custom hot-stamped monograms and customized dimensions are crafted individually and require 10–14 days atelier turnaround.</li>
-                              <li><strong>Satisfaction:</strong> Our 30-day exchange policy and 2-year warranty protect every customer transaction.</li>
+                              <li><strong><CmsText field="47809d8493233525" fallback="Authenticity:"/></strong> <CmsText field="a389359d39868226" fallback="All items are guaranteed 100% genuine full-grain leather certified by European leather guilds."/></li>
+                              <li><strong><CmsText field="530dd6fe2ac01c1e" fallback="Pricing:"/></strong> <CmsText field="5707dd0ca3d97733" fallback="All listed prices include applicable taxes and duties. Currency conversion is calculated live at international market rates."/></li>
+                              <li><strong><CmsText field="ae04708487b527f9" fallback="Bespoke Commissions:"/></strong> <CmsText field="bdebf5b1ab2116e4" fallback="Custom hot-stamped monograms and customized dimensions are crafted individually and require 10–14 days atelier turnaround."/></li>
+                              <li><strong><CmsText field="fe11abf46e622a5c" fallback="Satisfaction:"/></strong> <CmsText field="e695a7cc429ea4de" fallback="Our 30-day exchange policy and 2-year warranty protect every customer transaction."/></li>
                             </ul>
                           </div>
                         ),
@@ -635,8 +602,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    Terms of Service
-                  </button>
+                    <CmsText field="50696e79fe129092" fallback="Terms of Service"/></button>
                 </li>
                 <li>
                   <button
@@ -648,12 +614,11 @@ export function SiteFooter() {
                         content: (
                           <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
                             <p>
-                              Dioka only utilizes hides that are by-products of European agriculture. We work exclusively with tanneries audited by the Leather Working Group (LWG) with Gold and Silver environmental ratings.
-                            </p>
+                              <CmsText field="b9c5e9adc038302e" fallback="Dioka only utilizes hides that are by-products of European agriculture. We work exclusively with tanneries audited by the Leather Working Group (LWG) with Gold and Silver environmental ratings."/></p>
                             <ul style={{ paddingLeft: "20px", margin: "12px 0" }}>
-                              <li>Closed-loop water recycling in all Italian and Spanish tanneries.</li>
-                              <li>Natural vegetable extracts (chestnut, mimosa, quebracho) instead of harsh heavy metals.</li>
-                              <li>Zero synthetic plastics, petroleum pleather, or micro-plastic shed.</li>
+                              <li><CmsText field="074ab4e64d726c4b" fallback="Closed-loop water recycling in all Italian and Spanish tanneries."/></li>
+                              <li><CmsText field="47c8525b41912b18" fallback="Natural vegetable extracts (chestnut, mimosa, quebracho) instead of harsh heavy metals."/></li>
+                              <li><CmsText field="cc5d15671e00d8bf" fallback="Zero synthetic plastics, petroleum pleather, or micro-plastic shed."/></li>
                             </ul>
                           </div>
                         ),
@@ -670,8 +635,7 @@ export function SiteFooter() {
                     }}
                     className="hover:underline"
                   >
-                    LWG Certified Tannery Sourcing
-                  </button>
+                    <CmsText field="1d86f47ba667d6fa" fallback="LWG Certified Tannery Sourcing"/></button>
                 </li>
               </ul>
             </div>
@@ -691,8 +655,7 @@ export function SiteFooter() {
             }}
           >
             <p style={{ margin: 0, maxWidth: "420px", lineHeight: "1.4" }}>
-              Premium handcrafted leather bags, footwear, and jackets built for real life. Made with 100% full-grain European hides.
-            </p>
+              <CmsText field="48c35e70680cc6e5" fallback="Premium handcrafted leather bags, footwear, and jackets built for real life. Made with 100% full-grain European hides."/></p>
 
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
               <button
@@ -703,16 +666,14 @@ export function SiteFooter() {
                     category: "LEGAL",
                     content: (
                       <p>
-                        We respect your privacy. All checkout transactions are secured with 256-bit encryption. For full terms, please see our detailed policy.
-                      </p>
+                        <CmsText field="b25ceeeed9496e0b" fallback="We respect your privacy. All checkout transactions are secured with 256-bit encryption. For full terms, please see our detailed policy."/></p>
                     ),
                   })
                 }
                 style={{ background: "none", border: 0, color: "#fff", cursor: "pointer", padding: 0, textDecoration: "underline", fontSize: "12px" }}
               >
-                Privacy
-              </button>
-              <span>·</span>
+                <CmsText field="d7c6fa01da5910b8" fallback="Privacy"/></button>
+              <span><CmsText field="d50a2a992e9d2b3c" fallback="·"/></span>
               <button
                 type="button"
                 onClick={() =>
@@ -721,35 +682,29 @@ export function SiteFooter() {
                     category: "LEGAL",
                     content: (
                       <p>
-                        All items include 30-day returns and a 2-year warranty against craftsmanship defects.
-                      </p>
+                        <CmsText field="8ee256b4be43337e" fallback="All items include 30-day returns and a 2-year warranty against craftsmanship defects."/></p>
                     ),
                   })
                 }
                 style={{ background: "none", border: 0, color: "#fff", cursor: "pointer", padding: 0, textDecoration: "underline", fontSize: "12px" }}
               >
-                Terms
-              </button>
-              <span>·</span>
-              <Link href="/bags" style={{ color: "#fff", textDecoration: "underline" }}>
-                Bags
-              </Link>
-              <span>·</span>
-              <Link href="/footwear" style={{ color: "#fff", textDecoration: "underline" }}>
-                Shoes
-              </Link>
-              <span>·</span>
-              <Link href="/jackets" style={{ color: "#fff", textDecoration: "underline" }}>
-                Jackets
-              </Link>
-              <span>·</span>
-              <Link href="/customize" style={{ color: "#fff", textDecoration: "underline" }}>
-                Customize
-              </Link>
+                <CmsText field="9f62ccc724278a1f" fallback="Terms"/></button>
+              <span><CmsText field="14ea9c467946c024" fallback="·"/></span>
+              <CmsLink href="/bags" style={{ color: "#fff", textDecoration: "underline" }} hrefKey="870e303210ba103e">
+                <CmsText field="ef12992d690d2162" fallback="Bags"/></CmsLink>
+              <span><CmsText field="e3b524bc3bb21fd6" fallback="·"/></span>
+              <CmsLink href="/footwear" style={{ color: "#fff", textDecoration: "underline" }} hrefKey="1fc53cb3da5b7627">
+                <CmsText field="38061eda2ce66d28" fallback="Shoes"/></CmsLink>
+              <span><CmsText field="1cf61589833ac8c9" fallback="·"/></span>
+              <CmsLink href="/jackets" style={{ color: "#fff", textDecoration: "underline" }} hrefKey="8ca35386df43ec3e">
+                <CmsText field="bea64a3f639149bd" fallback="Jackets"/></CmsLink>
+              <span><CmsText field="068964c056bcc943" fallback="·"/></span>
+              <CmsLink href="/customize" style={{ color: "#fff", textDecoration: "underline" }} hrefKey="514ae8cc15f7d425">
+                <CmsText field="416a61f6dafc222e" fallback="Customize"/></CmsLink>
             </div>
 
-            <Link href="/admin" style={{ color: "#fff", textDecoration: "underline" }}>Administration</Link>
-            <span>© {new Date().getFullYear()} Dioka Atelier Ltd. All rights reserved.</span>
+            <CmsLink href="/admin" style={{ color: "#fff", textDecoration: "underline" }} hrefKey="437295c282781042"><CmsText field="d687ed7ed0e6ce37" fallback="Administration"/></CmsLink>
+            <span><CmsText field="5ad3953d8b2505ff" fallback="© "/>{new Date().getFullYear()} <CmsText field="ffddbabe9804542c" fallback="Dioka Atelier Ltd. All rights reserved."/></span>
           </div>
         </div>
       </footer>
@@ -801,7 +756,7 @@ export function SiteFooter() {
               </div>
 
               <DialogDescription style={{ color: "#444", margin: "16px 0 20px", lineHeight: "1.6" }}>
-                {activeInfoModal.category === "SHIPPING & DISPATCH" ? published?.shippingPolicy || "Contact our team for delivery options and current lead times." : activeInfoModal.category === "HASSLE-FREE RETURNS" ? published?.returnsPolicy || "Contact our team before returning an item." : activeInfoModal.category === "ATELIER GUARANTEE" ? "Contact our team about repairs, product care and the support available for your piece." : activeInfoModal.title.includes("Privacy") ? "We store account details, orders and customer-care messages to provide our services. Payments are handled by Stripe. Contact our team to ask about your data or request account assistance." : activeInfoModal.title.includes("Terms") ? "Checkout charges the item total shown in USD. Contact our team about delivery, returns and any personalized order before purchasing. Your order is confirmed after payment is verified." : activeInfoModal.content}
+                {activeInfoModal.category === "SHIPPING & DISPATCH" ? published?.shippingPolicy || "Contact our team for delivery options and current lead times." : activeInfoModal.category === "HASSLE-FREE RETURNS" ? published?.returnsPolicy || "Contact our team before returning an item." : activeInfoModal.category === "ATELIER GUARANTEE" ? published?.warrantyPolicy || "Contact our team about product care." : activeInfoModal.title.includes("Privacy") ? published?.privacyPolicy || "Contact our team about your data." : activeInfoModal.title.includes("Terms") ? published?.termsPolicy || "Contact our team before ordering." : activeInfoModal.content}
               </DialogDescription>
 
               <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
@@ -811,8 +766,7 @@ export function SiteFooter() {
                   className="dark-button"
                   style={{ padding: "10px 22px", fontSize: "12px" }}
                 >
-                  Close
-                </button>
+                  <CmsText field="b82bf979c7d74b04" fallback="Close"/></button>
               </div>
             </>
           )}

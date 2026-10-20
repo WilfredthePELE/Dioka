@@ -8,12 +8,13 @@ const url=process.env.SUPABASE_URL||process.env.NEXT_PUBLIC_SUPABASE_URL,key=pro
 if(!url||!key)throw new Error('Configure server-only Supabase credentials privately in the environment.');
 const db=new DatabaseSync(resolve(location),{readOnly:true});
 const rows=db.prepare('select key,value from app_state').all();db.close();
+if(!rows.some(row=>row.key==='schema:partitioned'))throw new Error('Start the updated application once against this SQLite database before importing, so its records are partitioned safely.');
 const client=createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});
 const canonical=value=>Array.isArray(value)?value.map(canonical):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(k=>[k,canonical(value[k])])):value;
 const digest=value=>createHash('sha256').update(JSON.stringify(canonical(value))).digest('hex');
 const planned=[];
 for(const row of rows){
- if(row.key.startsWith('limits:')||row.key==='google-oauth')continue;
+ if(/^(limit:|limits:|oauth:|session:)/.test(row.key)||['google-oauth','accounts','orders','inbox','subscribers','catalogue-v1'].includes(row.key))continue;
  const value=JSON.parse(row.value);if(row.key==='accounts')value.sessions={};
  const {data,error}=await client.from('dioka_app_state').select('value').eq('key',row.key).maybeSingle();if(error)throw new Error('Could not inspect target schema; apply the core migration first.');
  if(data){if(digest(data.value)!==digest(value))throw new Error('Target already has a different record for '+row.key+'. No records were overwritten. Import into an empty project or reconcile deliberately.');continue}

@@ -2,13 +2,13 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { randomBytes } from "node:crypto";
 import { z } from "zod";
-import { conversationId, getInbox, sendCustomerMessage } from "@/lib/chat";
+import { conversationId, getConversation, sendCustomerMessage } from "@/lib/chat";
 import { assertOrigin, bodyJson, failure, HttpError, limit } from "@/lib/http";
 export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const token = (await cookies()).get("dioka_chat")?.value;
-    const conversation = token && /^[a-f0-9]{64}$/.test(token) ? (await getInbox())[conversationId(token)] : null;
+    const conversation = token && /^[a-f0-9]{64}$/.test(token) ? await getConversation(conversationId(token)) : null;
     return Response.json({ conversation: conversation || null }, { headers: { "Cache-Control": "no-store" } });
   } catch (e) { return failure(e); }
 }

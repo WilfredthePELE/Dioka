@@ -82,6 +82,8 @@ export function GlobalModals() {
 
   // Checkout modal form
   const [checkoutBusy, setCheckoutBusy] = useState(false);
+  const [checkoutWait, setCheckoutWait] = useState(0);
+  React.useEffect(()=>{if(!checkoutWait)return;const timer=setTimeout(()=>setCheckoutWait(v=>Math.max(0,v-1)),1000);return()=>clearTimeout(timer);},[checkoutWait]);
   const [checkoutForm, setCheckoutForm] = useState({
     name: "Wilfred Owubokiri",
     email: "wilfred@example.com",
@@ -113,12 +115,16 @@ export function GlobalModals() {
 
   const handleCompleteOrder = async (e: React.FormEvent) => {
     e.preventDefault();
+    if(checkoutWait)return;
     setCheckoutBusy(true);
 
     try {
+      const fingerprint=JSON.stringify(cart.map(({id,size,quantity,color,leather,shape,monogram})=>({id,size,quantity,color,leather,shape,monogram})));
+      let requestId=crypto.randomUUID();
+      try{const saved=JSON.parse(localStorage.getItem("dioka_checkout_attempt")||"null");if(saved?.fingerprint===fingerprint)requestId=saved.id;else localStorage.setItem("dioka_checkout_attempt",JSON.stringify({fingerprint,id:requestId}));}catch{}
       const res = await fetch("/api/checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": requestId },
         body: JSON.stringify({
           items: cart,
           subtotal,
@@ -135,7 +141,7 @@ export function GlobalModals() {
       });
 
       const data = await res.json();
-      if (!res.ok || !data.url) throw new Error(data.error || "Unable to start secure checkout.");
+      if(!res.ok||!data.url){if(res.headers.get("X-Checkout-Reset"))try{localStorage.removeItem("dioka_checkout_attempt")}catch{}const seconds=Number(res.headers.get("Retry-After")||0);if(seconds)setCheckoutWait(Math.min(60,seconds+Math.floor(Math.random()*4)));throw new Error(data.error||"Unable to start secure checkout.");}
       try { localStorage.setItem("dioka_checkout_session", data.sessionId); } catch {}
       window.location.assign(data.url);
     } catch (error) {
@@ -617,11 +623,11 @@ export function GlobalModals() {
 
             <button
               type="submit"
-              disabled={checkoutBusy || cart.length === 0}
+              disabled={checkoutBusy || checkoutWait > 0 || cart.length === 0}
               className="dark-button"
               style={{ width: "100%", justifyContent: "center", padding: "16px" }}
             >
-              {checkoutBusy ? "Processing Order..." : `Place Order · ${formatPrice(subtotal)}`}
+              {checkoutWait ? `Please retry in ${checkoutWait}s` : checkoutBusy ? "Preparing secure checkout…" : `Place Order · ${formatPrice(subtotal)}`}
               <Lock size={16} style={{ marginLeft: "8px" }} />
             </button>
           </form>

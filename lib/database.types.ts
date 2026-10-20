@@ -17,16 +17,19 @@ export type Database = {
       dioka_app_state: {
         Row: {
           key: string
+          updated_at: string
           value: Json
           version: number
         }
         Insert: {
           key: string
+          updated_at?: string
           value: Json
           version?: number
         }
         Update: {
           key?: string
+          updated_at?: string
           value?: Json
           version?: number
         }
@@ -70,7 +73,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      dioka_admin_totals: { Args: never; Returns: Json }
+      dioka_cleanup_temporary: { Args: { p_limit?: number }; Returns: number }
+      dioka_compare_set: { Args: { p_changes: Json }; Returns: boolean }
+      dioka_reserve_inventory: {
+        Args: { p_id: string; p_items: Json }
+        Returns: boolean
+      }
+      dioka_settle_inventory: {
+        Args: { p_id: string; p_paid: boolean }
+        Returns: boolean
+      }
+      dioka_take_limit: {
+        Args: { p_key: string; p_maximum: number }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

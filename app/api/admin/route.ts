@@ -3,15 +3,16 @@ import { z } from "zod";
 import { requireAdmin, assertOrigin, bodyJson, failure, HttpError } from "@/lib/http";
 import { adminListProducts } from "@/lib/admin";
 import { getContent, contentSchema, defaultContent } from "@/lib/site-content";
-import { getInbox, type Inbox } from "@/lib/chat";
-import { readState, mutateState } from "@/lib/persistence";
-import { listOrders, type StoreOrder } from "@/lib/orders";
+import { getInbox, changeConversation, type Inbox } from "@/lib/chat";
+import { readState, mutateState, listStates, adminTotals } from "@/lib/persistence";
+import { listOrders, changeOrder, type StoreOrder } from "@/lib/orders";
+import { invalidatePublicCache } from "@/lib/public-cache";
 export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const user = await requireAdmin();
-    const [products, content, inbox, orders, subscribers] = await Promise.all([adminListProducts(), getContent(), getInbox(), listOrders(), readState("subscribers", {} as Record<string, string>)]);
-    return Response.json({ user: { name: user.name, email: user.email }, products, content, conversations: Object.values(inbox).sort((a,b) => b.updatedAt.localeCompare(a.updatedAt)), orders: Object.values(orders).sort((a,b) => b.createdAt.localeCompare(a.createdAt)), subscribers }, { headers: { "Cache-Control": "no-store" } });
+    const [products, content, inbox, orders, subscribers, totals] = await Promise.all([adminListProducts(), getContent(), getInbox(), listOrders(), listStates<{email:string;createdAt:string}>("subscriber:").then(rows=>Object.fromEntries(rows.map(r=>[r.value.email,r.value.createdAt]))), adminTotals()]);
+    return Response.json({ totals, user: { name: user.name, email: user.email }, products, content, conversations: Object.values(inbox).sort((a,b) => b.updatedAt.localeCompare(a.updatedAt)), orders: Object.values(orders).sort((a,b) => b.createdAt.localeCompare(a.createdAt)), subscribers }, { headers: { "Cache-Control": "no-store" } });
   } catch (e) { return failure(e); }
 }
 const actionSchema = z.discriminatedUnion("action", [
@@ -23,22 +24,21 @@ const actionSchema = z.discriminatedUnion("action", [
 export async function PATCH(request: Request) {
   try {
     assertOrigin(request); await requireAdmin();
-    const parsed = actionSchema.safeParse(await bodyJson(request)); if (!parsed.success) throw new HttpError(400, "Please review the form fields.");
+    const parsed = actionSchema.safeParse(await bodyJson(request,512*1024)); if (!parsed.success) throw new HttpError(400, "Please review the form fields.");
     const action = parsed.data;
     if (action.action === "content") await mutateState("content", defaultContent, content => Object.assign(content, action.content));
-    if (action.action === "reply" || action.action === "conversation") await mutateState("inbox", {} as Inbox, inbox => {
-      const conversation = inbox[action.conversationId]; if (!conversation) throw new HttpError(404, "Conversation not found.");
+    if (action.action === "reply" || action.action === "conversation") await changeConversation(action.conversationId, conversation => {
       if (action.action === "reply") {
         if (!conversation.messages.some(m => m.id === action.messageId)) conversation.messages.push({ id: action.messageId || randomUUID(), sender: "team", text: action.text, createdAt: new Date().toISOString() });
         conversation.status = "open";
       } else conversation.status = action.status;
       conversation.updatedAt = new Date().toISOString();
     });
-    if (action.action === "order") await mutateState("orders", {} as Record<string, StoreOrder>, orders => {
-      const order = orders[action.sessionId]; if (!order) throw new HttpError(404, "Order not found.");
+    if (action.action === "order") await changeOrder(action.sessionId, order => {
       if (["Dispatched", "Delivered"].includes(action.status) && !action.trackingCode.trim()) throw new HttpError(400, "Add the shipment tracking reference first.");
       order.status = action.status; order.trackingCode = action.trackingCode;
     });
+    invalidatePublicCache();
     return Response.json({ success: true });
   } catch (e) { return failure(e); }
 }

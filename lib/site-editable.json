@@ -1,0 +1,3066 @@
+[
+  {
+    "id": "cabff49880088f12",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "collections",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "31e39dd8f1b56b6e",
+    "kind": "text",
+    "defaultValue": "TRENDING COLLECTIONS",
+    "label": "TRENDING COLLECTIONS",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "e67895009748ef76",
+    "kind": "text",
+    "defaultValue": "Popular right",
+    "label": "Popular right",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "eedea30f7a2d0775",
+    "kind": "text",
+    "defaultValue": "now.",
+    "label": "now.",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "9481d2da2b652142",
+    "kind": "text",
+    "defaultValue": "View Arc Shoulder Bag details",
+    "label": "title: View Arc Shoulder Bag details",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "85c471d820005527",
+    "kind": "text",
+    "defaultValue": "Arc Leather Shoulder Bag in Cognac Brown",
+    "label": "alt: Arc Leather Shoulder Bag in Cognac Brown",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "8363518c196544c9",
+    "kind": "text",
+    "defaultValue": "POPULAR IN BAGS",
+    "label": "POPULAR IN BAGS",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "207d5c45361e4140",
+    "kind": "text",
+    "defaultValue": "01 / FEATURED BAG",
+    "label": "01 / FEATURED BAG",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "208f2c2cb24162d8",
+    "kind": "text",
+    "defaultValue": "Curved silhouette in rich full-grain calfskin",
+    "label": "Curved silhouette in rich full-grain calfskin",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "1c39c35646d9139c",
+    "kind": "text",
+    "defaultValue": "Quick View",
+    "label": "Quick View",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "00e18a97290aa87a",
+    "kind": "link",
+    "defaultValue": "/bags",
+    "label": "href: /bags",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "712046c7d78dcf6a",
+    "kind": "text",
+    "defaultValue": "Shop All Bags (",
+    "label": "Shop All Bags (",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "2b1100033b27ce66",
+    "kind": "text",
+    "defaultValue": ") ",
+    "label": ") ",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "bf16b06dad2ac29c",
+    "kind": "text",
+    "defaultValue": "View Chelsea Ankle Boot",
+    "label": "title: View Chelsea Ankle Boot",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "128c65e88e17e440",
+    "kind": "text",
+    "defaultValue": "Chelsea Heeled Ankle Boot",
+    "label": "alt: Chelsea Heeled Ankle Boot",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "7dfd0a582656c8aa",
+    "kind": "text",
+    "defaultValue": "BEST SELLER",
+    "label": "BEST SELLER",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "ae320827f97e87ff",
+    "kind": "text",
+    "defaultValue": "02 / SHOES & BOOTS",
+    "label": "02 / SHOES & BOOTS",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "df4953ff8ec3485c",
+    "kind": "text",
+    "defaultValue": "Stacked heel with cushioned support",
+    "label": "Stacked heel with cushioned support",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "fbb2707f4fb32223",
+    "kind": "text",
+    "defaultValue": "Quick View",
+    "label": "Quick View",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "e350d776e9b3c925",
+    "kind": "link",
+    "defaultValue": "/footwear",
+    "label": "href: /footwear",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "7577b00a3278bd42",
+    "kind": "text",
+    "defaultValue": "Shop Shoes (",
+    "label": "Shop Shoes (",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "4c9ade9b4d9b3a81",
+    "kind": "text",
+    "defaultValue": ") ",
+    "label": ") ",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "4c9881d1099763a1",
+    "kind": "text",
+    "defaultValue": "View Lambskin Leather Jacket",
+    "label": "title: View Lambskin Leather Jacket",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "1e101a03eafbc9d7",
+    "kind": "text",
+    "defaultValue": "Classic Lambskin Leather Jacket",
+    "label": "alt: Classic Lambskin Leather Jacket",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "2fe389ceab82152e",
+    "kind": "text",
+    "defaultValue": "TOP RATED",
+    "label": "TOP RATED",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "1d1a42b65fe93874",
+    "kind": "text",
+    "defaultValue": "03 / LEATHER JACKETS",
+    "label": "03 / LEATHER JACKETS",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "944b653d07c0ebd1",
+    "kind": "text",
+    "defaultValue": "Buttery-soft lambskin tailored fit",
+    "label": "Buttery-soft lambskin tailored fit",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "aa677b77b7e94e5e",
+    "kind": "text",
+    "defaultValue": "Quick View",
+    "label": "Quick View",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "7120dd9751b239e8",
+    "kind": "link",
+    "defaultValue": "/jackets",
+    "label": "href: /jackets",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "c55a86ffbeda04ff",
+    "kind": "text",
+    "defaultValue": "Shop Jackets (",
+    "label": "Shop Jackets (",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "9658ad8d3afde4da",
+    "kind": "text",
+    "defaultValue": ") ",
+    "label": ") ",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "ce7113756c9f5379",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "shop",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "aebe13b8f2ff0075",
+    "kind": "text",
+    "defaultValue": "ALL PRODUCTS",
+    "label": "ALL PRODUCTS",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "0cf7a55141e88e2e",
+    "kind": "text",
+    "defaultValue": "Find your",
+    "label": "Find your",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "1c2e222a7e0ddf06",
+    "kind": "text",
+    "defaultValue": "perfect piece.",
+    "label": "perfect piece.",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "38c24feb348a717f",
+    "kind": "text",
+    "defaultValue": "Select your size and add directly to your bag, or click any item to see full specifications, photos, and sizing.",
+    "label": "Select your size and add directly to your bag, or click any item to see full specification",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "47df6338a4525635",
+    "kind": "text",
+    "defaultValue": "(",
+    "label": "(",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "2e4e5fa61fd62f12",
+    "kind": "text",
+    "defaultValue": ")",
+    "label": ")",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "23518d5a61f54532",
+    "kind": "text",
+    "defaultValue": "No items match your search.",
+    "label": "No items match your search.",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "8448f04d61fc2bc8",
+    "kind": "text",
+    "defaultValue": "Reset Search & Filters",
+    "label": "Reset Search & Filters",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "4446bd5a44e5cd82",
+    "kind": "text",
+    "defaultValue": "View Details",
+    "label": "View Details",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "1541f7c197a0ea39",
+    "kind": "text",
+    "defaultValue": "(",
+    "label": "(",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "9902651f6ee6329c",
+    "kind": "text",
+    "defaultValue": "reviews)",
+    "label": "reviews)",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "bfbcdfac69cbe6dc",
+    "kind": "text",
+    "defaultValue": "Colour: ",
+    "label": "Colour: ",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "4ddb46dd7100a8c4",
+    "kind": "text",
+    "defaultValue": "Leather:",
+    "label": "Leather:",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "ae6045cd265bb36f",
+    "kind": "text",
+    "defaultValue": "Shape:",
+    "label": "Shape:",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "a11486ce1233bbc7",
+    "kind": "text",
+    "defaultValue": "Quick View / Customize",
+    "label": "Quick View / Customize",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "d00cb8c0ff9f02e6",
+    "kind": "text",
+    "defaultValue": "Details ",
+    "label": "Details ",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "62e74d20de761d65",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "benefits",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "d2ae27c0689a9b87",
+    "kind": "text",
+    "defaultValue": "WHY SHOP DIOKA",
+    "label": "WHY SHOP DIOKA",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "a4f5c3b13ae41afa",
+    "kind": "text",
+    "defaultValue": "Built to last.",
+    "label": "Built to last.",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "8dad2e2a801171b1",
+    "kind": "text",
+    "defaultValue": "Made to love.",
+    "label": "Made to love.",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "d6a74c2141c69f82",
+    "kind": "text",
+    "defaultValue": "We believe in high-quality materials, honest craftsmanship, and stress-free shopping with free delivery worldwide.",
+    "label": "We believe in high-quality materials, honest craftsmanship, and stress-free shopping with ",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "802a495db10393a0",
+    "kind": "text",
+    "defaultValue": "100% Genuine Full-Grain Leather",
+    "label": "100% Genuine Full-Grain Leather",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "306295d4fa31c25a",
+    "kind": "text",
+    "defaultValue": "Hand-selected European calfskin and Merino shearling. Develops a richer, softer patina with every single wear.",
+    "label": "Hand-selected European calfskin and Merino shearling. Develops a richer, softer patina wit",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "397ac52612b5c88c",
+    "kind": "text",
+    "defaultValue": "Free Express Shipping",
+    "label": "Free Express Shipping",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "ec4fd9ab8c3a5463",
+    "kind": "text",
+    "defaultValue": "Fast, tracked courier shipping straight to your door. All customs, duties, and taxes are completely covered.",
+    "label": "Fast, tracked courier shipping straight to your door. All customs, duties, and taxes are c",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "e5cffbb4385eb4f8",
+    "kind": "text",
+    "defaultValue": "30-Day Easy Returns",
+    "label": "30-Day Easy Returns",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "d8955a8999f4f484",
+    "kind": "text",
+    "defaultValue": "Try it on at home. If the size or fit isn't 100% right, exchange or return it with our prepaid return label.",
+    "label": "Try it on at home. If the size or fit isn't 100% right, exchange or return it with our pre",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "870111a31f392373",
+    "kind": "text",
+    "defaultValue": "2-Year Quality Warranty",
+    "label": "2-Year Quality Warranty",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "8def644c224944ff",
+    "kind": "text",
+    "defaultValue": "Reinforced double-stitching, solid brass hardware, and heavy-duty zippers built for multi-decade durability.",
+    "label": "Reinforced double-stitching, solid brass hardware, and heavy-duty zippers built for multi-",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "4e7b70b538f330e3",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "story",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "d9601a73f4389dfa",
+    "kind": "text",
+    "defaultValue": "DIOKA · PREMIUM ESSENTIALS",
+    "label": "DIOKA · PREMIUM ESSENTIALS",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "4111850fc9fe317d",
+    "kind": "text",
+    "defaultValue": "D",
+    "label": "D",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "36eb5d923e637d14",
+    "kind": "text",
+    "defaultValue": "CRAFTED FOR EVERYDAY LIFE",
+    "label": "CRAFTED FOR EVERYDAY LIFE",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "e1a163f1c6b32847",
+    "kind": "text",
+    "defaultValue": "OUR STORY",
+    "label": "OUR STORY",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "32a0e9e366a0b53c",
+    "kind": "text",
+    "defaultValue": "Quality you can",
+    "label": "Quality you can",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "61b08e3010e720cd",
+    "kind": "text",
+    "defaultValue": "feel every day.",
+    "label": "feel every day.",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "ee3316f2b7420e8d",
+    "kind": "text",
+    "defaultValue": "We started Dioka with a clear mission: create everyday leather essentials that look sharp, feel comfortable, and endure for decades. No synthetic shortcuts, no seasonal obsolescence.",
+    "label": "We started Dioka with a clear mission: create everyday leather essentials that look sharp,",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "306e96a85d25d7c7",
+    "kind": "text",
+    "defaultValue": "From the comfortable curve of our shoulder bags to the shock-absorbing footbeds of our Chelsea boots, every design decision is made for real-world wear.",
+    "label": "From the comfortable curve of our shoulder bags to the shock-absorbing footbeds of our Che",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "1ae3031da6961fac",
+    "kind": "link",
+    "defaultValue": "/bags",
+    "label": "href: /bags",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "09eb60662473385e",
+    "kind": "text",
+    "defaultValue": "Explore the Bags Collection ",
+    "label": "Explore the Bags Collection ",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "ebcaa4cd8e43253d",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "reviews",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "218f605407622607",
+    "kind": "text",
+    "defaultValue": "CUSTOMER REVIEWS",
+    "label": "CUSTOMER REVIEWS",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "f628a6dc92f741fd",
+    "kind": "text",
+    "defaultValue": "Rated 4.9 / 5 by verified buyers",
+    "label": "Rated 4.9 / 5 by verified buyers",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "5f53403051a00d2f",
+    "kind": "text",
+    "defaultValue": "“The Arc Shoulder Bag is literally my everyday bag now. The leather smells incredible, the strap doesn't slip off my shoulder, and it fits everything effortlessly.”",
+    "label": "“The Arc Shoulder Bag is literally my everyday bag now. The leather smells incredible, the",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "dd7b75cb0109a120",
+    "kind": "text",
+    "defaultValue": "Sarah M. · Verified Buyer (New York)",
+    "label": "Sarah M. · Verified Buyer (New York)",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "0fc77c15bd848393",
+    "kind": "text",
+    "defaultValue": "“These Chelsea boots required zero break-in period. Extremely comfortable arch support from day one, and the stacked heel is the ideal everyday height.”",
+    "label": "“These Chelsea boots required zero break-in period. Extremely comfortable arch support fro",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "05cdcca189a826f3",
+    "kind": "text",
+    "defaultValue": "James T. · Verified Buyer (London)",
+    "label": "James T. · Verified Buyer (London)",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "4780cb845043457b",
+    "kind": "text",
+    "defaultValue": "“The lambskin jacket is butter-soft. Flawless tailoring and looks effortlessly sharp with just a white tee and jeans. The leather quality is remarkable.”",
+    "label": "“The lambskin jacket is butter-soft. Flawless tailoring and looks effortlessly sharp with ",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "7540c5d32d2c906b",
+    "kind": "text",
+    "defaultValue": "Elena V. · Verified Buyer (Berlin)",
+    "label": "Elena V. · Verified Buyer (Berlin)",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "a10491cec8c3b38a",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "newsletter-section",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "1c07557c31e2e10c",
+    "kind": "text",
+    "defaultValue": "ATELIER NOTES",
+    "label": "ATELIER NOTES",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "68314d7a35a14eef",
+    "kind": "text",
+    "defaultValue": "Stay close to the atelier",
+    "label": "Stay close to the atelier",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "40625a871f1a3978",
+    "kind": "text",
+    "defaultValue": "Subscribe for collection announcements, atelier news, and style guides.",
+    "label": "Subscribe for collection announcements, atelier news, and style guides.",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "a51f0599dcd65363",
+    "kind": "text",
+    "defaultValue": "You're subscribed. Thank you for joining the Dioka community.",
+    "label": "You're subscribed. Thank you for joining the Dioka community.",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "49f236d607bbc8bb",
+    "kind": "text",
+    "defaultValue": "Subscribe",
+    "label": "Subscribe",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "6a384e9dffeeee0f",
+    "kind": "link",
+    "defaultValue": "/",
+    "label": "href: /",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "6d7f12d58c06df3d",
+    "kind": "text",
+    "defaultValue": "Home",
+    "label": "Home",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "945ed1a4ace602d1",
+    "kind": "text",
+    "defaultValue": "/",
+    "label": "/",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "e919210e29fd99c6",
+    "kind": "text",
+    "defaultValue": "Bags",
+    "label": "Bags",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "a26398e6ca3ee10b",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "Website section",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "914d3a869580bcb7",
+    "kind": "text",
+    "defaultValue": "COLLECTION · 100% FULL-GRAIN LEATHER",
+    "label": "COLLECTION · 100% FULL-GRAIN LEATHER",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "3a3d93c8628a6814",
+    "kind": "text",
+    "defaultValue": "Leather Bags",
+    "label": "Leather Bags",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "8a0444533e0a9762",
+    "kind": "text",
+    "defaultValue": "Handcrafted from rich European calfskin and Tuscan pebble-grain leather. Built with smooth brass hardware, ergonomic strap drops, and reinforced stitching for daily life and travel.",
+    "label": "Handcrafted from rich European calfskin and Tuscan pebble-grain leather. Built with smooth",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "50006b351d51bb2b",
+    "kind": "text",
+    "defaultValue": "100% Genuine Full-Grain Leather",
+    "label": "100% Genuine Full-Grain Leather",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "92ed82858efe87ea",
+    "kind": "text",
+    "defaultValue": "Free Worldwide Express Delivery",
+    "label": "Free Worldwide Express Delivery",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "0af33254dafe05d0",
+    "kind": "text",
+    "defaultValue": "2-Year Craftsmanship Guarantee",
+    "label": "2-Year Craftsmanship Guarantee",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "6932b975eca537db",
+    "kind": "text",
+    "defaultValue": "View Details",
+    "label": "View Details",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "48a266225dad6bf5",
+    "kind": "text",
+    "defaultValue": "(",
+    "label": "(",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "22038777cb01e5b1",
+    "kind": "text",
+    "defaultValue": "reviews)",
+    "label": "reviews)",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "939b1b9abaec8f29",
+    "kind": "text",
+    "defaultValue": "Colour: ",
+    "label": "Colour: ",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "84f7e9cf8b7db1e7",
+    "kind": "text",
+    "defaultValue": "Leather:",
+    "label": "Leather:",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "e1b5fb78b957096d",
+    "kind": "text",
+    "defaultValue": "Shape:",
+    "label": "Shape:",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "42825edf6c16ef91",
+    "kind": "text",
+    "defaultValue": "Quick View / Customize",
+    "label": "Quick View / Customize",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "80326ee6b0100e72",
+    "kind": "text",
+    "defaultValue": "Details ",
+    "label": "Details ",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "1626ef0cdfbf1b1b",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "Website section",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "5bf53eb490b5aec3",
+    "kind": "text",
+    "defaultValue": "HOW OUR BAGS ARE MADE",
+    "label": "HOW OUR BAGS ARE MADE",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "4083eaa46ee8500f",
+    "kind": "text",
+    "defaultValue": "Engineered for comfort. Built for decades.",
+    "label": "Engineered for comfort. Built for decades.",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "af405c8153188e0d",
+    "kind": "text",
+    "defaultValue": "European Full-Grain Calfskin",
+    "label": "European Full-Grain Calfskin",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "a3f73bd9a9121251",
+    "kind": "text",
+    "defaultValue": "We use top-layer European calfskin that maintains its natural grain, developing a rich, unique patina over time instead of peeling.",
+    "label": "We use top-layer European calfskin that maintains its natural grain, developing a rich, un",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "985897b86572f0f1",
+    "kind": "text",
+    "defaultValue": "Solid Brass Hardware",
+    "label": "Solid Brass Hardware",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "f27abd71b405943b",
+    "kind": "text",
+    "defaultValue": "Heavy-duty solid brass clasps, zippers, and magnetic closures that won't tarnish, crack, or snag on your clothes.",
+    "label": "Heavy-duty solid brass clasps, zippers, and magnetic closures that won't tarnish, crack, o",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "d468a5477662eb50",
+    "kind": "text",
+    "defaultValue": "Free Express Delivery",
+    "label": "Free Express Delivery",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "49f9dfb403cd4165",
+    "kind": "text",
+    "defaultValue": "Tracked courier delivery straight to your door with all customs and duties fully prepaid. 30-day hassle-free return window.",
+    "label": "Tracked courier delivery straight to your door with all customs and duties fully prepaid. ",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "cdb9d4beb2e885ba",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "Website section",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "f902f543e52162ea",
+    "kind": "text",
+    "defaultValue": "CUSTOMER EXPERIENCES",
+    "label": "CUSTOMER EXPERIENCES",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "2ec5d921ae24fcb7",
+    "kind": "text",
+    "defaultValue": "Loved by everyday commuters and travelers",
+    "label": "Loved by everyday commuters and travelers",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "d7f80038b56ddc2c",
+    "kind": "text",
+    "defaultValue": "“The Arc Shoulder Bag is literally my everyday bag now. The leather smells incredible, the strap doesn't slip off my shoulder, and it fits everything effortlessly.”",
+    "label": "“The Arc Shoulder Bag is literally my everyday bag now. The leather smells incredible, the",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "0b392beec29545ce",
+    "kind": "text",
+    "defaultValue": "Sarah M. · Arc Shoulder Bag in Cognac Brown",
+    "label": "Sarah M. · Arc Shoulder Bag in Cognac Brown",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "f5d6797e8689db8f",
+    "kind": "text",
+    "defaultValue": "“The Saddle Crossbody is clean, elegant, and secure. The turn-lock is so easy to open with one hand when walking. Couldn't be happier.”",
+    "label": "“The Saddle Crossbody is clean, elegant, and secure. The turn-lock is so easy to open with",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "9086939e6f17a582",
+    "kind": "text",
+    "defaultValue": "Jessica L. · Classic Saddle Crossbody in Black",
+    "label": "Jessica L. · Classic Saddle Crossbody in Black",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "ab64676f470460c1",
+    "kind": "text",
+    "defaultValue": "“Took the Voyager Travel Duffle on a 4-day trip to Paris. Fits in overhead bins without an issue and the Tuscan leather looks stunning.”",
+    "label": "“Took the Voyager Travel Duffle on a 4-day trip to Paris. Fits in overhead bins without an",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "f5db0419ab134efa",
+    "kind": "text",
+    "defaultValue": "Marcus B. · Voyager Travel Duffle in Espresso",
+    "label": "Marcus B. · Voyager Travel Duffle in Espresso",
+    "source": "app/bags/page.tsx",
+    "page": "bags"
+  },
+  {
+    "id": "ffb0278dadc799c8",
+    "kind": "link",
+    "defaultValue": "/",
+    "label": "href: /",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "1f3c4e1d8388c2d7",
+    "kind": "text",
+    "defaultValue": "Home",
+    "label": "Home",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "63f5908e63b3d620",
+    "kind": "text",
+    "defaultValue": "/",
+    "label": "/",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "2bf74e63f06d0459",
+    "kind": "text",
+    "defaultValue": "Shoes & Boots",
+    "label": "Shoes & Boots",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "f75c99014b36b6a3",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "Website section",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "8772c59fa1e7656c",
+    "kind": "text",
+    "defaultValue": "COLLECTION · CUSHIONED ARCH SUPPORT",
+    "label": "COLLECTION · CUSHIONED ARCH SUPPORT",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "11de9ac85f09713e",
+    "kind": "text",
+    "defaultValue": "Shoes & Boots",
+    "label": "Shoes & Boots",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "1fdca06d9eecd92a",
+    "kind": "text",
+    "defaultValue": "Classic Chelsea boots, stacked heeled boots, and Goodyear-welted derby shoes. Designed with multi-density cushioned footbeds for zero-break-in everyday comfort.",
+    "label": "Classic Chelsea boots, stacked heeled boots, and Goodyear-welted derby shoes. Designed wit",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "f1db8e5422020f49",
+    "kind": "text",
+    "defaultValue": "View Size & Fit Guide →",
+    "label": "View Size & Fit Guide →",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "f96b3365e3a7cf10",
+    "kind": "text",
+    "defaultValue": "True to Standard EU Sizing",
+    "label": "True to Standard EU Sizing",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "ce65fc535d07d02c",
+    "kind": "text",
+    "defaultValue": "Free Exchanges & Returns",
+    "label": "Free Exchanges & Returns",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "e0c707598597bed3",
+    "kind": "text",
+    "defaultValue": "View Details",
+    "label": "View Details",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "26612f6e9b5f2dd1",
+    "kind": "text",
+    "defaultValue": "BEST SELLER",
+    "label": "BEST SELLER",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "58ceefe988c066e5",
+    "kind": "text",
+    "defaultValue": "(",
+    "label": "(",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "d6ce27d0cdc0ac38",
+    "kind": "text",
+    "defaultValue": "reviews)",
+    "label": "reviews)",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "2db80326975917db",
+    "kind": "text",
+    "defaultValue": "Select Size:",
+    "label": "Select Size:",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "5df606633a6930db",
+    "kind": "text",
+    "defaultValue": "Quick View",
+    "label": "Quick View",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "416cba87284aeb23",
+    "kind": "text",
+    "defaultValue": "Details ",
+    "label": "Details ",
+    "source": "app/footwear/page.tsx",
+    "page": "footwear"
+  },
+  {
+    "id": "bdb35dd063bed1e9",
+    "kind": "link",
+    "defaultValue": "/",
+    "label": "href: /",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "87cb1e47ef3c912d",
+    "kind": "text",
+    "defaultValue": "Home",
+    "label": "Home",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "42d6ee93f5afc931",
+    "kind": "text",
+    "defaultValue": "/",
+    "label": "/",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "c115cc9b72b75713",
+    "kind": "text",
+    "defaultValue": "Leather Jackets",
+    "label": "Leather Jackets",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "ca807a19e1ca40a1",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "Website section",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "be9b3a08524f8f48",
+    "kind": "text",
+    "defaultValue": "COLLECTION · EUROPEAN LAMBSKIN & SHEARLING",
+    "label": "COLLECTION · EUROPEAN LAMBSKIN & SHEARLING",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "5c2f27e83813b5b7",
+    "kind": "text",
+    "defaultValue": "Leather Jackets",
+    "label": "Leather Jackets",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "8f1b70da7ebfb833",
+    "kind": "text",
+    "defaultValue": "Tailored leather jackets crafted from butter-soft European lambskin, calfskin, and plush Merino shearling. Timeless cuts engineered for modern layering.",
+    "label": "Tailored leather jackets crafted from butter-soft European lambskin, calfskin, and plush M",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "6c93dbb076dad139",
+    "kind": "text",
+    "defaultValue": "Jacket Size Guide →",
+    "label": "Jacket Size Guide →",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "a6aff53eed2d60c2",
+    "kind": "text",
+    "defaultValue": "100% Genuine Lambskin & Shearling",
+    "label": "100% Genuine Lambskin & Shearling",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "c851f5076308bf5d",
+    "kind": "text",
+    "defaultValue": "Free Express Delivery & Insurance",
+    "label": "Free Express Delivery & Insurance",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "3d247bb073641d19",
+    "kind": "text",
+    "defaultValue": "View Details",
+    "label": "View Details",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "dabe512c49f4f174",
+    "kind": "text",
+    "defaultValue": "TOP RATED",
+    "label": "TOP RATED",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "f66c66370509f34e",
+    "kind": "text",
+    "defaultValue": "(",
+    "label": "(",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "2978464e65fd7c91",
+    "kind": "text",
+    "defaultValue": "reviews)",
+    "label": "reviews)",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "efb2c53fec3e5b8a",
+    "kind": "text",
+    "defaultValue": "Select Size:",
+    "label": "Select Size:",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "4ca5b448dabf7ca7",
+    "kind": "text",
+    "defaultValue": "Quick View",
+    "label": "Quick View",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "96837e983f31eb01",
+    "kind": "text",
+    "defaultValue": "Details ",
+    "label": "Details ",
+    "source": "app/jackets/page.tsx",
+    "page": "jackets"
+  },
+  {
+    "id": "a22f09e4cfdc44d2",
+    "kind": "link",
+    "defaultValue": "/",
+    "label": "href: /",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "df72099776e15e52",
+    "kind": "text",
+    "defaultValue": "Home",
+    "label": "Home",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "8fbe23d47577eb68",
+    "kind": "text",
+    "defaultValue": "/",
+    "label": "/",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "d028badd98c9a6cf",
+    "kind": "text",
+    "defaultValue": "Customize (Atelier Bespoke)",
+    "label": "Customize (Atelier Bespoke)",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "51f8dfa31b0e6395",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "Website section",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "682b6517038d7723",
+    "kind": "text",
+    "defaultValue": "DIOKA BESPOKE ATELIER",
+    "label": "DIOKA BESPOKE ATELIER",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "4f13728639533b96",
+    "kind": "text",
+    "defaultValue": "Customize Your Creation",
+    "label": "Customize Your Creation",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "566af0629e070583",
+    "kind": "text",
+    "defaultValue": "Work directly with our European workshop. Select your hide, finish, hardware, and personalized 24k gold or blind debossed initials. Hand-stitched to order in 10 to 14 days.",
+    "label": "Work directly with our European workshop. Select your hide, finish, hardware, and personal",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "281af4834021883d",
+    "kind": "text",
+    "defaultValue": "Cut & Stitched by Master Artisans",
+    "label": "Cut & Stitched by Master Artisans",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "1127dfec1a207440",
+    "kind": "text",
+    "defaultValue": "Complimentary Worldwide Courier",
+    "label": "Complimentary Worldwide Courier",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "9abfdc2ae7a63238",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "Website section",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "ae925fb9b60cd52b",
+    "kind": "text",
+    "defaultValue": "MONOGRAM STAMP (",
+    "label": "MONOGRAM STAMP (",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "0f12b039108f9ca0",
+    "kind": "text",
+    "defaultValue": ")",
+    "label": ")",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "d6f513f1e3dfeec8",
+    "kind": "text",
+    "defaultValue": "CUSTOM COMMISSION SPECIFICATION",
+    "label": "CUSTOM COMMISSION SPECIFICATION",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "ad43db7f18bd5ef8",
+    "kind": "text",
+    "defaultValue": "ESTIMATED TOTAL",
+    "label": "ESTIMATED TOTAL",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "9b1b16d8fa76d049",
+    "kind": "text",
+    "defaultValue": "Leather:",
+    "label": "Leather:",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "ee48f0360bd96170",
+    "kind": "text",
+    "defaultValue": "Color Shade:",
+    "label": "Color Shade:",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "cbb2aea2d05ba995",
+    "kind": "text",
+    "defaultValue": "Hardware:",
+    "label": "Hardware:",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "a7de1c24389578f8",
+    "kind": "text",
+    "defaultValue": "Interior Lining:",
+    "label": "Interior Lining:",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "abb77f1f430af492",
+    "kind": "text",
+    "defaultValue": "Selected Size:",
+    "label": "Selected Size:",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "2534f3fd945b3cc6",
+    "kind": "text",
+    "defaultValue": "Personalization:",
+    "label": "Personalization:",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "706034ec0b732844",
+    "kind": "text",
+    "defaultValue": "Handmade for you in Europe · Free express shipping & 30-day exchange guarantee",
+    "label": "Handmade for you in Europe · Free express shipping & 30-day exchange guarantee",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "08f5a4bba9fc6fcf",
+    "kind": "text",
+    "defaultValue": "1",
+    "label": "1",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "a98bd8a184c1ff36",
+    "kind": "text",
+    "defaultValue": "Select Silhouette (",
+    "label": "Select Silhouette (",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "88a3449a00187081",
+    "kind": "text",
+    "defaultValue": "available)",
+    "label": "available)",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "c2d630ce0c2a80dc",
+    "kind": "text",
+    "defaultValue": "Base ",
+    "label": "Base ",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "f99f8cfd54b82372",
+    "kind": "text",
+    "defaultValue": "2",
+    "label": "2",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "603f8bdc4c6633cc",
+    "kind": "text",
+    "defaultValue": "Choose Leather Grade & Texture",
+    "label": "Choose Leather Grade & Texture",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "50e3655c96253e03",
+    "kind": "text",
+    "defaultValue": "3",
+    "label": "3",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "ef2f634283782d11",
+    "kind": "text",
+    "defaultValue": "Select Dye & Color Tone (",
+    "label": "Select Dye & Color Tone (",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "bcc866eaae4ce9c6",
+    "kind": "text",
+    "defaultValue": ")",
+    "label": ")",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "4b807f76eb0b89e8",
+    "kind": "text",
+    "defaultValue": "4",
+    "label": "4",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "e3034c9193bdb03e",
+    "kind": "text",
+    "defaultValue": "Hardware & Metal Accents",
+    "label": "Hardware & Metal Accents",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "99ec1deb4f27c99a",
+    "kind": "text",
+    "defaultValue": "5",
+    "label": "5",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "ae41e748f72b8b5d",
+    "kind": "text",
+    "defaultValue": "Interior Lining Fabric (",
+    "label": "Interior Lining Fabric (",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "68e1bf9178aa9954",
+    "kind": "text",
+    "defaultValue": ")",
+    "label": ")",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "b6a456b59b7fbe5c",
+    "kind": "text",
+    "defaultValue": "Included",
+    "label": "Included",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "c1159514f17f0a3f",
+    "kind": "text",
+    "defaultValue": "6",
+    "label": "6",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "c24876b745d43daf",
+    "kind": "text",
+    "defaultValue": "Personalized Initials & Stamping",
+    "label": "Personalized Initials & Stamping",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "8f0ddbb8aa394c73",
+    "kind": "text",
+    "defaultValue": "Enable Monogram (+",
+    "label": "Enable Monogram (+",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "1e4db2fb0fdf6394",
+    "kind": "text",
+    "defaultValue": ")",
+    "label": ")",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "adf0f1973cad658d",
+    "kind": "text",
+    "defaultValue": "Initials (1–4 Letters)",
+    "label": "Initials (1–4 Letters)",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "16b4b4a222a3a84b",
+    "kind": "text",
+    "defaultValue": "Placement",
+    "label": "Placement",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "d49cb73e53d2bd55",
+    "kind": "text",
+    "defaultValue": "Foil Embossing Style",
+    "label": "Foil Embossing Style",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "cdbfc25fbc9b1131",
+    "kind": "text",
+    "defaultValue": "7",
+    "label": "7",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "6d907d70d7770df9",
+    "kind": "text",
+    "defaultValue": "Size & Fitting",
+    "label": "Size & Fitting",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "66fbfb3d4ee41044",
+    "kind": "text",
+    "defaultValue": "Special Artisan Instructions / Fitting Notes (Optional)",
+    "label": "Special Artisan Instructions / Fitting Notes (Optional)",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "f13226877b795d33",
+    "kind": "section",
+    "defaultValue": "visible",
+    "label": "Website section",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "18d263450bc917b1",
+    "kind": "text",
+    "defaultValue": "THE DIOKA COMMISSION PROMISE",
+    "label": "THE DIOKA COMMISSION PROMISE",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "9ee7fe9c87a949c9",
+    "kind": "text",
+    "defaultValue": "Heirloom Craftsmanship",
+    "label": "Heirloom Craftsmanship",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "2a9dc3c4c7ec9ffa",
+    "kind": "text",
+    "defaultValue": "Every bespoke piece is crafted one at a time by veteran leather artisans in our European workshops.",
+    "label": "Every bespoke piece is crafted one at a time by veteran leather artisans in our European w",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "b7f7ad876af37c86",
+    "kind": "text",
+    "defaultValue": "Hand-Selected Hides",
+    "label": "Hand-Selected Hides",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "d10667fc08525d32",
+    "kind": "text",
+    "defaultValue": "We inspect every square decimeter of leather for tensile strength, grain consistency, and natural patina potential.",
+    "label": "We inspect every square decimeter of leather for tensile strength, grain consistency, and ",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "f01ea4e2468b47c8",
+    "kind": "text",
+    "defaultValue": "2-Year Atelier Guarantee",
+    "label": "2-Year Atelier Guarantee",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "1efe60cfadb1b7e6",
+    "kind": "text",
+    "defaultValue": "Stitching, zippers, brass hardware, and structural edges are covered under our full 2-year complimentary workshop warranty.",
+    "label": "Stitching, zippers, brass hardware, and structural edges are covered under our full 2-year",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "5ae366c6273224d8",
+    "kind": "text",
+    "defaultValue": "Fit Perfection Guarantee",
+    "label": "Fit Perfection Guarantee",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "24c05e0d1b270b9c",
+    "kind": "text",
+    "defaultValue": "If your footwear or jacket requires an adjustment upon arrival, our atelier provides complimentary tailoring adjustments.",
+    "label": "If your footwear or jacket requires an adjustment upon arrival, our atelier provides compl",
+    "source": "app/customize/page.tsx",
+    "page": "customize"
+  },
+  {
+    "id": "33633b6b3e97ba0e",
+    "kind": "link",
+    "defaultValue": "/bags",
+    "label": "href: /bags",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "9833898d3436d360",
+    "kind": "text",
+    "defaultValue": "Bags",
+    "label": "Bags",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "dd5f2d39a255b5be",
+    "kind": "link",
+    "defaultValue": "/footwear",
+    "label": "href: /footwear",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "a8c080abb3036e72",
+    "kind": "text",
+    "defaultValue": "Shoes & Boots",
+    "label": "Shoes & Boots",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "bd1da611533531e2",
+    "kind": "link",
+    "defaultValue": "/jackets",
+    "label": "href: /jackets",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "48acdf882f1e63a6",
+    "kind": "text",
+    "defaultValue": "Jacket",
+    "label": "Jacket",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "a4160eaddc40dfd4",
+    "kind": "link",
+    "defaultValue": "/customize",
+    "label": "href: /customize",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "deb7663497809514",
+    "kind": "text",
+    "defaultValue": "Customize",
+    "label": "Customize",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "412b35298c5da7a8",
+    "kind": "link",
+    "defaultValue": "/",
+    "label": "href: /",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "f9923307692c5efd",
+    "kind": "text",
+    "defaultValue": "DIOKA",
+    "label": "DIOKA",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "16fbfa34a5d2636a",
+    "kind": "text",
+    "defaultValue": "®",
+    "label": "®",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "0d4394d9bcdd354d",
+    "kind": "text",
+    "defaultValue": "Live Chat",
+    "label": "Live Chat",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "226de659b1182cf4",
+    "kind": "text",
+    "defaultValue": "Bag (",
+    "label": "Bag (",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "5a62d262b1205431",
+    "kind": "text",
+    "defaultValue": ")",
+    "label": ")",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "4ef2bb2770a2428d",
+    "kind": "link",
+    "defaultValue": "/bags",
+    "label": "href: /bags",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "f515c7cc04645350",
+    "kind": "text",
+    "defaultValue": "Bags",
+    "label": "Bags",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "68e2fa615e067a29",
+    "kind": "link",
+    "defaultValue": "/footwear",
+    "label": "href: /footwear",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "9769c054cdb058d4",
+    "kind": "text",
+    "defaultValue": "Shoes & Boots",
+    "label": "Shoes & Boots",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "a40c4acc2936b20f",
+    "kind": "link",
+    "defaultValue": "/jackets",
+    "label": "href: /jackets",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "031a635eaebcbc00",
+    "kind": "text",
+    "defaultValue": "Jacket",
+    "label": "Jacket",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "e95c316c366ab744",
+    "kind": "link",
+    "defaultValue": "/customize",
+    "label": "href: /customize",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "1633752b47a1f3e1",
+    "kind": "text",
+    "defaultValue": "Customize",
+    "label": "Customize",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "99c36d03e071e6e7",
+    "kind": "text",
+    "defaultValue": "Currency:",
+    "label": "Currency:",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "56a5e94ad36096e2",
+    "kind": "link",
+    "defaultValue": "/cart",
+    "label": "href: /cart",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "36a07524d2c12db6",
+    "kind": "text",
+    "defaultValue": "Your Bag (",
+    "label": "Your Bag (",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "1702eaab6ee0d6e8",
+    "kind": "text",
+    "defaultValue": ")",
+    "label": ")",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "fb833e7dfaeafae0",
+    "kind": "text",
+    "defaultValue": "Chat with the Dioka team",
+    "label": "Chat with the Dioka team",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "a7782f0d893817a9",
+    "kind": "text",
+    "defaultValue": "Track Your Order",
+    "label": "Track Your Order",
+    "source": "components/SiteHeader.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "fa6e01e86f8e83dc",
+    "kind": "asset",
+    "defaultValue": "/dioka-boots-jacket.webp",
+    "label": "poster: /dioka-boots-jacket.webp",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "8e2d454047f8f7dc",
+    "kind": "asset",
+    "defaultValue": "/italian-shoemaker-atelier.mp4",
+    "label": "src: /italian-shoemaker-atelier.mp4",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "09d32f42dd1311e7",
+    "kind": "asset",
+    "defaultValue": "/italian-shoemaker-atelier.webm",
+    "label": "src: /italian-shoemaker-atelier.webm",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "6e3e629de359367d",
+    "kind": "asset",
+    "defaultValue": "/shoemaker-daylight-brown.mp4",
+    "label": "src: /shoemaker-daylight-brown.mp4",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "221b05e3b78b9bd9",
+    "kind": "text",
+    "defaultValue": "DIOKA · ARTISAN HANDCRAFTED LEATHER ATELIER",
+    "label": "DIOKA · ARTISAN HANDCRAFTED LEATHER ATELIER",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "1abd4da0800771b2",
+    "kind": "text",
+    "defaultValue": "Back to top",
+    "label": "Back to top",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "956f5d59122f49bd",
+    "kind": "link",
+    "defaultValue": "/",
+    "label": "href: /",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "c2a35277b426bbee",
+    "kind": "text",
+    "defaultValue": "Return to Dioka Home",
+    "label": "title: Return to Dioka Home",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "4787fca805353cde",
+    "kind": "text",
+    "defaultValue": "DIOKA",
+    "label": "DIOKA",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "18180d66951dfa28",
+    "kind": "text",
+    "defaultValue": "Collections",
+    "label": "Collections",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "e9cb0d562839465a",
+    "kind": "link",
+    "defaultValue": "/bags",
+    "label": "href: /bags",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "ce805cd45dee305c",
+    "kind": "text",
+    "defaultValue": "Leather Bags (Shoulder & Crossbody)",
+    "label": "Leather Bags (Shoulder & Crossbody)",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "d0792b4d5300a1cd",
+    "kind": "link",
+    "defaultValue": "/footwear",
+    "label": "href: /footwear",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "8680fe4f66619824",
+    "kind": "text",
+    "defaultValue": "Shoes & Boots (Goodyear-Welted)",
+    "label": "Shoes & Boots (Goodyear-Welted)",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "4022e400fe499cd3",
+    "kind": "link",
+    "defaultValue": "/jackets",
+    "label": "href: /jackets",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "4828b020910321a4",
+    "kind": "text",
+    "defaultValue": "Leather Jackets & Shearling",
+    "label": "Leather Jackets & Shearling",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "48f84f49c02a8765",
+    "kind": "link",
+    "defaultValue": "/customize",
+    "label": "href: /customize",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "6f7de78b07d496a5",
+    "kind": "text",
+    "defaultValue": "Bespoke Customizer (Monogramming)",
+    "label": "Bespoke Customizer (Monogramming)",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "afe3a769b4e37b2d",
+    "kind": "link",
+    "defaultValue": "/",
+    "label": "href: /",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "a7a9ce9e43be09ed",
+    "kind": "text",
+    "defaultValue": "All Atelier Products",
+    "label": "All Atelier Products",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "a547440aeccc79be",
+    "kind": "text",
+    "defaultValue": "Client Care",
+    "label": "Client Care",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "16987c5b2f1875fb",
+    "kind": "text",
+    "defaultValue": "Track Your Order Live",
+    "label": "Track Your Order Live",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "c3886832eeffd28b",
+    "kind": "text",
+    "defaultValue": "Size & Fit Guide (EU/US)",
+    "label": "Size & Fit Guide (EU/US)",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "34bad0ddcd99d593",
+    "kind": "text",
+    "defaultValue": "Every order placed with Dioka Atelier includes ",
+    "label": "Every order placed with Dioka Atelier includes ",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "6ca9d62e36ac429f",
+    "kind": "text",
+    "defaultValue": "complimentary express courier delivery",
+    "label": "complimentary express courier delivery",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "18dba510dcf905a8",
+    "kind": "text",
+    "defaultValue": "anywhere in the world.",
+    "label": "anywhere in the world.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "6d7779930334bcde",
+    "kind": "text",
+    "defaultValue": "Europe & UK:",
+    "label": "Europe & UK:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "4a3e4dd1aeb06b68",
+    "kind": "text",
+    "defaultValue": "2 to 4 business days via DHL Express / DPD.",
+    "label": "2 to 4 business days via DHL Express / DPD.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "1900040ad268e878",
+    "kind": "text",
+    "defaultValue": "North America:",
+    "label": "North America:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "0b73a04f010bb4f7",
+    "kind": "text",
+    "defaultValue": "3 to 5 business days via FedEx International Priority.",
+    "label": "3 to 5 business days via FedEx International Priority.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "784c60bf0fc8d932",
+    "kind": "text",
+    "defaultValue": "Worldwide / Africa / Asia:",
+    "label": "Worldwide / Africa / Asia:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "8c0ecd3118015c0e",
+    "kind": "text",
+    "defaultValue": "4 to 6 business days with door-to-door courier.",
+    "label": "4 to 6 business days with door-to-door courier.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "04608078ef9efde9",
+    "kind": "text",
+    "defaultValue": "Customs & Import Duties:",
+    "label": "Customs & Import Duties:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "99416f543309e07c",
+    "kind": "text",
+    "defaultValue": "100% pre-paid and covered by Dioka. No surprise customs fees at your doorstep.",
+    "label": "100% pre-paid and covered by Dioka. No surprise customs fees at your doorstep.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "f6b2b0d72976c11c",
+    "kind": "text",
+    "defaultValue": "You will receive an automated tracking number via email as soon as master craftsmen package your item.",
+    "label": "You will receive an automated tracking number via email as soon as master craftsmen packag",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "cbe877c0ce39508d",
+    "kind": "text",
+    "defaultValue": "Shipping & Delivery",
+    "label": "Shipping & Delivery",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "067fc6ffcc27d0fc",
+    "kind": "text",
+    "defaultValue": "We want you to feel completely confident wearing Dioka. You have ",
+    "label": "We want you to feel completely confident wearing Dioka. You have ",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "c9bb304223ee5794",
+    "kind": "text",
+    "defaultValue": "30 calendar days",
+    "label": "30 calendar days",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "c64227713bd8d964",
+    "kind": "text",
+    "defaultValue": "from the date of delivery to try on your pieces at home.",
+    "label": "from the date of delivery to try on your pieces at home.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "7e44090edd74fda5",
+    "kind": "text",
+    "defaultValue": "Prepaid Return Label:",
+    "label": "Prepaid Return Label:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "f7b661c0ac54fe70",
+    "kind": "text",
+    "defaultValue": "Included inside every delivery parcel. Simply affix and hand to courier.",
+    "label": "Included inside every delivery parcel. Simply affix and hand to courier.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "59ed8f6db6b3efe4",
+    "kind": "text",
+    "defaultValue": "Free Size Exchanges:",
+    "label": "Free Size Exchanges:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "8a5d357b9892d1ae",
+    "kind": "text",
+    "defaultValue": "Need a half-size up in boots or a different jacket sleeve fit? Exchanges are completely complimentary.",
+    "label": "Need a half-size up in boots or a different jacket sleeve fit? Exchanges are completely co",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "ba33116573229a39",
+    "kind": "text",
+    "defaultValue": "Condition:",
+    "label": "Condition:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "81abff3c2862b8ae",
+    "kind": "text",
+    "defaultValue": "Items must be in unblemished, unworn condition with original dust bag and authenticity cards.",
+    "label": "Items must be in unblemished, unworn condition with original dust bag and authenticity car",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "b891e50d0c3c3a2a",
+    "kind": "text",
+    "defaultValue": "Fast Refunds:",
+    "label": "Fast Refunds:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "9f0282de354e2d48",
+    "kind": "text",
+    "defaultValue": "Issued back to your original payment method within 48 hours of atelier inspection.",
+    "label": "Issued back to your original payment method within 48 hours of atelier inspection.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "6b4358d1c653ae99",
+    "kind": "text",
+    "defaultValue": "Returns & Exchanges",
+    "label": "Returns & Exchanges",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "a0616ee61ebbd95b",
+    "kind": "text",
+    "defaultValue": "Dioka products are engineered to become heirlooms. We back every piece with a comprehensive ",
+    "label": "Dioka products are engineered to become heirlooms. We back every piece with a comprehensiv",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "4fd7b669d6f6b96f",
+    "kind": "text",
+    "defaultValue": "2-year workshop warranty",
+    "label": "2-year workshop warranty",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "0481acff0b36d115",
+    "kind": "text",
+    "defaultValue": "covering:",
+    "label": "covering:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "10456b6c760ef545",
+    "kind": "text",
+    "defaultValue": "All structural stitching, seams, and thread tension.",
+    "label": "All structural stitching, seams, and thread tension.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "dc88914c3d8468e5",
+    "kind": "text",
+    "defaultValue": "Solid brass hardware, clasps, buckles, and heavy-duty zippers.",
+    "label": "Solid brass hardware, clasps, buckles, and heavy-duty zippers.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "58d50fc1f45c0f43",
+    "kind": "text",
+    "defaultValue": "Goodyear welts, heels, and outsoles on all footwear.",
+    "label": "Goodyear welts, heels, and outsoles on all footwear.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "c42ba706905486c4",
+    "kind": "text",
+    "defaultValue": "Complimentary artisan repairs or replacement if a defect arises under normal use.",
+    "label": "Complimentary artisan repairs or replacement if a defect arises under normal use.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "8700c47fd8c8d2d7",
+    "kind": "text",
+    "defaultValue": "Craftsmanship & Care",
+    "label": "Craftsmanship & Care",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "dc73a1ae9ee8b2ba",
+    "kind": "text",
+    "defaultValue": "Account & Atelier",
+    "label": "Account & Atelier",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "e47de2dbb203b379",
+    "kind": "link",
+    "defaultValue": "/cart",
+    "label": "href: /cart",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "0c702b4811b13871",
+    "kind": "text",
+    "defaultValue": "Shopping Bag (",
+    "label": "Shopping Bag (",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "65962fbf69246e16",
+    "kind": "text",
+    "defaultValue": ")",
+    "label": ")",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "3e92af29208e1db2",
+    "kind": "text",
+    "defaultValue": "Currency Converter (Live Rates)",
+    "label": "Currency Converter (Live Rates)",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "9182f284dff9a425",
+    "kind": "text",
+    "defaultValue": "Full-grain leather is a living material that develops a gorgeous, bespoke patina over decades. Follow these simple atelier tips:",
+    "label": "Full-grain leather is a living material that develops a gorgeous, bespoke patina over deca",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "fa206463c9d53534",
+    "kind": "text",
+    "defaultValue": "Regular Dusting:",
+    "label": "Regular Dusting:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "089642bea6a09a08",
+    "kind": "text",
+    "defaultValue": "Wipe gently with a dry microfiber cloth after outdoor wear.",
+    "label": "Wipe gently with a dry microfiber cloth after outdoor wear.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "8dd35a5358278c8d",
+    "kind": "text",
+    "defaultValue": "Natural Conditioning:",
+    "label": "Natural Conditioning:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "6d9d82ccad88f796",
+    "kind": "text",
+    "defaultValue": "Apply a dab of organic beeswax or neutral leather balm once every 4 to 6 months to keep fibers supple.",
+    "label": "Apply a dab of organic beeswax or neutral leather balm once every 4 to 6 months to keep fi",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "e7eefbb7bd513403",
+    "kind": "text",
+    "defaultValue": "Rain Protection:",
+    "label": "Rain Protection:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "c9da744e654b38a6",
+    "kind": "text",
+    "defaultValue": "If exposed to sudden downpours, dab with a soft towel and let dry naturally at room temperature. Never expose to direct heat radiators.",
+    "label": "If exposed to sudden downpours, dab with a soft towel and let dry naturally at room temper",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "c227b4b524fa2fff",
+    "kind": "text",
+    "defaultValue": "Storage:",
+    "label": "Storage:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "8ff8e586e2dd2b13",
+    "kind": "text",
+    "defaultValue": "Always store bags in the included breathable cotton dust cover with gentle stuffing to preserve shape.",
+    "label": "Always store bags in the included breathable cotton dust cover with gentle stuffing to pre",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "23e56a10cf7ac48c",
+    "kind": "text",
+    "defaultValue": "Leather Care & Balm Guide",
+    "label": "Leather Care & Balm Guide",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "b20526af9094266a",
+    "kind": "text",
+    "defaultValue": "Contact our team for sizing, materials, delivery and bespoke requests:",
+    "label": "Contact our team for sizing, materials, delivery and bespoke requests:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "4c0e49ec9511f129",
+    "kind": "text",
+    "defaultValue": "Email Concierge",
+    "label": "Email Concierge",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "6d52c72ad66d30c5",
+    "kind": "text",
+    "defaultValue": "Contact Atelier Concierge",
+    "label": "Contact Atelier Concierge",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "4db2232be1ced88f",
+    "kind": "text",
+    "defaultValue": "▶ Watch Atelier Crafting Film",
+    "label": "▶ Watch Atelier Crafting Film",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "657d63838929a5cb",
+    "kind": "text",
+    "defaultValue": "Heritage & Trust",
+    "label": "Heritage & Trust",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "2dde3aa0a8b9b1e3",
+    "kind": "text",
+    "defaultValue": "Dioka was founded on a simple conviction: luxury should not mean fragile, synthetic shortcuts or artificial exclusivity.",
+    "label": "Dioka was founded on a simple conviction: luxury should not mean fragile, synthetic shortc",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "4d8a792b6c59ef5d",
+    "kind": "text",
+    "defaultValue": "We partner exclusively with generational European tanneries and artisan workshops that have perfected vegetable-tanning and Goodyear-welting across centuries. Every hide is 100% full-grain leather, hand-cut, and assembled with solid brass fittings.",
+    "label": "We partner exclusively with generational European tanneries and artisan workshops that hav",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "c7400a76d0239fbe",
+    "kind": "text",
+    "defaultValue": "By cutting out unnecessary middlemen, we deliver heirloom-grade craftsmanship directly to clients worldwide at fair, transparent atelier prices.",
+    "label": "By cutting out unnecessary middlemen, we deliver heirloom-grade craftsmanship directly to ",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "a2966e5782e3c3c9",
+    "kind": "text",
+    "defaultValue": "Our Story & Sourcing",
+    "label": "Our Story & Sourcing",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "bd4366ec7de6cf14",
+    "kind": "text",
+    "defaultValue": "At Dioka, we treat client privacy with the utmost discretion and respect. We comply fully with GDPR and international data standards:",
+    "label": "At Dioka, we treat client privacy with the utmost discretion and respect. We comply fully ",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "425f191045ab2735",
+    "kind": "text",
+    "defaultValue": "Your shipping details and order history are strictly used to fulfill and track your purchases.",
+    "label": "Your shipping details and order history are strictly used to fulfill and track your purcha",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "9b9e93c8b359d37b",
+    "kind": "text",
+    "defaultValue": "We never sell, rent, or trade client email addresses or profiles with third-party advertisers.",
+    "label": "We never sell, rent, or trade client email addresses or profiles with third-party advertis",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "518d066bb7ebdaa9",
+    "kind": "text",
+    "defaultValue": "Payment card transactions are tokenized via 256-bit bank-grade encryption; card numbers never touch our servers.",
+    "label": "Payment card transactions are tokenized via 256-bit bank-grade encryption; card numbers ne",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "d541842cf10c6d78",
+    "kind": "text",
+    "defaultValue": "You can view or request deletion of your atelier account at any time through your profile.",
+    "label": "You can view or request deletion of your atelier account at any time through your profile.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "25fca1fdec149718",
+    "kind": "text",
+    "defaultValue": "Privacy & Cookie Policy",
+    "label": "Privacy & Cookie Policy",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "92713619cfa0cb60",
+    "kind": "text",
+    "defaultValue": "Welcome to Dioka Atelier. By placing an order or commissioning a bespoke piece, the following standards apply:",
+    "label": "Welcome to Dioka Atelier. By placing an order or commissioning a bespoke piece, the follow",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "47809d8493233525",
+    "kind": "text",
+    "defaultValue": "Authenticity:",
+    "label": "Authenticity:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "a389359d39868226",
+    "kind": "text",
+    "defaultValue": "All items are guaranteed 100% genuine full-grain leather certified by European leather guilds.",
+    "label": "All items are guaranteed 100% genuine full-grain leather certified by European leather gui",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "530dd6fe2ac01c1e",
+    "kind": "text",
+    "defaultValue": "Pricing:",
+    "label": "Pricing:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "5707dd0ca3d97733",
+    "kind": "text",
+    "defaultValue": "All listed prices include applicable taxes and duties. Currency conversion is calculated live at international market rates.",
+    "label": "All listed prices include applicable taxes and duties. Currency conversion is calculated l",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "ae04708487b527f9",
+    "kind": "text",
+    "defaultValue": "Bespoke Commissions:",
+    "label": "Bespoke Commissions:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "bdebf5b1ab2116e4",
+    "kind": "text",
+    "defaultValue": "Custom hot-stamped monograms and customized dimensions are crafted individually and require 10–14 days atelier turnaround.",
+    "label": "Custom hot-stamped monograms and customized dimensions are crafted individually and requir",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "fe11abf46e622a5c",
+    "kind": "text",
+    "defaultValue": "Satisfaction:",
+    "label": "Satisfaction:",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "e695a7cc429ea4de",
+    "kind": "text",
+    "defaultValue": "Our 30-day exchange policy and 2-year warranty protect every customer transaction.",
+    "label": "Our 30-day exchange policy and 2-year warranty protect every customer transaction.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "50696e79fe129092",
+    "kind": "text",
+    "defaultValue": "Terms of Service",
+    "label": "Terms of Service",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "b9c5e9adc038302e",
+    "kind": "text",
+    "defaultValue": "Dioka only utilizes hides that are by-products of European agriculture. We work exclusively with tanneries audited by the Leather Working Group (LWG) with Gold and Silver environmental ratings.",
+    "label": "Dioka only utilizes hides that are by-products of European agriculture. We work exclusivel",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "074ab4e64d726c4b",
+    "kind": "text",
+    "defaultValue": "Closed-loop water recycling in all Italian and Spanish tanneries.",
+    "label": "Closed-loop water recycling in all Italian and Spanish tanneries.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "47c8525b41912b18",
+    "kind": "text",
+    "defaultValue": "Natural vegetable extracts (chestnut, mimosa, quebracho) instead of harsh heavy metals.",
+    "label": "Natural vegetable extracts (chestnut, mimosa, quebracho) instead of harsh heavy metals.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "cc5d15671e00d8bf",
+    "kind": "text",
+    "defaultValue": "Zero synthetic plastics, petroleum pleather, or micro-plastic shed.",
+    "label": "Zero synthetic plastics, petroleum pleather, or micro-plastic shed.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "1d86f47ba667d6fa",
+    "kind": "text",
+    "defaultValue": "LWG Certified Tannery Sourcing",
+    "label": "LWG Certified Tannery Sourcing",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "48c35e70680cc6e5",
+    "kind": "text",
+    "defaultValue": "Premium handcrafted leather bags, footwear, and jackets built for real life. Made with 100% full-grain European hides.",
+    "label": "Premium handcrafted leather bags, footwear, and jackets built for real life. Made with 100",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "b25ceeeed9496e0b",
+    "kind": "text",
+    "defaultValue": "We respect your privacy. All checkout transactions are secured with 256-bit encryption. For full terms, please see our detailed policy.",
+    "label": "We respect your privacy. All checkout transactions are secured with 256-bit encryption. Fo",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "d7c6fa01da5910b8",
+    "kind": "text",
+    "defaultValue": "Privacy",
+    "label": "Privacy",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "d50a2a992e9d2b3c",
+    "kind": "text",
+    "defaultValue": "·",
+    "label": "·",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "8ee256b4be43337e",
+    "kind": "text",
+    "defaultValue": "All items include 30-day returns and a 2-year warranty against craftsmanship defects.",
+    "label": "All items include 30-day returns and a 2-year warranty against craftsmanship defects.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "9f62ccc724278a1f",
+    "kind": "text",
+    "defaultValue": "Terms",
+    "label": "Terms",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "14ea9c467946c024",
+    "kind": "text",
+    "defaultValue": "·",
+    "label": "·",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "870e303210ba103e",
+    "kind": "link",
+    "defaultValue": "/bags",
+    "label": "href: /bags",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "ef12992d690d2162",
+    "kind": "text",
+    "defaultValue": "Bags",
+    "label": "Bags",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "e3b524bc3bb21fd6",
+    "kind": "text",
+    "defaultValue": "·",
+    "label": "·",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "1fc53cb3da5b7627",
+    "kind": "link",
+    "defaultValue": "/footwear",
+    "label": "href: /footwear",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "38061eda2ce66d28",
+    "kind": "text",
+    "defaultValue": "Shoes",
+    "label": "Shoes",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "1cf61589833ac8c9",
+    "kind": "text",
+    "defaultValue": "·",
+    "label": "·",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "8ca35386df43ec3e",
+    "kind": "link",
+    "defaultValue": "/jackets",
+    "label": "href: /jackets",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "bea64a3f639149bd",
+    "kind": "text",
+    "defaultValue": "Jackets",
+    "label": "Jackets",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "068964c056bcc943",
+    "kind": "text",
+    "defaultValue": "·",
+    "label": "·",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "514ae8cc15f7d425",
+    "kind": "link",
+    "defaultValue": "/customize",
+    "label": "href: /customize",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "416a61f6dafc222e",
+    "kind": "text",
+    "defaultValue": "Customize",
+    "label": "Customize",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "437295c282781042",
+    "kind": "link",
+    "defaultValue": "/admin",
+    "label": "href: /admin",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "d687ed7ed0e6ce37",
+    "kind": "text",
+    "defaultValue": "Administration",
+    "label": "Administration",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "5ad3953d8b2505ff",
+    "kind": "text",
+    "defaultValue": "© ",
+    "label": "© ",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "ffddbabe9804542c",
+    "kind": "text",
+    "defaultValue": "Dioka Atelier Ltd. All rights reserved.",
+    "label": "Dioka Atelier Ltd. All rights reserved.",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "b82bf979c7d74b04",
+    "kind": "text",
+    "defaultValue": "Close",
+    "label": "Close",
+    "source": "components/SiteFooter.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "3f8362dc409c5a5e",
+    "kind": "asset",
+    "defaultValue": "/preview-frame.jpg",
+    "label": "poster: /preview-frame.jpg",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "7b64f1c56dfd234c",
+    "kind": "asset",
+    "defaultValue": "/shoemaker-craft-optimized.mp4",
+    "label": "src: /shoemaker-craft-optimized.mp4",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "faae513ad8fe5722",
+    "kind": "asset",
+    "defaultValue": "/shoemaker-craft.mp4",
+    "label": "src: /shoemaker-craft.mp4",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "ea2ed4dc03ae16dc",
+    "kind": "asset",
+    "defaultValue": "/italian-shoemaker-atelier.mp4",
+    "label": "src: /italian-shoemaker-atelier.mp4",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "b8ded3d02c832f93",
+    "kind": "asset",
+    "defaultValue": "/shoemaker-daylight-brown.mp4",
+    "label": "src: /shoemaker-daylight-brown.mp4",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "6d8ca1a8beba4aa4",
+    "kind": "text",
+    "defaultValue": "●",
+    "label": "●",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "249bfc6bbf38c946",
+    "kind": "text",
+    "defaultValue": "Florence Atelier Crafting Film",
+    "label": "Florence Atelier Crafting Film",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "d1f2aecb439df9e6",
+    "kind": "text",
+    "defaultValue": "Skip to Store →",
+    "label": "Skip to Store →",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "1d53c8e1df68e7be",
+    "kind": "text",
+    "defaultValue": "FLORENTINE ARTISAN LEATHER ATELIER",
+    "label": "FLORENTINE ARTISAN LEATHER ATELIER",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "6f896fb73aa8aa55",
+    "kind": "text",
+    "defaultValue": "DIOKA",
+    "label": "DIOKA",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "db7ff8d3c9e4da79",
+    "kind": "text",
+    "defaultValue": "®",
+    "label": "®",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "978aa40ff63c6444",
+    "kind": "text",
+    "defaultValue": "Watch our Florentine master craftsmen cut, skive, and saddle-stitch Tuscan vegetable-tanned hides. Genuine Goodyear boots, sculpted bags, and drum-dyed lambskin jackets.",
+    "label": "Watch our Florentine master craftsmen cut, skive, and saddle-stitch Tuscan vegetable-tanne",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "020e7213c081a87b",
+    "kind": "text",
+    "defaultValue": "Enter Atelier",
+    "label": "Enter Atelier",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  },
+  {
+    "id": "99b10b849ab81f94",
+    "kind": "text",
+    "defaultValue": "Crafted in Florence & London · 100% Full-Grain Vegetable-Tanned Leather",
+    "label": "Crafted in Florence & London · 100% Full-Grain Vegetable-Tanned Leather",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Shared"
+  }
+]
