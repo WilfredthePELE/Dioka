@@ -10,15 +10,17 @@ import { ContentProvider } from "@/components/EditableContent";
 import { usePathname } from "next/navigation";
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
-  const admin = usePathname().startsWith("/admin");
+  const pathname=usePathname();
+  const admin = pathname.startsWith("/admin");
+  const accountPage=["/sign-in","/join","/account","/auth/result"].includes(pathname);
   if (admin) return <>{children}</>;
   return (
     <ContentProvider><StoreProvider>
-      <AtelierSplashScreen />
+      {!accountPage && <AtelierSplashScreen />}
       {children}
       <GlobalModals />
-      <DesignerChatbox />
-      <AtelierAudioPlayer />
+      {!accountPage && <DesignerChatbox />}
+      {!accountPage && <AtelierAudioPlayer />}
     </StoreProvider></ContentProvider>
   );
 }

@@ -2952,12 +2952,93 @@
     "page": "Shared"
   },
   {
+    "id": "account-story-label",
+    "kind": "text",
+    "defaultValue": "A PERSONAL CONNECTION",
+    "label": "A PERSONAL CONNECTION",
+    "source": "components/AccountPage.tsx",
+    "page": "Your account"
+  },
+  {
+    "id": "account-story-title",
+    "kind": "text",
+    "defaultValue": "Considered craft. A place of your own.",
+    "label": "Considered craft. A place of your own.",
+    "source": "components/AccountPage.tsx",
+    "page": "Your account"
+  },
+  {
+    "id": "account-story-copy",
+    "kind": "text",
+    "defaultValue": "Your favourite pieces, your saved bag and every step of your order. All together, at your atelier.",
+    "label": "Your favourite pieces, your saved bag and every step of your order. All together, at your atelier.",
+    "source": "components/AccountPage.tsx",
+    "page": "Your account"
+  },
+  {
+    "id": "account-welcome-label",
+    "kind": "text",
+    "defaultValue": "THE ATELIER IS YOURS",
+    "label": "THE ATELIER IS YOURS",
+    "source": "components/AccountPage.tsx",
+    "page": "Your account"
+  },
+  {
+    "id": "account-join-title",
+    "kind": "text",
+    "defaultValue": "Make yourself at home.",
+    "label": "Make yourself at home.",
+    "source": "components/AccountPage.tsx",
+    "page": "Your account"
+  },
+  {
+    "id": "account-login-title",
+    "kind": "text",
+    "defaultValue": "Welcome back.",
+    "label": "Welcome back.",
+    "source": "components/AccountPage.tsx",
+    "page": "Your account"
+  },
+  {
+    "id": "account-join-copy",
+    "kind": "text",
+    "defaultValue": "A little closer to the things you love. Create your personal Dioka account.",
+    "label": "A little closer to the things you love. Create your personal Dioka account.",
+    "source": "components/AccountPage.tsx",
+    "page": "Your account"
+  },
+  {
+    "id": "account-login-copy",
+    "kind": "text",
+    "defaultValue": "Good to see you again. Your collection is right where you left it.",
+    "label": "Good to see you again. Your collection is right where you left it.",
+    "source": "components/AccountPage.tsx",
+    "page": "Your account"
+  },
+  {
+    "id": "splash-studio-poster",
+    "kind": "asset",
+    "defaultValue": "/dioka-white-studio-shoemaker.png",
+    "label": "White studio still / video poster",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Introduction"
+  },
+  {
+    "id": "splash-studio-film",
+    "kind": "asset",
+    "defaultValue": "/dioka-white-studio-loop.mp4",
+    "label": "White studio intro film",
+    "source": "components/AtelierSplashScreen.tsx",
+    "page": "Introduction"
+  },
+  {
     "id": "3f8362dc409c5a5e",
     "kind": "asset",
     "defaultValue": "/preview-frame.jpg",
     "label": "poster: /preview-frame.jpg",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "7b64f1c56dfd234c",
@@ -2965,7 +3046,8 @@
     "defaultValue": "/shoemaker-craft-optimized.mp4",
     "label": "src: /shoemaker-craft-optimized.mp4",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "faae513ad8fe5722",
@@ -2973,7 +3055,8 @@
     "defaultValue": "/shoemaker-craft.mp4",
     "label": "src: /shoemaker-craft.mp4",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "ea2ed4dc03ae16dc",
@@ -2981,7 +3064,8 @@
     "defaultValue": "/italian-shoemaker-atelier.mp4",
     "label": "src: /italian-shoemaker-atelier.mp4",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "b8ded3d02c832f93",
@@ -2989,7 +3073,8 @@
     "defaultValue": "/shoemaker-daylight-brown.mp4",
     "label": "src: /shoemaker-daylight-brown.mp4",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "6d8ca1a8beba4aa4",
@@ -2997,7 +3082,8 @@
     "defaultValue": "●",
     "label": "●",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "249bfc6bbf38c946",
@@ -3005,7 +3091,8 @@
     "defaultValue": "Florence Atelier Crafting Film",
     "label": "Florence Atelier Crafting Film",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "d1f2aecb439df9e6",
@@ -3013,7 +3100,8 @@
     "defaultValue": "Skip to Store →",
     "label": "Skip to Store →",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "1d53c8e1df68e7be",
@@ -3021,7 +3109,8 @@
     "defaultValue": "FLORENTINE ARTISAN LEATHER ATELIER",
     "label": "FLORENTINE ARTISAN LEATHER ATELIER",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "6f896fb73aa8aa55",
@@ -3029,7 +3118,8 @@
     "defaultValue": "DIOKA",
     "label": "DIOKA",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "db7ff8d3c9e4da79",
@@ -3037,7 +3127,8 @@
     "defaultValue": "®",
     "label": "®",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "978aa40ff63c6444",
@@ -3045,7 +3136,8 @@
     "defaultValue": "Watch our Florentine master craftsmen cut, skive, and saddle-stitch Tuscan vegetable-tanned hides. Genuine Goodyear boots, sculpted bags, and drum-dyed lambskin jackets.",
     "label": "Watch our Florentine master craftsmen cut, skive, and saddle-stitch Tuscan vegetable-tanne",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "020e7213c081a87b",
@@ -3053,7 +3145,8 @@
     "defaultValue": "Enter Atelier",
     "label": "Enter Atelier",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   },
   {
     "id": "99b10b849ab81f94",
@@ -3061,6 +3154,7 @@
     "defaultValue": "Crafted in Florence & London · 100% Full-Grain Vegetable-Tanned Leather",
     "label": "Crafted in Florence & London · 100% Full-Grain Vegetable-Tanned Leather",
     "source": "components/AtelierSplashScreen.tsx",
-    "page": "Shared"
+    "page": "Shared",
+    "retired": true
   }
 ]

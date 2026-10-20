@@ -1,6 +1,3 @@
 import Link from "next/link";
-export const metadata = { title: "Sign-in assistance | Dioka", robots: { index: false, follow: false } };
-export default async function AuthResult({ searchParams }: { searchParams: Promise<{ returnTo?: string }> }) {
-  const params = await searchParams;
-  return <main style={{ maxWidth: 560, margin: "12vh auto", padding: 28 }}><p>DIOKA / YOUR ACCOUNT</p><h1>Let's try that again.</h1><p>Google sign-in was cancelled, expired or could not verify this account. Please try again, or sign in with your existing email and password.</p><p>If this email already has a Dioka account, sign in first and choose Connect Google from your profile. Administrator access requires the store owner's approved email.</p><Link href={params.returnTo === "/admin" ? "/admin" : "/"}>Return to Dioka</Link></main>;
-}
+export const metadata={title:"Sign-in assistance | Dioka",robots:{index:false,follow:false}};
+export default async function AuthResult({searchParams}:{searchParams:Promise<{returnTo?:string}>}){const params=await searchParams;return <main style={{maxWidth:560,margin:"12vh auto",padding:28,color:"#104b3d"}}><Link href="/" style={{fontFamily:"var(--dioka-font)",fontSize:40}}>DIOKA</Link><h1 style={{fontFamily:"var(--dioka-font)",fontSize:54,fontWeight:400,marginTop:40}}>Let’s try that again.</h1><p style={{lineHeight:1.8}}>Google sign-in was cancelled, expired or could not verify this account. Please try again, or use your email and password.</p><p style={{lineHeight:1.8}}>If you already have a Dioka account, sign in first and choose Connect Google from your account page.</p><Link href={params.returnTo==="/admin"?"/admin":"/sign-in"}>Return to sign-in →</Link></main>;}

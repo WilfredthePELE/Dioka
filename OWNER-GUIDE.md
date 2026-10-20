@@ -32,3 +32,9 @@ The admin Media tab and product-image uploader become available when the Supabas
 ## Launch traffic
 
 The architecture has been hardened for concurrent purchases, but 10,000 simultaneous production buyers have not been certified on your Truehost hosting. Read SCALABILITY.md before a large launch. Infrastructure sizing, a waiting room and a staging load test remain necessary.
+
+## Full-page sign-in and introduction
+
+Customer sign-in is now /sign-in, registration is /join, and account details are /account. Existing account actions open these pages. The introduction is a silent white-studio portrait loop with only DIOKA in emerald and an arrow to enter, with automatic entry and reduced-motion support. It uses an animated generated portrait rather than live-action hand movement. The new account wording and introduction media are managed from Website.
+
+Google through Supabase is implemented, but the live provider is currently disabled until you enter your Google OAuth credentials privately. Follow GOOGLE-SIGN-IN.md. Existing email/password sign-in continues to work.

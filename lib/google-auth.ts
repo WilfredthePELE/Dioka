@@ -11,10 +11,10 @@ export function googleConfig() {
   if (origin.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(origin.hostname)) throw new Error("Google sign-in requires HTTPS.");
   return { clientId: process.env.GOOGLE_CLIENT_ID!, clientSecret: process.env.GOOGLE_CLIENT_SECRET!, origin: origin.origin, redirectUri: origin.origin + "/api/auth/google/callback" };
 }
-interface Transaction { nonce: string; verifier: string; returnTo: "/" | "/admin"; expiresAt: number; cart: StoredCartItem[]; linkUserId?: string }
+export interface Transaction { provider?: "supabase"; nonce: string; verifier: string; returnTo: "/" | "/admin" | "/account"; expiresAt: number; cart: StoredCartItem[]; linkUserId?: string }
 type Transactions = Record<string, Transaction>;
 const hash = (value: string) => createHash("sha256").update(value).digest("base64url");
-export async function beginGoogle(returnTo: "/" | "/admin", cart: StoredCartItem[], linkUserId?: string) {
+export async function beginGoogle(returnTo: "/" | "/admin" | "/account", cart: StoredCartItem[], linkUserId?: string) {
   const config = googleConfig();
   const state = randomBytes(32).toString("base64url"), verifier = randomBytes(48).toString("base64url"), nonce = randomBytes(32).toString("base64url");
   await setState("oauth:"+hash(state),{nonce,verifier,returnTo,cart,linkUserId,expiresAt:Date.now()+600000});

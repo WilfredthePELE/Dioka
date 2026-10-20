@@ -4,7 +4,7 @@ import fields from "@/lib/site-editable.json";
 import type {SiteContent} from "@/lib/site-content";
 export function WebsiteControlsEditor({content,onChange}:{content:SiteContent;onChange:(value:SiteContent)=>void}){
  const [query,setQuery]=useState(""),[selected,setSelected]=useState(fields.find(f=>f.kind==="text")?.id||""),[page,setPage]=useState("app/page.tsx");
- const filtered=useMemo(()=>fields.filter(f=>f.kind!=="section"&&(f.label+" "+f.page+" "+f.source).toLowerCase().includes(query.toLowerCase())),[query]);
+ const filtered=useMemo(()=>fields.filter(f=>f.kind!=="section"&&!("retired" in f&&f.retired)&&(f.label+" "+f.page+" "+f.source).toLowerCase().includes(query.toLowerCase())),[query]);
  const field=filtered.find(f=>f.id===selected)||filtered[0],controls=content.controls||{texts:{},assets:{},sections:{},order:{}};
  const group=field?.kind==="text"?"texts":"assets",value=field?(controls[group][field.id]??field.defaultValue):"";
  function setValue(next:string,reset=false){if(!field)return;const changes={...controls[group]};if(reset)delete changes[field.id];else changes[field.id]=next;onChange({...content,controls:{...controls,[group]:changes}});}

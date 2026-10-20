@@ -73,6 +73,7 @@ export async function browserChecks({ origin, password }) {
     await google.getByRole('button', { name: 'Continue with Google', exact: true }).click();
     await google.waitForURL('https://accounts.google.com/**');
     assert.equal(new URL(google.url()).searchParams.get('redirect_uri'), origin + '/api/auth/google/callback');
+    await import('./account-browser.mjs').then(m=>m.accountBrowserChecks({browser,origin,password}));
     assert.deepEqual(errors, [], 'Browser console must not contain unhandled application errors');
     console.log('PASS browser: owner login, product publishing, new product URLs, content publishing, two-way chat, mobile layouts and clean page execution');
   } catch (error) {

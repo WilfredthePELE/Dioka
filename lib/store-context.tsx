@@ -26,6 +26,8 @@ export interface CartItem {
 }
 
 export interface UserProfile {
+  googleConnected?: boolean;
+  administrator?: boolean;
   id: string;
   name: string;
   email: string;

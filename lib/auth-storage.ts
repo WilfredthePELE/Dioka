@@ -6,7 +6,7 @@ const scrypt=promisify(crypto.scrypt);
 export interface StoredCartItem { id: string; size: string; quantity: number; addedAt?: string; color?: string; leather?: string; shape?: string; monogram?: string; itemKey?: string }
 export interface UserOrder { orderId: string; items: StoredCartItem[]; subtotal: number; total: number; currency: string; shippingAddress?: UserAccount["shippingAddress"]; status: "Confirmed" | "Crafting" | "Dispatched" | "Delivered"; trackingCode: string; createdAt: string }
 export interface UserAccount {
-  id: string; name: string; email: string; googleSubject?: string; passwordHash: string; salt: string; tier: string;
+  id: string; name: string; email: string; googleSubject?: string; supabaseUserId?: string; passwordHash: string; salt: string; tier: string;
   cart: StoredCartItem[]; wishlist: string[]; orders: UserOrder[];
   shippingAddress?: { fullName?: string; street?: string; city?: string; country?: string; postalCode?: string; phone?: string };
   createdAt: string; updatedAt: string;
@@ -49,3 +49,5 @@ export async function googleAccount(identity:{subject:string;email:string;name:s
  });
 }
 export function mergeUserCart(id:string,incoming:StoredCartItem[]){const items=cartSchema.parse(incoming);return changeUser(id,user=>{for(const item of items){const existing=user.cart.find(m=>sameSelection(m,item));if(existing)existing.quantity=Math.min(10,existing.quantity+item.quantity);else user.cart.push(item);}user.cart=user.cart.slice(0,50);return user.cart;});}
+
+export async function linkSupabaseAccount(userId:string,authUserId:string,subject:string){const userKey="user:"+userId,indexKey="supabase:"+authUserId;await atomicStates({[userKey]:null,[indexKey]:null},rows=>{const user=rows[userKey] as UserAccount|null;if(!user||user.googleSubject!==subject||(user.supabaseUserId&&user.supabaseUserId!==authUserId)||(rows[indexKey]&&rows[indexKey].id!==userId))throw new Error("Supabase identity is already linked.");user.supabaseUserId=authUserId;rows[indexKey]={id:userId};});}
