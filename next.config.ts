@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Vercel handles its own output tracing; standalone currently conflicts with
+  // the Next.js 16.3 Vercel build adapter. Keep it for Truehost/Docker hosts.
+  ...(process.env.VERCEL ? {} : { output: "standalone" }),
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60 * 60 * 24,
