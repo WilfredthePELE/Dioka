@@ -3,6 +3,7 @@ import { CmsLink, CmsPage, CmsSection, CmsText } from "@/components/SiteControls
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { shouldBypassImageOptimization } from "@/lib/image-source";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -87,6 +88,7 @@ export default function FootwearPage() {
                 >
                   <Image
                     src={product.image}
+                    unoptimized={shouldBypassImageOptimization(product.image)}
                     alt={product.name}
                     fill
                     sizes="(max-width: 760px) 100vw, (max-width: 1024px) 50vw, 33vw"

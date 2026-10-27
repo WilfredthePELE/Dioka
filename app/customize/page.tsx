@@ -1,9 +1,8 @@
 "use client";
 import { CmsLink, CmsPage, CmsSection, CmsText } from "@/components/SiteControls";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   Crown,
   RotateCcw,
@@ -72,7 +71,7 @@ const BASE_MODELS: CustomBaseModel[] = [
     name: "Chelsea Heeled Ankle Boot",
     category: "Footwear",
     basePrice: 340,
-    image: "/dioka-footwear-editorial.png",
+    image: "/dioka-footwear-editorial.webp",
     defaultColor: "Black",
     availableSizes: ["EU 38", "EU 39", "EU 40", "EU 41", "EU 42", "EU 43", "EU 44", "EU 45"],
     description: "45mm stacked heel, memory-foam arch bed, and Goodyear-welted resoleable construction.",
@@ -106,7 +105,7 @@ const BASE_MODELS: CustomBaseModel[] = [
     name: "Classic Lambskin Leather Jacket",
     category: "Jackets",
     basePrice: 560,
-    image: "/dioka-jacket-editorial.png",
+    image: "/dioka-jacket-editorial.webp",
     defaultColor: "Black",
     availableSizes: ["XS", "S", "M", "L", "XL", "XXL"],
     description: "Tailored lambskin with sharp point collar, pleated action back, and two internal passport pockets.",
@@ -212,6 +211,19 @@ export default function CustomizePage() {
   const [monogramPlacement, setMonogramPlacement] = useState("Exterior Flap");
   const [customNotes, setCustomNotes] = useState("");
   const [isCommissioning, setIsCommissioning] = useState(false);
+  const [referenceFile, setReferenceFile] = useState<File | null>(null);
+  const [referencePreview, setReferencePreview] = useState("");
+  const [referenceError, setReferenceError] = useState("");
+  const referencePreviewUrl = useRef<string | null>(null);
+  useEffect(() => () => {
+    if (referencePreviewUrl.current) URL.revokeObjectURL(referencePreviewUrl.current);
+  }, []);
+  const selectReferenceFile = (file: File | null) => {
+    if (referencePreviewUrl.current) URL.revokeObjectURL(referencePreviewUrl.current);
+    referencePreviewUrl.current = file ? URL.createObjectURL(file) : null;
+    setReferencePreview(referencePreviewUrl.current || "");
+    setReferenceFile(file);
+  };
 
   // Filter models for category
   const categoryModels = useMemo(() => {
@@ -262,10 +274,23 @@ export default function CustomizePage() {
   const activeSize = selectedSize || currentModel.availableSizes[0] || "Custom Fit";
 
   // Handle adding customized commission to cart
-  const handleAddToBag = () => {
+  const handleAddToBag = async () => {
+    if (isCommissioning) return;
     setIsCommissioning(true);
+    setReferenceError("");
 
-    const bespokeProduct: Product = {
+    try {
+      let designReference: string | undefined;
+      if (referenceFile) {
+        const form = new FormData();
+        form.append("file", referenceFile);
+        const response = await fetch("/api/customize/reference", { method: "POST", body: form });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "The reference image could not be saved.");
+        designReference = result.path;
+      }
+
+      const bespokeProduct: Product = {
       id: `bespoke-${currentModel.id}-${Date.now().toString(36)}`,
       name: `Bespoke ${currentModel.name} · ${selectedColor.name}`,
       category: currentModel.category,
@@ -277,7 +302,7 @@ export default function CustomizePage() {
       subtitle: `Bespoke Commission · ${currentLeather.name}`,
       description: `Bespoke Dioka atelier piece. Leather: ${currentLeather.name} in ${selectedColor.name}. Hardware: ${currentHardware.name}. Lining: ${currentLining.name}. Monogram: ${
         monogramEnabled && monogramText.trim() ? `${monogramText.toUpperCase()} (${currentFoil.name} on ${monogramPlacement})` : "None"
-      }. ${customNotes ? `Notes: ${customNotes}` : ""}`,
+      }. ${customNotes ? `Notes: ${customNotes}` : ""}${designReference ? " Design reference photo attached privately." : ""}`,
       materials: `${currentLeather.name}, ${currentHardware.name}, ${currentLining.name}.`,
       dimensions: currentModel.specs,
       care: "Individually handcrafted. Includes breathable cotton storage bag, organic beeswax leather balm, and certificate of origin.",
@@ -286,20 +311,23 @@ export default function CustomizePage() {
         `Hardware: ${currentHardware.name}`,
         `Interior lining: ${currentLining.name}`,
         `Personalization: ${monogramEnabled && monogramText.trim() ? `${monogramText.toUpperCase()} (${currentFoil.name})` : "Standard Atelier Mark"}`,
+        ...(designReference ? ["Private customer design reference attached"] : []),
         `Made-to-order turnaround: 10–14 business days in European Atelier`,
       ],
       inStock: true,
       stockQuantity: 5,
       rating: 5,
       reviews: 1,
-    };
+      };
 
-    addToCart(bespokeProduct, activeSize, 1);
-    showToast(`Added Bespoke ${currentModel.name} to your bag!`);
-
-    setTimeout(() => {
+      addToCart(bespokeProduct, activeSize, 1, designReference ? { designReference } : undefined);
+      showToast(`Added Bespoke ${currentModel.name} to your bag!`);
+      setReferenceFile(null);
+    } catch (error) {
+      setReferenceError(error instanceof Error ? error.message : "The design could not be added. Please try again.");
+    } finally {
       setIsCommissioning(false);
-    }, 600);
+    }
   };
 
   return (
@@ -936,6 +964,31 @@ export default function CustomizePage() {
                     fontFamily: "inherit",
                   }}
                 />
+              </div>
+              <div className="custom-reference-block">
+                <label htmlFor="custom-design-reference">Design inspiration <span>OPTIONAL</span></label>
+                <p>Show our artisans a bag, sketch or detail you have in mind. Your image is stored privately with your commission.</p>
+                <input
+                  id="custom-design-reference"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/avif"
+                  onChange={(event) => {
+                    const file = event.currentTarget.files?.[0] || null;
+                    event.currentTarget.value = "";
+                    if (file && file.size > 8 * 1024 * 1024) {
+                      setReferenceError("Choose an image smaller than 8 MB.");
+                      return;
+                    }
+                    setReferenceError("");
+                    selectReferenceFile(file);
+                  }}
+                />
+                {referenceFile && referencePreview && <div className="custom-reference-preview">
+                  <div role="img" aria-label="Preview of your design reference" style={{ backgroundImage: `url("${referencePreview}")` }} />
+                  <span>{referenceFile?.name}</span>
+                  <button type="button" onClick={() => selectReferenceFile(null)}>Remove</button>
+                </div>}
+                {referenceError && <p className="custom-reference-error" role="alert">{referenceError}</p>}
               </div>
             </div>
 

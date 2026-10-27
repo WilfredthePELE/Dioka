@@ -2,7 +2,7 @@
 import {useCallback,useEffect,useRef,useState} from "react";
 import {usePathname} from "next/navigation";
 import {ArrowRight} from "lucide-react";
-import {CmsImg,CmsVideo} from "@/components/SiteControls";
+import {CmsImage,CmsVideo} from "@/components/SiteControls";
 import "./atelier-intro.css";
 export function AtelierSplashScreen(){
  const pathname=usePathname(),dialog=useRef<HTMLDialogElement>(null),video=useRef<HTMLVideoElement>(null);
@@ -14,8 +14,8 @@ export function AtelierSplashScreen(){
  useEffect(()=>{if(!fading)return;const timer=setTimeout(()=>{setVisible(false);setFading(false)},450);return()=>clearTimeout(timer);},[fading]);
  if(!visible)return null;
  return <dialog ref={dialog} className={"dioka-intro"+(fading?" is-leaving":"")} aria-label="Dioka atelier introduction" onCancel={event=>{event.preventDefault();enter()}}>
-  <CmsImg className="dioka-intro-film is-poster" src="/dioka-white-studio-shoemaker.png" srcKey="splash-studio-poster" width={1672} height={941} alt="" aria-hidden="true" loading="eager" decoding="sync"/>
-  {!reduced&&!failed&&<CmsVideo ref={video} className="dioka-intro-film" style={{opacity:ready?1:0}} src="/dioka-white-studio-loop.mp4" srcKey="splash-studio-film" width={1280} height={720} poster="/dioka-white-studio-shoemaker.png" posterKey="splash-studio-poster" muted autoPlay loop playsInline preload="auto" aria-hidden="true" onLoadedData={()=>setReady(true)} onError={()=>setFailed(true)}/>}
+  <CmsImage className="dioka-intro-film is-poster" src="/dioka-white-studio-shoemaker.webp" srcKey="splash-studio-poster" width={1672} height={941} alt="" aria-hidden="true" loading="eager" decoding="async"/>
+  {!reduced&&!failed&&<CmsVideo ref={video} className="dioka-intro-film" style={{opacity:ready?1:0}} src="/dioka-white-studio-loop.mp4" srcKey="splash-studio-film" width={1280} height={720} poster="/dioka-white-studio-shoemaker.webp" posterKey="splash-studio-poster" muted autoPlay loop playsInline preload="metadata" aria-hidden="true" onLoadedData={()=>setReady(true)} onError={()=>setFailed(true)}/>}
   <h1 className="dioka-intro-wordmark">DIOKA</h1>
   <button type="button" className="dioka-intro-enter" aria-label="Enter Dioka" onClick={enter} autoFocus><ArrowRight size={23} strokeWidth={1.2}/></button>
  </dialog>;

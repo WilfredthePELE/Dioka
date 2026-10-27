@@ -528,6 +528,38 @@
     "page": "Home"
   },
   {
+    "id": "c8de31059614aaca",
+    "kind": "asset",
+    "defaultValue": "/dioka-brown-bag.webp",
+    "label": "Our Story / Main image",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "24aa7c770b467b4c",
+    "kind": "text",
+    "defaultValue": "A handcrafted cognac leather bag in the Dioka collection",
+    "label": "Our Story / Image description",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "ba19890c8ca45801",
+    "kind": "text",
+    "defaultValue": "FORMED BY HAND. MADE FOR EVERY DAY.",
+    "label": "Our Story / Image caption",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
+    "id": "2ca8cc5b03b16ca7",
+    "kind": "text",
+    "defaultValue": "DIOKA ATELIER · 01 / 03",
+    "label": "Our Story / Image footer",
+    "source": "app/page.tsx",
+    "page": "Home"
+  },
+  {
     "id": "32a0e9e366a0b53c",
     "kind": "text",
     "defaultValue": "Quality you can",
@@ -3018,7 +3050,7 @@
   {
     "id": "splash-studio-poster",
     "kind": "asset",
-    "defaultValue": "/dioka-white-studio-shoemaker.png",
+    "defaultValue": "/dioka-white-studio-shoemaker.webp",
     "label": "White studio still / video poster",
     "source": "components/AtelierSplashScreen.tsx",
     "page": "Introduction"

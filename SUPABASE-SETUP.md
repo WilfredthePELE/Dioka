@@ -9,7 +9,7 @@ Created and verified on 20 October 2026:
 - Region: London (eu-west-2).
 - Dashboard: https://supabase.com/dashboard/project/plwxwgqlpurfvqgzcuin .
 - API URL: https://plwxwgqlpurfvqgzcuin.supabase.co .
-- Applied migrations: 20261020084440 dioka_app_state and 20261020084445 dioka_media_storage, and 20261020093827 dioka_scalability.
+- Applied migrations: 20261020084440 dioka_app_state and 20261020084445 dioka_media_storage, 20261020093827 dioka_scalability, and 20261021091909 customer_design_references.
 - Migrated independent user, inventory, order, conversation and subscriber records; preserved legacy snapshots for recovery. The 12 catalogue products remain at zero stock.
 - Provisioned the owner account contactus@diokacraft.com. Its generated password is in the ignored local outputs/cloud-admin-access.txt file. This is separate from the SQLite preview account.
 - Verified live SQL row-security/permissions and bucket privacy. Real anonymous REST requests returned 401 for both app tables.
@@ -23,14 +23,15 @@ Supabase security advisors reported informational notices about the intentionall
 1. supabase/production.sql — app data table and server-only permissions.
 2. supabase/migrations/20261020084445_dioka_media_storage.sql — upload metadata and public/private buckets.
 3. supabase/migrations/20261020093827_dioka_scalability.sql — partition records, transactional stock/CAS functions, indexes and bounded temporary-record cleanup.
-4. supabase/seed.sql — initial catalogue and website content; existing records are kept. Stock starts at zero until the owner enters actual quantities. Regenerate this seed with node scripts/generate-supabase-seed.mjs after changing source catalogue defaults.
+4. supabase/migrations/20261021091909_customer_design_references.sql — allow private customer inspiration images in the existing 8 MB private bucket. The bucket remains private; uploads use the server-only key and admins view them through five-minute signed links.
+5. supabase/seed.sql — initial catalogue and website content; existing records are kept. Stock starts at zero until the owner enters actual quantities. Regenerate this seed with node scripts/generate-supabase-seed.mjs after changing source catalogue defaults.
 
 ## Data model actually used by the app
 
 - dioka_app_state: versioned JSONB application records. Each user, session, product, reservation, paid order, conversation, subscriber, checkout snapshot and OAuth transaction has an independent key. Shared legacy aggregates are recovery snapshots only. PostgreSQL functions atomically reserve and settle stock; bounded multi-record compare-and-set transactions protect related writes. Content is a separate validated record. Password accounts remain app-managed. In Supabase Google mode, verified Supabase Auth Google users link to these private application accounts; app sessions remain server-checked opaque cookies. See GOOGLE-SIGN-IN.md for activation and exact callback settings.
 - dioka_media: typed file metadata, owner identifier, bucket/path, MIME type, byte size and upload time.
 - dioka-products bucket: public JPG/PNG/WebP/AVIF product images, maximum 8 MB per image. Public URLs are intended to appear on the website.
-- dioka-private bucket: private PDF documents for the owner's media library, maximum 8 MB. Admin-only signed links expire after five minutes. These are not customer-accessible order attachments.
+- dioka-private bucket: private PDF documents and customer design-reference images, maximum 8 MB. Admin-only signed links expire after five minutes. Customer references are never exposed as public URLs.
 
 Both app tables have row-level security and no anon/authenticated privileges. A server-only service role key performs authorized requests after the app checks the owner session. Browser authentication does not grant direct database or upload access. Do not add public write policies to fix an error.
 

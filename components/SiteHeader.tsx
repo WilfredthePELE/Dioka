@@ -110,7 +110,7 @@ export function SiteHeader() {
 
         {/* Center Wordmark Logo (The only Dioka brand mark) */}
         <CmsLink className="wordmark" href="/" prefetch={true} aria-label="Dioka home" hrefKey="412b35298c5da7a8">
-          <CmsText field="f9923307692c5efd" fallback="DIOKA"/><span><CmsText field="16fbfa34a5d2636a" fallback="®"/></span>
+          <span className="wordmark-label" style={{ fontSize: "clamp(34px, 7vw, 56px)" }}><CmsText field="f9923307692c5efd" fallback="DIOKA"/></span><span className="wordmark-mark"><CmsText field="16fbfa34a5d2636a" fallback="®"/></span>
         </CmsLink>
 
         {/* Header Right Actions */}

@@ -22,6 +22,7 @@ export interface CartItem {
   leather?: string;
   shape?: string;
   monogram?: string;
+  designReference?: string;
   itemKey?: string;
 }
 
@@ -83,6 +84,7 @@ interface StoreContextType {
       leather?: string;
       shape?: string;
       monogram?: string;
+      designReference?: string;
     }
   ) => void;
   changeQuantity: (idOrKey: string, size?: string, delta?: number) => void;
@@ -443,6 +445,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       leather?: string;
       shape?: string;
       monogram?: string;
+      designReference?: string;
     }
   ) => {
     if (product.inStock === false || (product.stockQuantity ?? 10) < 1) { showToast("This piece is currently unavailable."); return; }
@@ -452,7 +455,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const finalLeather = customization?.leather || "Full-Grain";
     const finalShape = customization?.shape || "The Classic";
     const finalMonogram = customization?.monogram || "";
-    const itemKey = `${product.id}__${finalSize}__${finalColor}__${finalLeather}__${finalShape}__${finalMonogram}`;
+    const finalDesignReference = customization?.designReference || "";
+    const itemKey = `${product.id}__${finalSize}__${finalColor}__${finalLeather}__${finalShape}__${finalMonogram}__${finalDesignReference}`;
 
     setCart((prev) => {
       const existingIdx = prev.findIndex(
@@ -463,7 +467,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             (item.color || "") === finalColor &&
             (item.leather || "") === finalLeather &&
             (item.shape || "") === finalShape &&
-            (item.monogram || "") === finalMonogram)
+            (item.monogram || "") === finalMonogram &&
+            (item.designReference || "") === finalDesignReference)
       );
 
       if (existingIdx > -1) {
@@ -490,6 +495,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           leather: finalLeather,
           shape: finalShape,
           monogram: finalMonogram,
+          ...(finalDesignReference ? { designReference: finalDesignReference } : {}),
           itemKey,
         },
       ];

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { shouldBypassImageOptimization } from "@/lib/image-source";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -119,7 +120,7 @@ export function GlobalModals() {
     setCheckoutBusy(true);
 
     try {
-      const fingerprint=JSON.stringify(cart.map(({id,size,quantity,color,leather,shape,monogram})=>({id,size,quantity,color,leather,shape,monogram})));
+      const fingerprint=JSON.stringify(cart.map(({id,size,quantity,color,leather,shape,monogram,designReference})=>({id,size,quantity,color,leather,shape,monogram,designReference})));
       let requestId=crypto.randomUUID();
       try{const saved=JSON.parse(localStorage.getItem("dioka_checkout_attempt")||"null");if(saved?.fingerprint===fingerprint)requestId=saved.id;else localStorage.setItem("dioka_checkout_attempt",JSON.stringify({fingerprint,id:requestId}));}catch{}
       const res = await fetch("/api/checkout", {
@@ -281,7 +282,7 @@ export function GlobalModals() {
                   return (
                     <div className="cart-item" key={item.itemKey || item.id + item.size}>
                       <div className="cart-item-image">
-                        <Image src={product.image} alt={product.name} fill sizes="100px" style={{ objectPosition: product.position }} />
+                        <Image src={product.image} alt={product.name} fill sizes="100px" unoptimized={shouldBypassImageOptimization(product.image)} style={{ objectPosition: product.position }} />
                       </div>
                       <div className="cart-item-info">
                         <p>{product.category}</p>
@@ -299,6 +300,7 @@ export function GlobalModals() {
                           {item.leather || "Full-Grain"} · {item.shape || "The Classic"}
                           {item.monogram ? ` · [Gold Monogram: ${item.monogram}]` : ""}
                         </span>
+                        {item.designReference && <span className="cart-reference-note">Private design reference attached</span>}
 
                         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "10px" }}>
                           <div className="quantity">
@@ -393,6 +395,7 @@ export function GlobalModals() {
               <div className="dialog-image">
                 <Image
                   src={selectedProduct.image}
+                  unoptimized={shouldBypassImageOptimization(selectedProduct.image)}
                   alt={selectedProduct.name}
                   fill
                   sizes="(max-width: 760px) 100vw, 50vw"

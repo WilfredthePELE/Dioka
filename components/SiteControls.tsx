@@ -2,11 +2,11 @@
 import React, {Children,isValidElement,type ComponentProps} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {shouldBypassImageOptimization} from "@/lib/image-source";
 import {useSiteContent} from "@/components/EditableContent";
 export function CmsText({field,fallback}:{field:string;fallback:string}){const content=useSiteContent();return <span style={{display:"contents"}} data-site-field={field}>{content?.controls?.texts[field]??fallback}</span>;}
-function useField(kind:"texts"|"assets",key:string|undefined,fallback:any){const content=useSiteContent();return key?content?.controls?.[kind][key]??fallback:fallback;}
-export function CmsImage({srcKey,altKey,...props}:ComponentProps<typeof Image>&{srcKey?:string;altKey?:string}){const src=useField("assets",srcKey,props.src),alt=useField("texts",altKey,props.alt);return <Image {...props} src={src} alt={alt}/>;}
-export function CmsImg({srcKey,altKey,...props}:ComponentProps<"img">&{srcKey?:string;altKey?:string}){const src=useField("assets",srcKey,props.src),alt=useField("texts",altKey,props.alt);return <img {...props} src={src} alt={alt}/>;}
+function useField<T>(kind:"texts"|"assets",key:string|undefined,fallback:T):T{const content=useSiteContent();return key?(content?.controls?.[kind][key]??fallback) as T:fallback;}
+export function CmsImage({srcKey,altKey,...props}:ComponentProps<typeof Image>&{srcKey?:string;altKey?:string}){const src=useField("assets",srcKey,props.src),alt=useField("texts",altKey,props.alt);return <Image {...props} unoptimized={shouldBypassImageOptimization(src)} src={src} alt={alt}/>;}
 export function CmsSource({srcKey,...props}:ComponentProps<"source">&{srcKey?:string}){const src=useField("assets",srcKey,props.src);return <source {...props} src={src}/>;}
 export function CmsVideo({srcKey,posterKey,...props}:ComponentProps<"video">&{srcKey?:string;posterKey?:string}){const src=useField("assets",srcKey,props.src),poster=useField("assets",posterKey,props.poster);return <video {...props} src={src} poster={poster}/>;}
 export function CmsLink({hrefKey,titleKey,...props}:ComponentProps<typeof Link>&{hrefKey?:string;titleKey?:string}){const href=useField("assets",hrefKey,props.href),title=useField("texts",titleKey,props.title);return <Link {...props} href={href} title={title}/>;}

@@ -2,6 +2,7 @@
 
 import React, { use, useState } from "react";
 import Image from "next/image";
+import { shouldBypassImageOptimization } from "@/lib/image-source";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -125,6 +126,7 @@ export default function ProductDetailPage({
             >
               <Image
                 src={product.image}
+                unoptimized={shouldBypassImageOptimization(product.image)}
                 alt={product.name}
                 fill
                 priority
@@ -436,7 +438,7 @@ export default function ProductDetailPage({
                     className="product-image-button"
                     style={{ display: "block", textDecoration: "none" }}
                   >
-                    <Image src={item.image} alt={item.name} fill sizes="33vw" style={{ objectPosition: item.position }} />
+                    <Image src={item.image} alt={item.name} fill sizes="33vw" unoptimized={shouldBypassImageOptimization(item.image)} style={{ objectPosition: item.position }} />
                   </Link>
 
                   <div className="product-meta">

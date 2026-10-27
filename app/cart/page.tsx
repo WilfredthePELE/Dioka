@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { shouldBypassImageOptimization } from "@/lib/image-source";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -233,6 +234,7 @@ export default function CartPage() {
                     <div style={{ position: "relative", width: "110px", height: "110px", background: "#ede6dc" }}>
                       <Image
                         src={product.image}
+                        unoptimized={shouldBypassImageOptimization(product.image)}
                         alt={product.name}
                         fill
                         sizes="110px"

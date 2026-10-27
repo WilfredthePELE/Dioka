@@ -31,7 +31,7 @@ export function AccountPage({ mode = "login" }: { mode?: "login" | "register" | 
   return <main className="dioka-account-page">
     <section className="dioka-account-story" aria-label="Dioka atelier">
       <Link className="dioka-account-wordmark" href="/" aria-label="Dioka home">DIOKA</Link>
-      <div className="dioka-account-portrait"><Image src="/dioka-white-studio-shoemaker.png" alt="A silver-haired shoemaker carefully stitching a cognac leather shoe in a white studio" fill sizes="(max-width: 800px) 100vw, 48vw" priority/></div>
+      <div className="dioka-account-portrait"><Image src="/dioka-white-studio-shoemaker.webp" alt="A silver-haired shoemaker carefully stitching a cognac leather shoe in a white studio" fill sizes="(max-width: 800px) 100vw, 48vw" priority/></div>
       <div className="dioka-account-story-copy"><span><CmsText field="account-story-label" fallback="A PERSONAL CONNECTION"/></span><h2><CmsText field="account-story-title" fallback="Considered craft. A place of your own."/></h2><p><CmsText field="account-story-copy" fallback="Your favourite pieces, your saved bag and every step of your order. All together, at your atelier."/></p></div>
       <span className="dioka-account-edition" aria-hidden="true">DIOKA ATELIER / EVERY DETAIL, CONSIDERED</span>
     </section>

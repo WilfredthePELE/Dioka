@@ -3,7 +3,7 @@ import { promisify } from "node:util";
 import { readState, mutateState, atomicStates, setState, deleteState, identityKey } from "@/lib/persistence";
 import { z } from "zod";
 const scrypt=promisify(crypto.scrypt);
-export interface StoredCartItem { id: string; size: string; quantity: number; addedAt?: string; color?: string; leather?: string; shape?: string; monogram?: string; itemKey?: string }
+export interface StoredCartItem { id: string; size: string; quantity: number; addedAt?: string; color?: string; leather?: string; shape?: string; monogram?: string; designReference?: string; itemKey?: string }
 export interface UserOrder { orderId: string; items: StoredCartItem[]; subtotal: number; total: number; currency: string; shippingAddress?: UserAccount["shippingAddress"]; status: "Confirmed" | "Crafting" | "Dispatched" | "Delivered"; trackingCode: string; createdAt: string }
 export interface UserAccount {
   id: string; name: string; email: string; googleSubject?: string; supabaseUserId?: string; passwordHash: string; salt: string; tier: string;
@@ -11,7 +11,7 @@ export interface UserAccount {
   shippingAddress?: { fullName?: string; street?: string; city?: string; country?: string; postalCode?: string; phone?: string };
   createdAt: string; updatedAt: string;
 }
-export const cartSchema = z.array(z.object({ id: z.string().min(1).max(100), size: z.string().min(1).max(100), quantity: z.number().int().min(1).max(10), addedAt: z.string().max(100).optional(), color: z.string().max(100).optional(), leather: z.string().max(100).optional(), shape: z.string().max(100).optional(), monogram: z.string().max(3).optional(), itemKey: z.string().max(500).optional() })).max(50);
+export const cartSchema = z.array(z.object({ id: z.string().min(1).max(100), size: z.string().min(1).max(100), quantity: z.number().int().min(1).max(10), addedAt: z.string().max(100).optional(), color: z.string().max(100).optional(), leather: z.string().max(100).optional(), shape: z.string().max(100).optional(), monogram: z.string().max(3).optional(), designReference: z.string().regex(/^customer-designs\/[a-f0-9-]{36}\.(jpg|png|webp|avif)$/i).optional(), itemKey: z.string().max(500).optional() })).max(50);
 let hashing=0;
 export async function hashPassword(password:string,salt:string){if(hashing>=32)throw new Error("Sign-in is busy. Please retry shortly.");hashing++;try{return(await scrypt(password,salt,64) as Buffer).toString("hex");}finally{hashing--;}}
 export async function verifyPassword(password: string, user: UserAccount) {
@@ -32,7 +32,7 @@ export async function deleteSession(token:string){await deleteState(sessionKey(t
 async function changeUser<R>(id:string,change:(user:UserAccount)=>R){return mutateState<UserAccount|null,R>("user:"+id,null,user=>{if(!user)throw new Error("User not found.");const result=change(user);user.updatedAt=new Date().toISOString();return result;});}
 export function updateUserCart(id:string,cart:StoredCartItem[]){const items=cartSchema.parse(cart);return changeUser(id,user=>{user.cart=items;return items;});}
 export async function applyPurchaseToCart(userId:string,purchased:StoredCartItem[],sessionId:string){const userKey="user:"+userId,paidKey="paidcart:"+sessionId;await atomicStates({[userKey]:null,[paidKey]:null},rows=>{if(rows[paidKey]?.done)return;const user=rows[userKey] as UserAccount|null;if(user)user.cart=user.cart.flatMap(item=>{const count=purchased.filter(p=>sameSelection(p,item)).reduce((sum,p)=>sum+p.quantity,0);return item.quantity>count?[{...item,quantity:item.quantity-count}]:[];});rows[paidKey]={done:true};});}
-function sameSelection(a:StoredCartItem,b:StoredCartItem){return a.id===b.id&&a.size===b.size&&(a.color||"")===(b.color||"")&&(a.leather||"")===(b.leather||"")&&(a.shape||"")===(b.shape||"")&&(a.monogram||"")===(b.monogram||"");}
+function sameSelection(a:StoredCartItem,b:StoredCartItem){return a.id===b.id&&a.size===b.size&&(a.color||"")===(b.color||"")&&(a.leather||"")===(b.leather||"")&&(a.shape||"")===(b.shape||"")&&(a.monogram||"")===(b.monogram||"")&&(a.designReference||"")===(b.designReference||"");}
 export function updateUserProfile(id:string,updates:{name?:string;shippingAddress?:UserAccount["shippingAddress"]}){return changeUser(id,user=>{if(updates.name)user.name=updates.name.trim();if(updates.shippingAddress)user.shippingAddress=updates.shippingAddress;return user;});}
 export function recordUserOrder(id:string,data:Omit<UserOrder,"orderId"|"createdAt"|"status"|"trackingCode">){return changeUser(id,user=>{const order:UserOrder={...data,orderId:"DK-"+crypto.randomUUID(),trackingCode:"",status:"Confirmed",createdAt:new Date().toISOString()};user.orders.unshift(order);user.cart=[];return order;});}
 export async function googleAccount(identity:{subject:string;email:string;name:string;authoritative:boolean},administrator:boolean,linkUserId?:string){

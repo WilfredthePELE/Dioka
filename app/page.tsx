@@ -3,6 +3,7 @@ import { CmsImage, CmsLink, CmsPage, CmsSection, CmsText } from "@/components/Si
 
 import React, { useMemo, useState } from "react";
 import Image from "next/image";
+import { shouldBypassImageOptimization } from "@/lib/image-source";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -20,6 +21,7 @@ import {
   X,
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { PopularProductsCarousel } from "@/components/PopularProductsCarousel";
 import { SiteFooter } from "@/components/SiteFooter";
 import { HomeIntroduction, StorePolicies } from "@/components/EditableContent";
 import { useStore } from "@/lib/store-context";
@@ -92,10 +94,6 @@ export default function Home() {
     return result;
   }, [catalog, filter, searchQuery, sortBy]);
 
-  // Featured hero products for Trending Collections showcase
-  const featuredBag = catalog.find((p) => p.id === "arc-shoulder-bag") || catalog.find(p => p.category === "Bags");
-  const featuredShoe = catalog.find((p) => p.id === "column-ankle-boot") || catalog.find(p => p.category === "Footwear");
-  const featuredJacket = catalog.find((p) => p.id === "transit-leather-jacket") || catalog.find(p => p.category === "Jackets");
 
   return (
     <CmsPage pageKey="app/page.tsx">
@@ -114,163 +112,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="collection-grid">
-          {/* BAGS SHOWCASE CARD */}
-          <div
-            className="collection-card bag-card"
-            onClick={(e) => {
-              const el = e.target as HTMLElement;
-              if (el.closest("button") || el.closest("a")) return;
-              router.push(featuredBag ? `/products/${featuredBag.id}` : "/bags");
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <CmsLink
-              href={featuredBag ? `/products/${featuredBag.id}` : "/bags"}
-              className="collection-media"
-              style={{ display: "block", textDecoration: "none" }}
-              title="View Arc Shoulder Bag details" titleKey="9481d2da2b652142"
-            >
-              <CmsImage
-                src={featuredBag?.image || "/dioka-brown-bag.webp"}
-                alt="Arc Leather Shoulder Bag in Cognac Brown"
-                fill
-                sizes="(max-width: 900px) 100vw, 60vw" altKey="85c471d820005527"
-              />
-              <span className="collection-badge"><CmsText field="8363518c196544c9" fallback="POPULAR IN BAGS"/></span>
-            </CmsLink>
-            <div className="collection-label">
-              <div style={{ flex: 1 }}>
-                <span className="collection-number"><CmsText field="207d5c45361e4140" fallback="01 / FEATURED BAG"/></span>
-                <Link href={featuredBag ? `/products/${featuredBag.id}` : "/bags"} style={{ textDecoration: "none", color: "inherit" }}>
-                  <strong>{featuredBag?.name || "Arc Shoulder Bag"}</strong>
-                </Link>
-                <p style={{ margin: "4px 0 0", fontSize: "14px", color: "#666" }}>
-                  <CmsText field="208f2c2cb24162d8" fallback="Curved silhouette in rich full-grain calfskin"/>{featuredBag ? ` · ${formatPrice(featuredBag.price)}` : ""}
-                </p>
-              </div>
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
-                <button
-                  type="button"
-                  className="quick-action-pill"
-                  onClick={() => featuredBag && setSelectedProduct(featuredBag)}
-                >
-                  <Eye size={14} /> <CmsText field="1c39c35646d9139c" fallback="Quick View"/></button>
-                <CmsLink
-                  href="/bags"
-                  className="quick-action-pill active"
-                  style={{ textDecoration: "none" }} hrefKey="00e18a97290aa87a"
-                >
-                  <CmsText field="712046c7d78dcf6a" fallback="Shop All Bags ("/>{catalog.filter(p => p.category === "Bags").length}<CmsText field="2b1100033b27ce66" fallback=") "/><ArrowRight size={14} />
-                </CmsLink>
-              </div>
-            </div>
-          </div>
-
-          {/* FOOTWEAR SHOWCASE CARD */}
-          <div
-            className="collection-card footwear-card"
-            onClick={(e) => {
-              const el = e.target as HTMLElement;
-              if (el.closest("button") || el.closest("a")) return;
-              router.push(featuredShoe ? `/products/${featuredShoe.id}` : "/footwear");
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <CmsLink
-              href={featuredShoe ? `/products/${featuredShoe.id}` : "/footwear"}
-              className="collection-media"
-              style={{ display: "block", textDecoration: "none" }}
-              title="View Chelsea Ankle Boot" titleKey="bf16b06dad2ac29c"
-            >
-              <CmsImage
-                src={featuredShoe?.image || "/dioka-footwear-editorial.png"}
-                alt="Chelsea Heeled Ankle Boot"
-                fill
-                sizes="(max-width: 900px) 100vw, 40vw" altKey="128c65e88e17e440"
-              />
-              <span className="collection-badge"><CmsText field="7dfd0a582656c8aa" fallback="BEST SELLER"/></span>
-            </CmsLink>
-            <div className="collection-label">
-              <div style={{ flex: 1 }}>
-                <span className="collection-number"><CmsText field="ae320827f97e87ff" fallback="02 / SHOES & BOOTS"/></span>
-                <Link href={featuredShoe ? `/products/${featuredShoe.id}` : "/footwear"} style={{ textDecoration: "none", color: "inherit" }}>
-                  <strong>{featuredShoe?.name || "Heeled Ankle Boots"}</strong>
-                </Link>
-                <p style={{ margin: "4px 0 0", fontSize: "14px", color: "#666" }}>
-                  <CmsText field="df4953ff8ec3485c" fallback="Stacked heel with cushioned support"/>{featuredShoe ? ` · ${formatPrice(featuredShoe.price)}` : ""}
-                </p>
-              </div>
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
-                <button
-                  type="button"
-                  className="quick-action-pill"
-                  onClick={() => featuredShoe && setSelectedProduct(featuredShoe)}
-                >
-                  <Eye size={14} /> <CmsText field="fbb2707f4fb32223" fallback="Quick View"/></button>
-                <CmsLink
-                  href="/footwear"
-                  className="quick-action-pill active"
-                  style={{ textDecoration: "none" }} hrefKey="e350d776e9b3c925"
-                >
-                  <CmsText field="7577b00a3278bd42" fallback="Shop Shoes ("/>{catalog.filter(p => p.category === "Footwear").length}<CmsText field="4c9ade9b4d9b3a81" fallback=") "/><ArrowRight size={14} />
-                </CmsLink>
-              </div>
-            </div>
-          </div>
-
-          {/* JACKETS SHOWCASE CARD */}
-          <div
-            className="collection-card jacket-card"
-            onClick={(e) => {
-              const el = e.target as HTMLElement;
-              if (el.closest("button") || el.closest("a")) return;
-              router.push(featuredJacket ? `/products/${featuredJacket.id}` : "/jackets");
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <CmsLink
-              href={featuredJacket ? `/products/${featuredJacket.id}` : "/jackets"}
-              className="collection-media"
-              style={{ display: "block", textDecoration: "none" }}
-              title="View Lambskin Leather Jacket" titleKey="4c9881d1099763a1"
-            >
-              <CmsImage
-                src={featuredJacket?.image || "/dioka-jacket-editorial.png"}
-                alt="Classic Lambskin Leather Jacket"
-                fill
-                sizes="(max-width: 900px) 100vw, 40vw" altKey="1e101a03eafbc9d7"
-              />
-              <span className="collection-badge"><CmsText field="2fe389ceab82152e" fallback="TOP RATED"/></span>
-            </CmsLink>
-            <div className="collection-label">
-              <div style={{ flex: 1 }}>
-                <span className="collection-number"><CmsText field="1d1a42b65fe93874" fallback="03 / LEATHER JACKETS"/></span>
-                <Link href={featuredJacket ? `/products/${featuredJacket.id}` : "/jackets"} style={{ textDecoration: "none", color: "inherit" }}>
-                  <strong>{featuredJacket?.name || "Lambskin Jacket"}</strong>
-                </Link>
-                <p style={{ margin: "4px 0 0", fontSize: "14px", color: "#666" }}>
-                  <CmsText field="944b653d07c0ebd1" fallback="Buttery-soft lambskin tailored fit"/>{featuredJacket ? ` · ${formatPrice(featuredJacket.price)}` : ""}
-                </p>
-              </div>
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
-                <button
-                  type="button"
-                  className="quick-action-pill"
-                  onClick={() => featuredJacket && setSelectedProduct(featuredJacket)}
-                >
-                  <Eye size={14} /> <CmsText field="aa677b77b7e94e5e" fallback="Quick View"/></button>
-                <CmsLink
-                  href="/jackets"
-                  className="quick-action-pill active"
-                  style={{ textDecoration: "none" }} hrefKey="7120dd9751b239e8"
-                >
-                  <CmsText field="c55a86ffbeda04ff" fallback="Shop Jackets ("/>{catalog.filter(p => p.category === "Jackets").length}<CmsText field="9658ad8d3afde4da" fallback=") "/><ArrowRight size={14} />
-                </CmsLink>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PopularProductsCarousel products={catalog} formatPrice={formatPrice} onQuickView={setSelectedProduct} />
       </CmsSection>
 
       {/* 6. STOREFRONT CATALOG */}
@@ -382,6 +224,7 @@ export default function Home() {
                   >
                     <Image
                       src={product.image}
+                      unoptimized={shouldBypassImageOptimization(product.image)}
                       alt={product.name}
                       fill
                       sizes="(max-width: 760px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -638,10 +481,10 @@ export default function Home() {
 
       {/* 8. OUR STORY */}
       <CmsSection id="story" className="story-section" sectionKey="4e7b70b538f330e3">
-        <div className="story-mark">
-          <p><CmsText field="d9601a73f4389dfa" fallback="DIOKA · PREMIUM ESSENTIALS"/></p>
-          <span aria-hidden="true"><CmsText field="4111850fc9fe317d" fallback="D"/></span>
-          <p><CmsText field="36eb5d923e637d14" fallback="CRAFTED FOR EVERYDAY LIFE"/></p>
+        <div className="story-image">
+          <CmsImage src="/dioka-brown-bag.webp" srcKey="c8de31059614aaca" alt="A handcrafted cognac leather bag in the Dioka collection" altKey="24aa7c770b467b4c" fill sizes="(max-width: 900px) 100vw, 50vw" />
+          <span className="story-image-caption"><CmsText field="ba19890c8ca45801" fallback="FORMED BY HAND. MADE FOR EVERY DAY."/></span>
+          <span className="story-image-number"><CmsText field="2ca8cc5b03b16ca7" fallback="DIOKA ATELIER · 01 / 03"/></span>
         </div>
         <div className="story-copy">
           <p className="eyebrow"><CmsText field="e1a163f1c6b32847" fallback="OUR STORY"/></p>

@@ -1,12 +1,15 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Send, X, ArrowUpRight } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useStore } from "@/lib/store-context";
 import type { Conversation } from "@/lib/chat";
 import "./atelier-tools.css";
 export function DiokaMessenger() {
   const { designerChatOpen: open, setDesignerChatOpen: setOpen } = useStore();
+  const pathname = usePathname();
   const [conversation, setConversation] = useState<Conversation | null>(null);
+  const [footerVideoVisible, setFooterVideoVisible] = useState(false);
   const [text, setText] = useState(""); const [name, setName] = useState(""); const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false); const [error, setError] = useState("");
   const pending = useRef<string | null>(null); const end = useRef<HTMLDivElement>(null); const composing = useRef(false);
@@ -14,6 +17,13 @@ export function DiokaMessenger() {
     const handler = () => setOpen(true); window.addEventListener("open-dioka-chat", handler);
     return () => window.removeEventListener("open-dioka-chat", handler);
   }, [setOpen]);
+  useEffect(() => {
+    const footerVideo = document.querySelector(".footer-video-wrap");
+    if (!footerVideo) return;
+    const observer = new IntersectionObserver(([entry]) => setFooterVideoVisible(entry.isIntersecting), { threshold: 0.08 });
+    observer.observe(footerVideo);
+    return () => observer.disconnect();
+  }, [pathname]);
   useEffect(() => {
     if (!open) return;
     const controller = new AbortController();
@@ -40,7 +50,7 @@ export function DiokaMessenger() {
     finally { setBusy(false); composing.current = false; }
   }
   return <>
-    {!open && <button className="atelier-chat-launcher" aria-label="Chat with Dioka" onClick={() => setOpen(true)}><MessageCircle size={20} /> <span>At your service</span><ArrowUpRight size={16} /></button>}
+    {!open && !footerVideoVisible && <button className="atelier-chat-launcher" aria-label="Chat with Dioka" onClick={() => setOpen(true)}><MessageCircle size={20} /> <span>At your service</span><ArrowUpRight size={16} /></button>}
     {open && <aside className="atelier-chat" role="dialog" aria-label="Dioka customer service">
       <header><div><span className="atelier-kicker">DIOKA ATELIER</span><h2>A personal conversation.</h2><p>Customer care · Replies from our team</p></div><button aria-label="Close chat" onClick={() => setOpen(false)}><X size={20}/></button></header>
       <div className="atelier-chat-messages" aria-live="polite" role="log">

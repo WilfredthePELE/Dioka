@@ -4,7 +4,8 @@ export function inspectUpload(bytes: Uint8Array, mime: string, kind: string) {
   if (!bytes.length || bytes.length > maximumFileSize) throw new HttpError(400, "Choose a file smaller than 8 MB.");
   const hex = Buffer.from(bytes.slice(0, 12)).toString("hex"), ascii = Buffer.from(bytes.slice(0, 32)).toString("ascii");
   const detected = hex.startsWith("ffd8ff") ? ["image/jpeg", "jpg"] : hex.startsWith("89504e470d0a1a0a") ? ["image/png", "png"] : ascii.startsWith("RIFF") && ascii.slice(8,12) === "WEBP" ? ["image/webp", "webp"] : ascii.slice(4,8) === "ftyp" && /avif|avis/.test(ascii.slice(8)) ? ["image/avif", "avif"] : ascii.startsWith("%PDF-") ? ["application/pdf", "pdf"] : null;
-  if (!detected || detected[0] !== mime || (kind === "image" ? !mime.startsWith("image/") : kind === "document" ? mime !== "application/pdf" : true)) throw new HttpError(400, "Use a JPG, PNG, WebP or AVIF image, or a PDF for a private document. The file contents must match its type.");
+  const isImage = Boolean(detected?.[0].startsWith("image/"));
+  if (!detected || detected[0] !== mime || (kind === "image" || kind === "reference" ? !isImage : kind === "document" ? mime !== "application/pdf" : true)) throw new HttpError(400, "Use a JPG, PNG, WebP or AVIF image, or a PDF for a private document. The file contents must match its type.");
   return { contentType: detected[0], extension: detected[1], bucket: kind === "image" ? "dioka-products" : "dioka-private" };
 }
 export async function uploadForm(request: Request) {
