@@ -537,72 +537,14 @@ export function SiteFooter() {
                     <CmsText field="a2966e5782e3c3c9" fallback="Our Story & Sourcing"/></button>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setActiveInfoModal({
-                        title: "Privacy & Data Protection Policy",
-                        category: "LEGAL & COMPLIANCE",
-                        content: (
-                          <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
-                            <p>
-                              <CmsText field="bd4366ec7de6cf14" fallback="At Dioka, we treat client privacy with the utmost discretion and respect. We comply fully with GDPR and international data standards:"/></p>
-                            <ul style={{ paddingLeft: "20px", margin: "12px 0" }}>
-                              <li><CmsText field="425f191045ab2735" fallback="Your shipping details and order history are strictly used to fulfill and track your purchases."/></li>
-                              <li><CmsText field="9b9e93c8b359d37b" fallback="We never sell, rent, or trade client email addresses or profiles with third-party advertisers."/></li>
-                              <li><CmsText field="518d066bb7ebdaa9" fallback="Payment card transactions are tokenized via 256-bit bank-grade encryption; card numbers never touch our servers."/></li>
-                              <li><CmsText field="d541842cf10c6d78" fallback="You can view or request deletion of your atelier account at any time through your profile."/></li>
-                            </ul>
-                          </div>
-                        ),
-                      })
-                    }
-                    style={{
-                      background: "none",
-                      border: 0,
-                      color: "#fff",
-                      cursor: "pointer",
-                      padding: 0,
-                      fontSize: "13px",
-                      textAlign: "left",
-                    }}
-                    className="hover:underline"
-                  >
-                    <CmsText field="25fca1fdec149718" fallback="Privacy & Cookie Policy"/></button>
+                  <Link href="/privacy" style={{ color: "#fff", textDecoration: "none", fontSize: "13px" }} className="hover:underline">
+                    <CmsText field="25fca1fdec149718" fallback="Privacy & Cookie Policy" />
+                  </Link>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setActiveInfoModal({
-                        title: "Terms of Service & Atelier Conditions",
-                        category: "LEGAL",
-                        content: (
-                          <div style={{ fontSize: "14px", lineHeight: "1.6", color: "#333" }}>
-                            <p>
-                              <CmsText field="92713619cfa0cb60" fallback="Welcome to Dioka Atelier. By placing an order or commissioning a bespoke piece, the following standards apply:"/></p>
-                            <ul style={{ paddingLeft: "20px", margin: "12px 0" }}>
-                              <li><strong><CmsText field="47809d8493233525" fallback="Authenticity:"/></strong> <CmsText field="a389359d39868226" fallback="All items are guaranteed 100% genuine full-grain leather certified by European leather guilds."/></li>
-                              <li><strong><CmsText field="530dd6fe2ac01c1e" fallback="Pricing:"/></strong> <CmsText field="5707dd0ca3d97733" fallback="All listed prices include applicable taxes and duties. Currency conversion is calculated live at international market rates."/></li>
-                              <li><strong><CmsText field="ae04708487b527f9" fallback="Bespoke Commissions:"/></strong> <CmsText field="bdebf5b1ab2116e4" fallback="Custom hot-stamped monograms and customized dimensions are crafted individually and require 10–14 days atelier turnaround."/></li>
-                              <li><strong><CmsText field="fe11abf46e622a5c" fallback="Satisfaction:"/></strong> <CmsText field="e695a7cc429ea4de" fallback="Our 30-day exchange policy and 2-year warranty protect every customer transaction."/></li>
-                            </ul>
-                          </div>
-                        ),
-                      })
-                    }
-                    style={{
-                      background: "none",
-                      border: 0,
-                      color: "#fff",
-                      cursor: "pointer",
-                      padding: 0,
-                      fontSize: "13px",
-                      textAlign: "left",
-                    }}
-                    className="hover:underline"
-                  >
-                    <CmsText field="50696e79fe129092" fallback="Terms of Service"/></button>
+                  <Link href="/terms" style={{ color: "#fff", textDecoration: "none", fontSize: "13px" }} className="hover:underline">
+                    <CmsText field="50696e79fe129092" fallback="Terms of Service" />
+                  </Link>
                 </li>
                 <li>
                   <button
@@ -658,37 +600,13 @@ export function SiteFooter() {
               <CmsText field="48c35e70680cc6e5" fallback="Premium handcrafted leather bags, footwear, and jackets built for real life. Made with 100% full-grain European hides."/></p>
 
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
-              <button
-                type="button"
-                onClick={() =>
-                  setActiveInfoModal({
-                    title: "Privacy & Data Protection Policy",
-                    category: "LEGAL",
-                    content: (
-                      <p>
-                        <CmsText field="b25ceeeed9496e0b" fallback="We respect your privacy. All checkout transactions are secured with 256-bit encryption. For full terms, please see our detailed policy."/></p>
-                    ),
-                  })
-                }
-                style={{ background: "none", border: 0, color: "#fff", cursor: "pointer", padding: 0, textDecoration: "underline", fontSize: "12px" }}
-              >
-                <CmsText field="d7c6fa01da5910b8" fallback="Privacy"/></button>
+              <Link href="/privacy" style={{ color: "#fff", textDecoration: "underline", fontSize: "12px" }}>
+                <CmsText field="d7c6fa01da5910b8" fallback="Privacy" />
+              </Link>
               <span><CmsText field="d50a2a992e9d2b3c" fallback="·"/></span>
-              <button
-                type="button"
-                onClick={() =>
-                  setActiveInfoModal({
-                    title: "Terms of Service",
-                    category: "LEGAL",
-                    content: (
-                      <p>
-                        <CmsText field="8ee256b4be43337e" fallback="All items include 30-day returns and a 2-year warranty against craftsmanship defects."/></p>
-                    ),
-                  })
-                }
-                style={{ background: "none", border: 0, color: "#fff", cursor: "pointer", padding: 0, textDecoration: "underline", fontSize: "12px" }}
-              >
-                <CmsText field="9f62ccc724278a1f" fallback="Terms"/></button>
+              <Link href="/terms" style={{ color: "#fff", textDecoration: "underline", fontSize: "12px" }}>
+                <CmsText field="9f62ccc724278a1f" fallback="Terms" />
+              </Link>
               <span><CmsText field="14ea9c467946c024" fallback="·"/></span>
               <CmsLink href="/bags" style={{ color: "#fff", textDecoration: "underline" }} hrefKey="870e303210ba103e">
                 <CmsText field="ef12992d690d2162" fallback="Bags"/></CmsLink>
