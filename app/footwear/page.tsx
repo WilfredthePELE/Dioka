@@ -159,7 +159,7 @@ export default function FootwearPage() {
                       style={{ width: "100%", justifyContent: "center" }}
                     >
                       <ShoppingBag size={15} />
-                      {inStock ? `Add to Bag — ${formatPrice(product.price)}` : "Sold Out"}
+                      {inStock ? `Add to Cart — ${formatPrice(product.price)}` : "Sold Out"}
                     </button>
 
                     <div style={{ display: "flex", gap: "8px" }}>

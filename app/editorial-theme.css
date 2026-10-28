@@ -959,6 +959,9 @@ header.site-header > .wordmark { font-size: clamp(48px, 4.4vw, 56px) !important;
 .popular-actions > strong { color: #123d32; font: 500 18px var(--dioka-sans); }
 .popular-actions > div { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .popular-quick-view, .popular-shop-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 0 15px; border: 1px solid #cbd2c9; background: transparent; color: #123d32; font: 700 9px var(--dioka-sans); letter-spacing: .1em; text-decoration: none; text-transform: uppercase; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.popular-add-to-cart { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 0 15px; border: 1px solid #123d32; background: #123d32; color: #fff; font: 700 9px var(--dioka-sans); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.popular-add-to-cart:hover { border-color: #5b1f2b; background: #5b1f2b; }
+.popular-add-to-cart:disabled { border-color: #aeb6af; background: #aeb6af; cursor: not-allowed; }
 .popular-quick-view:hover, .popular-shop-link { border-color: #123d32; background: #123d32; color: #fff; }
 .popular-shop-link:hover { border-color: #5b1f2b; background: #5b1f2b; }
 .popular-carousel-controls { display: flex; align-items: center; justify-content: flex-end; gap: 22px; padding: 19px 0 0; }

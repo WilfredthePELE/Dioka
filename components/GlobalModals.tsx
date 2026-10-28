@@ -501,7 +501,7 @@ export function GlobalModals() {
                       setSelectedProduct(null);
                     }}
                   >
-                    Add to Bag — {formatPrice(selectedProduct.price * modalQuantity)}
+                    Add to Cart — {formatPrice(selectedProduct.price * modalQuantity)}
                     <ShoppingBag size={17} style={{ marginLeft: "8px" }} />
                   </button>
                 </div>

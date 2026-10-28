@@ -290,7 +290,7 @@ export default function ProductDetailPage({
                 style={{ flex: 1, height: "50px", justifyContent: "center", cursor: "pointer", fontSize: "14px" }}
               >
                 <ShoppingBag size={18} style={{ marginRight: "8px" }} />
-                Add to Bag — {formatPrice(product.price * quantity)}
+                Add to Cart — {formatPrice(product.price * quantity)}
               </button>
 
               {/* Wishlist button */}
@@ -455,7 +455,7 @@ export default function ProductDetailPage({
                       onClick={() => addToCart(item)}
                       style={{ marginTop: "12px", width: "100%", justifyContent: "center" }}
                     >
-                      <ShoppingBag size={14} /> Add to Bag — {formatPrice(item.price)}
+                      <ShoppingBag size={14} /> Add to Cart — {formatPrice(item.price)}
                     </button>
                   </div>
                 </article>

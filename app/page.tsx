@@ -112,7 +112,7 @@ export default function Home() {
           </div>
         </div>
 
-        <PopularProductsCarousel products={catalog} formatPrice={formatPrice} onQuickView={setSelectedProduct} />
+        <PopularProductsCarousel products={catalog} formatPrice={formatPrice} onQuickView={setSelectedProduct} onAddToCart={(product) => addToCart(product, product.sizes[0])} />
       </CmsSection>
 
       {/* 6. STOREFRONT CATALOG */}
@@ -399,7 +399,7 @@ export default function Home() {
                         }
                       >
                         <ShoppingBag size={15} />
-                        {inStock ? `Add to Bag — ${formatPrice(product.price)}` : "Sold Out"}
+                        {inStock ? `Add to Cart — ${formatPrice(product.price)}` : "Sold Out"}
                       </button>
 
                       <div style={{ display: "flex", gap: "8px" }}>

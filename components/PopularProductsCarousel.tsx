@@ -4,17 +4,19 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { shouldBypassImageOptimization } from "@/lib/image-source";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Eye, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, Eye, ShoppingCart, Star } from "lucide-react";
 import type { Product } from "@/lib/products";
 
 export function PopularProductsCarousel({
   products,
   formatPrice,
   onQuickView,
+  onAddToCart,
 }: {
   products: Product[];
   formatPrice: (amount: number) => string;
   onQuickView: (product: Product) => void;
+  onAddToCart: (product: Product) => void;
 }) {
   const items = useMemo(
     () => [...products].sort((a, b) => (b.reviews ?? 0) - (a.reviews ?? 0) || (b.rating ?? 0) - (a.rating ?? 0)).slice(0, 6),
@@ -74,6 +76,9 @@ export function PopularProductsCarousel({
                 <div className="popular-actions">
                   <strong>{formatPrice(product.price)}</strong>
                   <div>
+                    <button type="button" className="popular-add-to-cart" onClick={() => onAddToCart(product)} disabled={product.inStock === false || (product.stockQuantity ?? 10) < 1} tabIndex={activeIndex === index ? 0 : -1}>
+                      <ShoppingCart size={15}/>{product.inStock === false || (product.stockQuantity ?? 10) < 1 ? "Sold out" : "Add to Cart"}
+                    </button>
                     <button type="button" className="popular-quick-view" onClick={() => onQuickView(product)} tabIndex={activeIndex === index ? 0 : -1}><Eye size={15}/> Quick view</button>
                     <Link href={`/products/${product.id}`} className="popular-shop-link" tabIndex={activeIndex === index ? 0 : -1}>Discover piece <ArrowRight size={15}/></Link>
                   </div>
