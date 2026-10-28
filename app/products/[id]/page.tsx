@@ -58,7 +58,7 @@ export default function ProductDetailPage({
   }
 
   const currentSize = selectedSize || product.sizes[0] || "One size";
-  const inStock = (product.stockQuantity ?? 10) > 0;
+  const inStock = product.inStock !== false && (product.stockQuantity ?? 10) > 0;
   const isWishlisted = wishlist.includes(product.id);
 
   // Category link helper

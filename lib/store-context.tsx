@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import {
   products as defaultProducts,
   type Product,
@@ -134,6 +134,22 @@ const DEFAULT_EXCHANGE_RATES: Record<Currency, number> = {
   NGN: CURRENCY_CONFIG.NGN.rate,
 };
 
+function mergeCartItems(...groups: CartItem[][]): CartItem[] {
+  const merged = new Map<string, CartItem>();
+  for (const group of groups) {
+    for (const item of group) {
+      const key = item.itemKey || [item.id, item.size, item.color || "", item.leather || "", item.shape || "", item.monogram || "", item.designReference || ""].join("__");
+      const current = merged.get(key);
+      if (current) {
+        merged.set(key, { ...current, quantity: Math.min(10, current.quantity + item.quantity) });
+      } else if (merged.size < 50) {
+        merged.set(key, { ...item, itemKey: key, quantity: Math.min(10, item.quantity) });
+      }
+    }
+  }
+  return [...merged.values()];
+}
+
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [catalog, setCatalog] = useState<Product[]>(defaultProducts);
   const [catalogLoaded, setCatalogLoaded] = useState(false);
@@ -163,7 +179,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [accountModalTab, setAccountModalTab] = useState<"login" | "register" | "profile">("login");
   const [isCartSyncing, setIsCartSyncing] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const isInitialSync = useRef(true);
 
   // Set currency with localStorage persistence
   const setCurrency = useCallback((newCurr: Currency) => {
@@ -257,7 +272,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       clearTimeout(timer);
       setIsCartSyncing(false);
     }
-  }, [user]);
+  }, []);
 
   // Check auth session on mount & load user's specialized cart
   useEffect(() => {
@@ -271,9 +286,19 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           if (data.authenticated && data.user && mounted) {
             setUser(data.user);
 
-            if (Array.isArray(data.user.cart)) {
-              setCart(data.user.cart);
+            let guestCart: CartItem[] = [];
+            try {
+              const savedCart = localStorage.getItem("dioka-cart-guest");
+              const parsed = savedCart ? JSON.parse(savedCart) : [];
+              if (Array.isArray(parsed)) guestCart = parsed;
+            } catch {
+              // Ignore malformed guest storage and keep the server cart.
             }
+            if (Array.isArray(data.user.cart)) {
+              // Preserve any additions made while the session request was in flight.
+              setCart((current) => mergeCartItems(data.user.cart, guestCart, current));
+            }
+            try { localStorage.removeItem("dioka-cart-guest"); } catch {}
             if (Array.isArray(data.user.wishlist) && data.user.wishlist.length > 0) {
               setWishlist(data.user.wishlist);
             }
@@ -293,7 +318,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           if (savedCart) {
             const parsed = JSON.parse(savedCart);
             if (Array.isArray(parsed)) {
-              setCart(parsed);
+              setCart((current) => mergeCartItems(parsed, current));
             }
           }
           const savedWishlist = localStorage.getItem("dioka-wishlist");
@@ -324,11 +349,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Save cart to storage and sync specialized cart to backend on change
   useEffect(() => {
     if (!loaded) return;
-
-    if (isInitialSync.current) {
-      isInitialSync.current = false;
-      return;
-    }
 
     if (user) {
       try {
@@ -372,6 +392,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (Array.isArray(data.user.cart)) {
         setCart(data.user.cart);
       }
+      try { localStorage.removeItem("dioka-cart-guest"); } catch {}
       showToast(`Welcome back, ${data.user.name.split(" ")[0]}! Specialized bag loaded.`);
       return { success: true };
     } catch (err: unknown) {
@@ -403,6 +424,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (Array.isArray(data.user.cart)) {
         setCart(data.user.cart);
       }
+      try { localStorage.removeItem("dioka-cart-guest"); } catch {}
       showToast(`Welcome to Dioka Atelier, ${name.split(" ")[0]}! Specialized bag created.`);
       return { success: true };
     } catch (err: unknown) {
@@ -418,12 +440,13 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     } catch {}
 
     setUser(null);
+    // Guest and account carts are separate. Sign-out should not resurrect the
+    // guest copy that was merged into this account during sign-in.
     try {
       const guestCart = localStorage.getItem("dioka-cart-guest");
-      setCart(guestCart ? JSON.parse(guestCart) : []);
-    } catch {
-      setCart([]);
-    }
+      const parsed = guestCart ? JSON.parse(guestCart) : [];
+      setCart(Array.isArray(parsed) ? parsed : []);
+    } catch { setCart([]); }
     showToast("Signed out. Switched to guest shopping bag.");
   };
 

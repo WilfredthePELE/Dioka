@@ -202,7 +202,7 @@ export default function Home() {
           <div className="product-grid">
             {visibleProducts.map((product) => {
               const isWishlisted = wishlist.includes(product.id);
-              const inStock = (product.stockQuantity ?? 10) > 0;
+              const inStock = product.inStock !== false && (product.stockQuantity ?? 10) > 0;
               const currentSelectedSize = cardSizes[product.id] || product.sizes[0] || "One size";
 
               return (

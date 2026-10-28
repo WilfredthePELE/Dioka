@@ -123,7 +123,7 @@ export default function BagsPage() {
         <div className="product-grid" style={{ marginTop: "36px" }}>
           {visibleBags.map((product) => {
             const isWishlisted = wishlist.includes(product.id);
-            const inStock = (product.stockQuantity ?? 10) > 0;
+            const inStock = product.inStock !== false && (product.stockQuantity ?? 10) > 0;
             const currentSelectedSize = product.sizes[0] || "One size";
 
             return (

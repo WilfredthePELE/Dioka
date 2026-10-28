@@ -75,7 +75,7 @@ export default function FootwearPage() {
         <div className="product-grid" style={{ marginTop: "36px" }}>
           {shoes.map((product) => {
             const isWishlisted = wishlist.includes(product.id);
-            const inStock = (product.stockQuantity ?? 10) > 0;
+            const inStock = product.inStock !== false && (product.stockQuantity ?? 10) > 0;
             const currentSelectedSize = cardSizes[product.id] || product.sizes[0] || "EU 41";
 
             return (
