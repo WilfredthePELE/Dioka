@@ -47,8 +47,8 @@ export function AccountPage({ mode = "login" }: { mode?: "login" | "register" | 
           <button className="dioka-account-signout" disabled={busy} onClick={async()=>{setBusy(true);await logout();router.replace("/sign-in");setBusy(false);}}><LogOut size={16}/> Sign out</button>
         </>:<>
           <span className="dioka-account-eyebrow"><CmsText field="account-welcome-label" fallback="THE ATELIER IS YOURS"/></span>
-          <h1>{joining?<CmsText field="account-join-title" fallback="Make yourself at home."/>:<CmsText field="account-login-title" fallback="Welcome back."/>}</h1>
-          <p className="dioka-account-intro">{joining?<CmsText field="account-join-copy" fallback="A little closer to the things you love. Create your personal Dioka account."/>:<CmsText field="account-login-copy" fallback="Good to see you again. Your collection is right where you left it."/>}</p>
+          <h1>{joining?<CmsText field="account-join-title" fallback="Make yourself at home."/>:<CmsText field="account-login-title" fallback="Sign in to Dioka."/>}</h1>
+          <p className="dioka-account-intro">{joining?<CmsText field="account-join-copy" fallback="A little closer to the things you love. Create your personal Dioka account."/>:<CmsText field="account-login-copy" fallback="Sign in to see your saved pieces, bag and order history."/>}</p>
           <GoogleSignIn/>
           <div className="dioka-account-divider"><span>OR CONTINUE WITH EMAIL</span></div>
           <form onSubmit={submit} className="dioka-account-form">

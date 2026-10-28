@@ -3026,8 +3026,8 @@
   {
     "id": "account-login-title",
     "kind": "text",
-    "defaultValue": "Welcome back.",
-    "label": "Welcome back.",
+    "defaultValue": "Sign in to Dioka.",
+    "label": "Sign in to Dioka.",
     "source": "components/AccountPage.tsx",
     "page": "Your account"
   },
@@ -3042,8 +3042,8 @@
   {
     "id": "account-login-copy",
     "kind": "text",
-    "defaultValue": "Good to see you again. Your collection is right where you left it.",
-    "label": "Good to see you again. Your collection is right where you left it.",
+    "defaultValue": "Sign in to see your saved pieces, bag and order history.",
+    "label": "Sign in to see your saved pieces, bag and order history.",
     "source": "components/AccountPage.tsx",
     "page": "Your account"
   },
