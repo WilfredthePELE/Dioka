@@ -1,7 +1,8 @@
 import type { StoreOrder } from "@/lib/orders";
+import { siteOrigin } from "@/lib/site-origin";
 export interface CheckoutAttempt { fingerprint:string;items:StoreOrder["items"];userId:string|null;email:string;reservationId:string;status:"processing"|"retry"|"ready"|"failed";lease:string;updatedAt:number;createdAt:number;expiresAt:number;stripeBody?:string;sessionId?:string;url?:string }
 export function checkoutParameters(attempt:CheckoutAttempt){
- const origin=new URL(process.env.DIOKA_SITE_URL!).origin,params=new URLSearchParams({mode:"payment",success_url:origin+"/order-confirmation?session_id={CHECKOUT_SESSION_ID}",cancel_url:origin+"/cart?checkout=cancelled",billing_address_collection:"required","phone_number_collection[enabled]":"true"});
+ const origin=siteOrigin(),params=new URLSearchParams({mode:"payment",success_url:origin+"/order-confirmation?session_id={CHECKOUT_SESSION_ID}",cancel_url:origin+"/cart?checkout=cancelled",billing_address_collection:"required","phone_number_collection[enabled]":"true"});
  params.set("expires_at",String(Math.floor(attempt.expiresAt/1000)));params.set("metadata[dioka_reservation]",attempt.reservationId);params.set("payment_method_types[0]","card");
  if(attempt.userId){params.set("customer_email",attempt.email);params.set("client_reference_id",attempt.userId)}
  ["US","GB","NG","CA","AU","IT","FR","DE"].forEach((country,i)=>params.set("shipping_address_collection[allowed_countries]["+i+"]",country));

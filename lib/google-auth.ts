@@ -1,18 +1,18 @@
 import { createHash, randomBytes } from "node:crypto";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 import { z } from "zod";
-import { readState, atomicStates, setState } from "@/lib/persistence";
+import { atomicStates, setState } from "@/lib/persistence";
 import { HttpError } from "@/lib/http";
 import type { StoredCartItem } from "@/lib/auth-storage";
+import { siteOrigin } from "@/lib/site-origin";
 export const googleReady = () => Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.DIOKA_SITE_URL);
 export function googleConfig() {
   if (!googleReady()) throw new HttpError(503, "Google sign-in needs the store owner's Google configuration.");
-  const origin = new URL(process.env.DIOKA_SITE_URL!);
+  const origin = new URL(siteOrigin());
   if (origin.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(origin.hostname)) throw new Error("Google sign-in requires HTTPS.");
   return { clientId: process.env.GOOGLE_CLIENT_ID!, clientSecret: process.env.GOOGLE_CLIENT_SECRET!, origin: origin.origin, redirectUri: origin.origin + "/api/auth/google/callback" };
 }
 export interface Transaction { provider?: "supabase"; nonce: string; verifier: string; returnTo: "/" | "/admin" | "/account"; expiresAt: number; cart: StoredCartItem[]; linkUserId?: string }
-type Transactions = Record<string, Transaction>;
 const hash = (value: string) => createHash("sha256").update(value).digest("base64url");
 export async function beginGoogle(returnTo: "/" | "/admin" | "/account", cart: StoredCartItem[], linkUserId?: string) {
   const config = googleConfig();

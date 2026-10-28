@@ -2,10 +2,11 @@ import { cookies } from "next/headers";
 import { getUserFromSession } from "@/lib/auth-storage";
 import { incrementLimit } from "@/lib/persistence";
 import { createHash } from "node:crypto";
+import { siteOrigin } from "@/lib/site-origin";
 export class HttpError extends Error { constructor(public status: number, message: string, public retryAfter = 0) { super(message); } }
 export function assertOrigin(request: Request) {
   const origin = request.headers.get("origin");
-  if ((origin && origin !== new URL(process.env.DIOKA_SITE_URL || request.url).origin) || request.headers.get("sec-fetch-site") === "cross-site") throw new HttpError(403, "Request origin is not allowed.");
+  if ((origin && origin !== siteOrigin()) || request.headers.get("sec-fetch-site") === "cross-site") throw new HttpError(403, "Request origin is not allowed.");
 }
 export async function bodyJson(request:Request,maximum=65536){
  if(Number(request.headers.get("content-length")||0)>maximum)throw new HttpError(413,"Request is too large.");

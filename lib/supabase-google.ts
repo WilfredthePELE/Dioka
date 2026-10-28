@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { createHash, randomBytes } from "node:crypto";
 import { setState } from "@/lib/persistence";
 import { HttpError } from "@/lib/http";
+import { siteOrigin } from "@/lib/site-origin";
 import type { StoredCartItem } from "@/lib/auth-storage";
 
 export const supabaseGoogleSelected = () => process.env.DIOKA_GOOGLE_AUTH_PROVIDER === "supabase";
@@ -12,7 +13,7 @@ export const supabaseGoogleReady = () => Boolean(
   (process.env.SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) && process.env.DIOKA_SITE_URL
 );
 export function authOrigin() {
-  const url = new URL(process.env.DIOKA_SITE_URL || "http://localhost:3000");
+  const url = new URL(siteOrigin());
   if (url.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(url.hostname)) throw new Error("Sign-in requires HTTPS.");
   return url.origin;
 }
