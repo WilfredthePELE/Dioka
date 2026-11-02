@@ -116,7 +116,7 @@ interface StoreContextType {
   authLoading: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   register: (name: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  logout: () => Promise<void>;
+  logout: () => Promise<boolean>;
   accountModalOpen: boolean;
   setAccountModalOpen: (open: boolean) => void;
   accountModalTab: "login" | "register" | "profile";
@@ -435,9 +435,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   // Auth: Logout function
   const logout = async () => {
+    let serverSessionRevoked = false;
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
-    } catch {}
+      const response = await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin", cache: "no-store" });
+      if (!response.ok) throw new Error("The server could not complete sign-out.");
+      const result = await response.json();
+      if (result.success !== true) throw new Error("The server could not complete sign-out.");
+      serverSessionRevoked = result.serverSessionRevoked === true;
+    } catch {
+      showToast("We couldn’t reach Dioka to sign you out. Please try again.");
+      return false;
+    }
 
     setUser(null);
     // Guest and account carts are separate. Sign-out should not resurrect the
@@ -447,7 +455,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const parsed = guestCart ? JSON.parse(guestCart) : [];
       setCart(Array.isArray(parsed) ? parsed : []);
     } catch { setCart([]); }
-    showToast("Signed out. Switched to guest shopping bag.");
+    showToast(serverSessionRevoked
+      ? "Signed out. Switched to guest shopping bag."
+      : "Signed out on this device. Server session cleanup could not be confirmed.");
+    return true;
   };
 
   // Format price helper with real-time exchange rates

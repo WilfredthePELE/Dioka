@@ -44,7 +44,8 @@ export function AccountPage({ mode = "login" }: { mode?: "login" | "register" | 
           <div className="dioka-account-orders"><h2><Package size={18}/> Your orders</h2>{user.orders?.length ? user.orders.map(order=><article key={order.orderId}><div><strong>{order.orderId}</strong><p>{new Date(order.createdAt).toLocaleDateString()} · {formatPrice(order.total)}</p>{order.trackingCode&&<small>Tracking: {order.trackingCode}</small>}</div><span>{order.status}</span></article>):<p>Your purchases will appear here once payment is verified.</p>}</div>
           {user.googleConnected?<p className="dioka-account-connected"><ShieldCheck size={16}/> Google is connected to your account.</p>:<GoogleSignIn connect/>}
           {user.administrator&&<Link className="dioka-account-owner" href="/admin">Open website administration <ArrowUpRight size={16}/></Link>}
-          <button className="dioka-account-signout" disabled={busy} onClick={async()=>{setBusy(true);await logout();router.replace("/sign-in");setBusy(false);}}><LogOut size={16}/> Sign out</button>
+          {error&&<p role="alert" className="dioka-account-error">{error}</p>}
+          <button className="dioka-account-signout" disabled={busy} onClick={async()=>{setBusy(true);setError("");try{if(await logout())router.replace("/sign-in");else setError("We couldn’t reach Dioka to sign you out. Please try again.");}finally{setBusy(false);}}}><LogOut size={16}/> {busy?"Signing out…":"Sign out"}</button>
         </>:<>
           <span className="dioka-account-eyebrow"><CmsText field="account-welcome-label" fallback="THE ATELIER IS YOURS"/></span>
           <h1>{joining?<CmsText field="account-join-title" fallback="Make yourself at home."/>:<CmsText field="account-login-title" fallback="Sign in to Dioka."/>}</h1>
