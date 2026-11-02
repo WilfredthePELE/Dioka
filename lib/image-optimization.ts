@@ -25,6 +25,6 @@ export async function optimizeUploadedImage(bytes: Uint8Array, kind: "image" | "
     return { bytes: result, contentType: "image/webp" as const, extension: "webp" as const };
   } catch (error) {
     if (error instanceof HttpError) throw error;
-    throw new HttpError(400, "This image could not be processed. Try a JPG, PNG, WebP or AVIF image.");
+    throw new HttpError(400, "This image could not be processed. Try a JPG, PNG, WebP, AVIF, GIF, TIFF, HEIC or HEIF image.");
   }
 }

@@ -971,7 +971,7 @@ export default function CustomizePage() {
                 <input
                   id="custom-design-reference"
                   type="file"
-                  accept="image/jpeg,image/png,image/webp,image/avif"
+                  accept="image/jpeg,image/png,image/webp,image/avif,image/gif,image/tiff,image/heic,image/heif"
                   onChange={(event) => {
                     const file = event.currentTarget.files?.[0] || null;
                     event.currentTarget.value = "";
@@ -983,6 +983,7 @@ export default function CustomizePage() {
                     selectReferenceFile(file);
                   }}
                 />
+                <small>JPG, PNG, WebP, AVIF, GIF, TIFF, HEIC or HEIF · up to 8 MB</small>
                 {referenceFile && referencePreview && <div className="custom-reference-preview">
                   <div role="img" aria-label="Preview of your design reference" style={{ backgroundImage: `url("${referencePreview}")` }} />
                   <span>{referenceFile?.name}</span>

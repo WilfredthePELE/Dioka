@@ -32,16 +32,29 @@ If your host places a trusted proxy in front of the app, configure that proxy to
 
 ## 3. Connect and test payments
 
-Set `DIOKA_SITE_URL` to your canonical HTTPS origin, `STRIPE_SECRET_KEY` to your Stripe key, and `STRIPE_WEBHOOK_SECRET` to the signing secret for `/api/webhooks/stripe`. Subscribe to:
+The checkout supports Paystack and Stripe. Dioka's current catalogue prices and order totals are in USD, so the Paystack integration sends USD amounts in cents. Your Paystack business must be approved for USD payments before checkout can succeed. For a Nigeria-based Paystack account, confirm USD is enabled and that the account is configured to receive USD payouts; Paystack says USD payouts require a qualifying USD domiciliary account. If your Paystack account only accepts NGN, do not turn on checkout until the catalogue and checkout have been deliberately converted to NGN.
 
-- `checkout.session.completed`
-- `checkout.session.async_payment_succeeded`
-- `checkout.session.expired`
+### Paystack setup
 
-Complete a Stripe test-mode purchase, confirm the order appears in `/admin`, verify the payment in Stripe and update tracking. Then supply live-mode credentials and set `DIOKA_STORE_LIVE=true`. Until those settings exist, checkout stays unavailable and customers keep their bag.
+1. Activate your Paystack business and confirm that USD payments are enabled. Enable international payments if you expect international customers.
+2. In Paystack, switch to Test Mode and copy the **Secret Key** (`sk_test_...`). Never use a public key in the server environment, and never share this key in chat or commit it to Git.
+3. In your hosting dashboard, set these server environment variables:
+   - `DIOKA_PAYMENT_PROVIDER=paystack`
+   - `PAYSTACK_SECRET_KEY` to the test secret key
+   - `DIOKA_SITE_URL=https://www.diokacraft.com`
+   - `DIOKA_STORE_LIVE=true` only on a staging/preview deployment while testing
+   - `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` for persistent production checkout, inventory, and orders
+4. Deploy the staging/preview build. In the Paystack Dashboard, add the webhook URL `https://www.diokacraft.com/api/webhooks/paystack` (or your staging domain) and subscribe to `charge.success`. The webhook signature uses the same Paystack secret key, so there is no separate webhook secret variable. Keep the test webhook and its test key together.
+5. Complete a test purchase using Paystack's test credentials. Confirm the customer returns to `/order-confirmation`, the order appears in `/admin`, stock decreases once, and a delivered `charge.success` event is accepted. Also check a cancelled or failed attempt and confirm it does not create a paid order.
+6. When the account and test flow are ready, configure the production webhook URL in Paystack Live Mode. Replace the test key with the Live Secret Key (`sk_live_...`), set `DIOKA_PAYMENT_PROVIDER=paystack`, `DIOKA_SITE_URL=https://www.diokacraft.com`, and `DIOKA_STORE_LIVE=true` in Production, then redeploy. Never leave a test key or test webhook on the live site.
 
-Prices are read from the server catalogue in USD. Stock is reserved atomically before opening a 30-minute Stripe checkout; paid reservations consume stock, expired checkouts release it. Both the signed webhook and server-verified receipt can complete fulfillment idempotently. A URL query alone cannot create a paid order. Admin stock values mean the available, unreserved quantity. Returns, refunds, tax registration/rates and shipping charges are business settings to establish with your payment account; this release charges the listed item total and has no automated refund interface.
+The server verifies every Paystack transaction against its saved amount, currency and reference before recording the order. It also checks the signed `charge.success` webhook and safely handles repeated success events. The customer redirect alone cannot mark an order paid. The admin's **Check pending payments** action verifies unresolved references with Paystack and keeps stock reserved when Paystack reports an unknown or pending result.
 
+Paystack's supported transaction currencies and channels depend on your merchant account. USD availability and USD payout arrangements must be confirmed in your Paystack Dashboard; the code does not convert the USD catalogue into NGN. This build collects the item's listed price and shipping address but does not calculate shipping charges or taxes, send order emails, or automate refunds. Process refunds in Paystack and update the order status in the admin.
+
+### Stripe alternative
+
+To use Stripe instead, set `DIOKA_PAYMENT_PROVIDER=stripe`, configure `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET`, and subscribe the Stripe endpoint `https://www.diokacraft.com/api/webhooks/stripe` to `checkout.session.completed`, `checkout.session.async_payment_succeeded`, and `checkout.session.expired`. Test with Stripe test keys and a separate test-mode webhook secret before replacing them with live-mode credentials. Leave `DIOKA_STORE_LIVE=false` until a verified test has passed.
 ## 4. Build and run
 
 ```sh
@@ -71,6 +84,6 @@ Official references: [Next.js deployment](https://nextjs.org/docs/app/getting-st
 
 ## Truehost / diokacraft.com
 
-Use [TRUEHOST.md](TRUEHOST.md) for the cPanel or VPS deployment. `server.cjs` is the Passenger-compatible production entry point. Set the canonical origin to `https://diokacraft.com` and the owner allowlist to `contactus@diokacraft.com`.
+Use [TRUEHOST.md](TRUEHOST.md) for the cPanel or VPS deployment. `server.cjs` is the Passenger-compatible production entry point. Set the canonical origin to `https://www.diokacraft.com` and the owner allowlist to `contactus@diokacraft.com`.
 
 For a new Supabase backend, follow [SUPABASE-SETUP.md](SUPABASE-SETUP.md), including the media migration and seed. The admin now includes a Media library and product image upload control.

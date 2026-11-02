@@ -86,14 +86,27 @@ export function GlobalModals() {
   const [checkoutWait, setCheckoutWait] = useState(0);
   React.useEffect(()=>{if(!checkoutWait)return;const timer=setTimeout(()=>setCheckoutWait(v=>Math.max(0,v-1)),1000);return()=>clearTimeout(timer);},[checkoutWait]);
   const [checkoutForm, setCheckoutForm] = useState({
-    name: "Wilfred Owubokiri",
-    email: "wilfred@example.com",
-    address: "42 Savile Row",
-    city: "London",
-    state: "Westminster",
-    zip: "W1S 2ER",
-    country: "United Kingdom",
+    name: "",
+    email: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
   });
+
+  React.useEffect(() => {
+    if (!user) return;
+    setCheckoutForm((current) => ({
+      ...current,
+      name: current.name || user.name,
+      email: current.email || user.email,
+      address: current.address || user.shippingAddress?.street || "",
+      city: current.city || user.shippingAddress?.city || "",
+      zip: current.zip || user.shippingAddress?.postalCode || "",
+      country: current.country || user.shippingAddress?.country || "",
+    }));
+  }, [user]);
 
   const activeName = user?.name || checkoutForm.name;
   const activeEmail = user?.email || checkoutForm.email;
@@ -120,7 +133,7 @@ export function GlobalModals() {
     setCheckoutBusy(true);
 
     try {
-      const fingerprint=JSON.stringify(cart.map(({id,size,quantity,color,leather,shape,monogram,designReference})=>({id,size,quantity,color,leather,shape,monogram,designReference})));
+      const fingerprint=JSON.stringify({items:cart.map(({id,size,quantity,color,leather,shape,monogram,designReference})=>({id,size,quantity,color,leather,shape,monogram,designReference})),email:activeEmail,shippingAddress:{fullName:activeName,street:activeAddress,city:activeCity,postalCode:activeZip,country:activeCountry}});
       let requestId=crypto.randomUUID();
       try{const saved=JSON.parse(localStorage.getItem("dioka_checkout_attempt")||"null");if(saved?.fingerprint===fingerprint)requestId=saved.id;else localStorage.setItem("dioka_checkout_attempt",JSON.stringify({fingerprint,id:requestId}));}catch{}
       const res = await fetch("/api/checkout", {
@@ -128,6 +141,7 @@ export function GlobalModals() {
         headers: { "Content-Type": "application/json", "Idempotency-Key": requestId },
         body: JSON.stringify({
           items: cart,
+          email: activeEmail,
           subtotal,
           total: subtotal,
           currency: "USD",
@@ -606,13 +620,17 @@ export function GlobalModals() {
                   />
                 </div>
               </div>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", marginBottom: "4px" }}>Country</label>
+                <input type="text" required autoComplete="country-name" value={checkoutForm.country} onChange={(e) => setCheckoutForm({ ...checkoutForm, country: e.target.value })} style={{ width: "100%", padding: "10px", border: "1px solid #d8e0d9", fontSize: "14px" }} />
+              </div>
             </div>
 
             {/* Payment Summary Box */}
             <div style={{ background: "#f8f7f3", padding: "16px", border: "1px solid #d8e0d9", marginBottom: "20px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
                 <span>Items Subtotal ({cartCount})</span>
-                <strong>{formatPrice(subtotal)}</strong>
+                <strong>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(subtotal)}</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px", color: "#166534" }}>
                 <span>Worldwide Express Delivery</span>
@@ -620,8 +638,9 @@ export function GlobalModals() {
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "18px", fontWeight: 700, borderTop: "1px solid #d8e0d9", paddingTop: "8px", marginTop: "8px" }}>
                 <span>Total to Pay</span>
-                <span style={{ color: "#123d32" }}>{formatPrice(subtotal)}</span>
+                <span style={{ color: "#123d32" }}>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(subtotal)}</span>
               </div>
+              <small style={{ display: "block", marginTop: 10, color: "#66775f" }}>Payment is processed in USD. Prices shown in another display currency are estimates.</small>
             </div>
 
             <button
@@ -630,7 +649,7 @@ export function GlobalModals() {
               className="dark-button"
               style={{ width: "100%", justifyContent: "center", padding: "16px" }}
             >
-              {checkoutWait ? `Please retry in ${checkoutWait}s` : checkoutBusy ? "Preparing secure checkout…" : `Place Order · ${formatPrice(subtotal)}`}
+              {checkoutWait ? `Please retry in ${checkoutWait}s` : checkoutBusy ? "Preparing secure checkout…" : `Place Order · ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(subtotal)}`}
               <Lock size={16} style={{ marginLeft: "8px" }} />
             </button>
           </form>

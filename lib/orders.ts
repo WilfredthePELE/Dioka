@@ -3,9 +3,9 @@ import { adminListProducts, adminGetProduct, settleInventory } from "@/lib/admin
 import { HttpError } from "@/lib/http";
 import { z } from "zod";
 import { cartSchema, applyPurchaseToCart, type StoredCartItem } from "@/lib/auth-storage";
-export const checkoutSchema = z.object({ items: cartSchema.min(1).max(20) });
+export const checkoutSchema = z.object({ items: cartSchema.min(1).max(20), email: z.string().trim().email().max(254).optional(), shippingAddress: z.object({ fullName: z.string().max(160).optional(), street: z.string().max(300).optional(), city: z.string().max(120).optional(), postalCode: z.string().max(40).optional(), country: z.string().max(100).optional() }).optional() });
 export interface StoreOrder { id: string; sessionId: string; userId: string | null; email: string; name: string; total: number; currency: string; paymentStatus: "paid"; status: "Confirmed" | "Crafting" | "Dispatched" | "Delivered"; trackingCode: string; items: (StoredCartItem & { name: string; price: number })[]; createdAt: string; shippingAddress: unknown }
-export interface CheckoutRecord { sessionId: string; reservationId: string; userId: string | null; items: StoreOrder["items"]; total: number; createdAt: string }
+export interface CheckoutRecord { sessionId: string; reservationId: string; userId: string | null; items: StoreOrder["items"]; total: number; currency?: string; provider?: "stripe" | "paystack"; attemptKey?: string; email?: string; shippingAddress?: unknown; createdAt: string }
 export async function listOrders(userId?:string,before?:string){return Object.fromEntries((await listStates<StoreOrder>("order:",{userId,before,limit:100})).map(row=>[row.value.sessionId,row.value]));}
 export function changeOrder<R>(id:string,change:(order:StoreOrder)=>R){return mutateState<StoreOrder|null,R>("order:"+id,null,order=>{if(!order)throw new Error("Order not found.");return change(order);});}
 export async function validateSelections(input: unknown) {
