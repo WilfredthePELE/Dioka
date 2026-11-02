@@ -22,6 +22,10 @@ Copy `.env.example` to an untracked environment file for development, or set the
 3. Visit `/admin`, choose **First time? Set up the owner account**, and enter the configured owner email, setup secret and a password of 12+ characters.
 4. Remove `DIOKA_BOOTSTRAP_SECRET` from the deployed environment after provisioning. Subsequent access uses the normal sign-in form.
 
+For a Vercel-managed admin password, set `DIOKA_ADMIN_PASSWORD` (12–128 characters) for Production. When present, it is the only password accepted for allowlisted administrator accounts; changing it and redeploying changes the login password. Keep it server-side and restrict Vercel project access. Leave it unset to use the salted password saved for the account.
+
+If the owner forgets the password, set a separate random `DIOKA_ADMIN_RECOVERY_SECRET` of at least 32 characters in the Production environment and redeploy. On `/admin`, choose **Forgot the owner password? Reset it**, enter the allowlisted owner email, the recovery secret and a new password of at least 12 characters. A successful reset invalidates existing sessions. Remove `DIOKA_ADMIN_RECOVERY_SECRET` from Vercel and redeploy immediately after recovery.
+
 Public registration cannot create an allowlisted administrator. Sessions use HttpOnly cookies, expire after seven days, and are stored by a hash of the session token. Passwords use salted scrypt. Admin endpoints enforce role checks and cross-origin write protection.
 
 If your host places a trusted proxy in front of the app, configure that proxy to replace X-Forwarded-For, then set `DIOKA_TRUST_PROXY=true`. Otherwise leave it false; rate limits use a shared bucket rather than trusting a spoofable address. Add host-level request-size and traffic limits for a public launch.

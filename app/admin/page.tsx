@@ -23,7 +23,7 @@ export default function Admin() {
   const [tab, setTab] = useState<Tab>("Overview"); const [query, setQuery] = useState(""); const [notice, setNotice] = useState(""); const [error, setError] = useState(""); const [busy, setBusy] = useState(false);
   const [editor, setEditor] = useState<Product | null>(null); const [editingId, setEditingId] = useState<string | null>(null);
   const [content, setContent] = useState<SiteContent | null>(null); const [selected, setSelected] = useState<string | null>(null); const [reply, setReply] = useState("");
-  const [provision, setProvision] = useState(false); const [email, setEmail] = useState(""); const [password, setPassword] = useState(""); const [name, setName] = useState(""); const [secret, setSecret] = useState("");
+  const [provision, setProvision] = useState(false); const [recovering, setRecovering] = useState(false); const [email, setEmail] = useState(""); const [password, setPassword] = useState(""); const [name, setName] = useState(""); const [secret, setSecret] = useState(""); const [recoverySecret, setRecoverySecret] = useState("");
   const replyId = useRef<string | null>(null);
   const editorOpen = Boolean(editor);
   useEffect(() => {
@@ -49,12 +49,13 @@ export default function Admin() {
     catch (e) { if ((e as { status?: number }).status === 401 || (e as { status?: number }).status === 403) { setSnapshot(null); setSignedOut(true); } else setError(e instanceof Error ? e.message : "Unable to load the atelier."); }
     finally { setLoading(false); }
   }, []);
-  useEffect(() => { void refresh(true); }, [refresh]);
+  useEffect(() => { const timer = window.setTimeout(() => { void refresh(true); }, 0); return () => window.clearTimeout(timer); }, [refresh]);
+  const isLoaded = Boolean(snapshot);
   useEffect(() => {
-    if (!snapshot) return;
+    if (!isLoaded) return;
     const timer = setInterval(() => { if (!document.hidden) void refresh(); }, tab === "Conversations" ? 4000 : 30000);
     return () => clearInterval(timer);
-  }, [Boolean(snapshot), tab, refresh]);
+  }, [isLoaded, tab, refresh]);
   async function perform(work: () => Promise<unknown>, success: string) {
     if (busy) return; setBusy(true); setError(""); setNotice("");
     try { await work(); await refresh(); setNotice(success); }
@@ -70,16 +71,26 @@ export default function Admin() {
       setPassword(""); await refresh(true);
     } catch (e) { setError(e instanceof Error ? e.message : "Unable to sign in."); } finally { setBusy(false); }
   }
+  async function recoverPassword(e: React.FormEvent) {
+    e.preventDefault(); if (busy) return; setBusy(true); setError(""); setNotice("");
+    try {
+      await request("/api/admin/recover", "POST", { email, password, secret: recoverySecret });
+      setPassword(""); setRecoverySecret(""); setRecovering(false);
+      setNotice("Owner password updated. Sign in with your new password.");
+    } catch (e) { setError(e instanceof Error ? e.message : "Owner password recovery could not be completed."); }
+    finally { setBusy(false); }
+  }
   const conversation = snapshot?.conversations.find(c => c.id === selected);
   const filtered = snapshot?.products.filter(p => `${p.name} ${p.category} ${p.id}`.toLowerCase().includes(query.toLowerCase())) || [];
   const revenue = snapshot?.orders.reduce((sum, o) => sum + o.total, 0) || 0;
   const money = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(n);
   if (loading) return <main className="atelier-admin-loading">Opening the atelier…</main>;
-  if (signedOut || !snapshot) return <main className="atelier-login"><Link href="/" className="atelier-brand">DIOKA<sup>®</sup></Link><section><span className="atelier-kicker">THE ATELIER / PRIVATE ACCESS</span><h1>A little care.<br/><em>Behind every detail.</em></h1><p>Sign in to manage your collection, your website and your customer conversations.</p><form onSubmit={login}>
-    {provision && <><label>Your name<input required value={name} onChange={e => setName(e.target.value)} autoComplete="name"/></label><label>Owner setup secret<input type="password" minLength={32} required value={secret} onChange={e => setSecret(e.target.value)} autoComplete="off"/></label></>}
-    <label>Email address<input type="email" required value={email} onChange={e => setEmail(e.target.value)} autoComplete="username"/></label><label>Password<input type="password" minLength={provision ? 12 : 1} required value={password} onChange={e => setPassword(e.target.value)} autoComplete={provision ? "new-password" : "current-password"}/></label>
-    {error && <p role="alert" className="atelier-error">{error}</p>}<button className="atelier-primary" disabled={busy}>{busy ? "One moment…" : provision ? "Create administrator & sign in" : "Enter the atelier"}<ArrowUpRight size={18}/></button>
-  </form>{!provision && <GoogleSignIn admin />}<button className="atelier-text-button" onClick={() => { setProvision(!provision); setError(""); }}>{provision ? "Back to sign in" : "First time? Set up the owner account"}</button>{provision && <p className="atelier-help">Use an email listed in DIOKA_ADMIN_EMAILS and the setup secret configured by the store owner. Public sign-up cannot create an administrator.</p>}</section><footer>CAREFULLY CONSIDERED. BEAUTIFULLY MANAGED.</footer></main>;
+  if (signedOut || !snapshot) return <main className="atelier-login"><Link href="/" className="atelier-brand">DIOKA<sup>®</sup></Link><section><span className="atelier-kicker">THE ATELIER / PRIVATE ACCESS</span><h1>{recovering?<>A fresh start.<br/><em>Your atelier awaits.</em></>:<>A little care.<br/><em>Behind every detail.</em></>}</h1><p>{recovering?"Set a new password for the owner account using the one-time recovery secret.":"Sign in to manage your collection, your website and your customer conversations."}</p><form onSubmit={recovering?recoverPassword:login}>
+    {provision && <><label>Your name<input required minLength={2} maxLength={120} value={name} onChange={e => setName(e.target.value)} autoComplete="name"/></label><label>Owner setup secret<input type="password" minLength={32} required value={secret} onChange={e => setSecret(e.target.value)} autoComplete="off"/></label></>}
+    <label>Email address<input type="email" required value={email} onChange={e => setEmail(e.target.value)} autoComplete="username"/></label>
+    {recovering?<><label>One-time recovery secret<input type="password" minLength={32} maxLength={256} required value={recoverySecret} onChange={e=>setRecoverySecret(e.target.value)} autoComplete="off"/></label><label>New password<input type="password" minLength={12} maxLength={128} required value={password} onChange={e=>setPassword(e.target.value)} autoComplete="new-password"/></label></>:!provision&&<label>Password<input type="password" minLength={1} required value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password"/></label>}
+    {notice && <p role="status" className="atelier-notice">{notice}</p>}{error && <p role="alert" className="atelier-error">{error}</p>}<button className="atelier-primary" disabled={busy}>{busy?"One moment…":recovering?"Update owner password":provision?"Create administrator & sign in":"Enter the atelier"}<ArrowUpRight size={18}/></button>
+  </form>{!provision&&!recovering&&<GoogleSignIn admin />}{!recovering&&<button className="atelier-text-button" onClick={()=>{setProvision(!provision);setError("");setNotice("");}}>{provision?"Back to sign in":"First time? Set up the owner account"}</button>}{!provision&&<button className="atelier-text-button" onClick={()=>{setRecovering(!recovering);setError("");setNotice("");setPassword("");}}>{recovering?"Back to sign in":"Forgot the owner password? Reset it"}</button>}{provision&&<p className="atelier-help">Use an email listed in DIOKA_ADMIN_EMAILS and the setup secret configured by the store owner. Public sign-up cannot create an administrator.</p>}{recovering&&<p className="atelier-help">Set DIOKA_ADMIN_RECOVERY_SECRET in Vercel, deploy, then remove it after resetting the password. If DIOKA_ADMIN_PASSWORD is set, change the password directly in Vercel instead.</p>}</section><footer>CAREFULLY CONSIDERED. BEAUTIFULLY MANAGED.</footer></main>;
   return <main className="atelier-admin"><aside className="atelier-sidebar"><Link className="atelier-brand" href="/">DIOKA<sup>®</sup></Link><span className="atelier-kicker">THE ATELIER / ADMINISTRATION</span><nav aria-label="Administration">{tabs.map(t => <button key={t.name} className={tab === t.name ? "active" : ""} onClick={() => { setTab(t.name); setQuery(""); setNotice(""); }}><t.icon size={18}/>{t.name}{t.name === "Conversations" && <span>{snapshot.conversations.filter(c => c.status === "open").length}</span>}</button>)}</nav><div className="atelier-sidebar-bottom"><Link href="/" target="_blank">Visit your website <ArrowUpRight size={16}/></Link><p>{snapshot.user.name}<small>{snapshot.user.email}</small></p><button onClick={() => perform(async () => { await request("/api/auth/logout", "POST"); setSnapshot(null); setSignedOut(true); }, "Signed out.")}><LogOut size={16}/> Sign out</button></div></aside>
     <section className="atelier-workspace"><header className="atelier-admin-header"><span>YOUR ATELIER, AT A GLANCE</span><Link href="/" target="_blank">View storefront <ArrowUpRight size={14}/></Link></header><div className="atelier-admin-title"><div><span className="atelier-kicker">DIOKA / {tab.toUpperCase()}</span><h1>{tab === "Overview" ? <>Welcome to<br/><em>your atelier.</em></> : <>{tab}<em>.</em></>}</h1><p>{({ Overview: "Every detail matters. Here is how your store is doing.", Products: "A considered collection. Every piece, in your hands.", Conversations: "Personal service begins with a conversation.", Orders: "From your atelier to their doorstep.", Website: "Tell your story. Keep every detail current.", Subscribers: "The people who want to hear from you.", Media: "The images and documents behind your atelier." })[tab]}</p></div>{tab === "Products" && <button className="atelier-primary" onClick={() => { setEditor(structuredClone(blank)); setEditingId(null); }}><Plus size={16}/> Add a piece</button>}</div>
       {notice && <div className="atelier-notice" role="status"><Check size={16}/>{notice}</div>}{error && <div className="atelier-error" role="alert">{error}</div>}

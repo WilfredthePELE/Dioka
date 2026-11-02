@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import { findUserByEmail, verifyPassword, createSession, updateUserCart, cartSchema } from "@/lib/auth-storage";
 import { assertOrigin, bodyJson, failure, HttpError, isAdminEmail, limit } from "@/lib/http";
@@ -9,7 +10,17 @@ export async function POST(request: Request) {
     const body = z.object({ email: z.string().email().max(254), password: z.string().min(1).max(128), incomingCart: cartSchema.optional() }).safeParse(await bodyJson(request));
     if (!body.success) throw new HttpError(400, "Enter a valid email and password.");
     const user = await findUserByEmail(body.data.email);
-    if (!user || !await verifyPassword(body.data.password, user)) throw new HttpError(401, "Email or password is incorrect.");
+    if (!user) throw new HttpError(401, "Email or password is incorrect.");
+    const configuredAdminPassword = isAdminEmail(user.email) ? process.env.DIOKA_ADMIN_PASSWORD : undefined;
+    let passwordMatches = false;
+    if (configuredAdminPassword !== undefined && configuredAdminPassword !== "") {
+      const supplied = Buffer.from(body.data.password);
+      const expected = Buffer.from(configuredAdminPassword);
+      passwordMatches = expected.length >= 12 && supplied.length === expected.length && timingSafeEqual(supplied, expected);
+    } else {
+      passwordMatches = await verifyPassword(body.data.password, user);
+    }
+    if (!passwordMatches) throw new HttpError(401, "Email or password is incorrect.");
     if (body.data.incomingCart?.length) {
       const merged = structuredClone(user.cart);
       for (const item of body.data.incomingCart) { const existing = merged.find(m => m.id === item.id && m.size === item.size && (m.color || "") === (item.color || "") && (m.leather || "") === (item.leather || "") && (m.shape || "") === (item.shape || "") && (m.monogram || "") === (item.monogram || "")); if (existing) existing.quantity = Math.min(10, existing.quantity + item.quantity); else merged.push(item); }
